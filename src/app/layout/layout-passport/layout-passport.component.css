@@ -1,0 +1,14 @@
+:host {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f2f5; /* default background ng-zorro */
+}
+
+nz-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 24px;
+}
+  

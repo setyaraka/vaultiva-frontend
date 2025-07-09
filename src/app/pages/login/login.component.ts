@@ -8,6 +8,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzCardModule } from 'ng-zorro-antd/card';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     NzCheckboxModule,
     NzFormModule,
     NzInputModule,
-    NzMessageModule
+    NzMessageModule,
+    NzCardModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']

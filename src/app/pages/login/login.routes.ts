@@ -1,11 +1,11 @@
 import { Routes } from "@angular/router";
-import { PassportComponent } from "../../layout/passport/passport.component";
 import { LoginComponent } from "./login.component";
+import { LayoutPassportComponent } from "../../layout/layout-passport/layout-passport.component";
 
 export const LOGIN_ROUTES: Routes = [
     {
         path: '',
-        component: PassportComponent,
+        component: LayoutPassportComponent,
         children: [
             { path: '', component: LoginComponent }
         ]

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PassportComponent } from './passport.component';
+import { LayoutPassportComponent } from './layout-passport.component';
 
-describe('PassportComponent', () => {
-  let component: PassportComponent;
-  let fixture: ComponentFixture<PassportComponent>;
+describe('LayoutPassportComponent', () => {
+  let component: LayoutPassportComponent;
+  let fixture: ComponentFixture<LayoutPassportComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PassportComponent]
+      imports: [LayoutPassportComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PassportComponent);
+    fixture = TestBed.createComponent(LayoutPassportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
