@@ -43,13 +43,14 @@ export class LoginComponent {
     this.isLoading = true;
     if (this.validateForm.valid) {
       const { email, password } = this.validateForm.value;
-      this.http.post<any>('/api/auth/login', { email, password }).subscribe({
+      this.http.post<any>('http://localhost:3000/auth/login', { email, password }).subscribe({
         next: (res) => {
-          localStorage.setItem('token', res.accessToken);
-          this.router.navigateByUrl('/dashboard');
+          localStorage.setItem('token', res.access_token);
+          this.router.navigateByUrl('/welcome');
         },
         error: () => {
           this.message.error('Login gagal. Cek email & password.');
+          this.isLoading = false;
         },
         complete: () => {
           this.isLoading = false;
