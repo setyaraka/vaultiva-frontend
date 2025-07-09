@@ -8,11 +8,11 @@ export const routes: Routes = [
   {
     path: '',
     component: LayoutDefaultComponent,
+    canActivateChild: [authGuard],
     children: [
       { path: '', pathMatch: 'full', redirectTo: '/welcome' },
       {
         path: 'welcome',
-        canActivate: [authGuard],
         loadChildren: () => import('./pages/welcome/welcome.routes').then(m => m.WELCOME_ROUTES)
       },
     ]
