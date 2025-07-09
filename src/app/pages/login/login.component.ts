@@ -65,4 +65,10 @@ export class LoginComponent {
       });
     }
   }
+  ngOnInit(): void {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.router.navigateByUrl('/welcome');
+    }
+  }
 }
