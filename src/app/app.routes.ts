@@ -15,6 +15,10 @@ export const routes: Routes = [
         path: 'welcome',
         loadChildren: () => import('./pages/welcome/welcome.routes').then(m => m.WELCOME_ROUTES)
       },
+      {
+        path: 'upload',
+        loadChildren: () => import('./pages/upload/upload.routes').then(m => m.UPLOAD_ROUTES)
+      },
     ]
   },
   {
