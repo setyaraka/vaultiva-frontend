@@ -1,56 +1,69 @@
 <nz-card nzTitle="Upload File" nzBordered="false">
+  
   <form [formGroup]="form" (ngSubmit)="onSubmit()" nz-form nzLayout="vertical">
-
+    <!-- UPLOAD FILE (drag & drop) -->
     <nz-form-item *ngIf="!fileList.length">
-        <nz-form-control>
-          <nz-upload
-            nzType="drag"
-            [nzBeforeUpload]="beforeUpload"
-            [nzShowUploadList]="false"
-            [(nzFileList)]="fileList"
-          >
-            <p class="ant-upload-drag-icon">
-              <nz-icon nzType="inbox"></nz-icon>
-            </p>
-            <p class="ant-upload-text">Klik atau drag file ke sini untuk upload</p>
-            <p class="ant-upload-hint">Mendukung file PDF, gambar, dll</p>
-          </nz-upload>
-        </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item *ngIf="fileList.length > 0">
-        <nz-form-label>File Terpilih</nz-form-label>
-        <nz-form-control>
-          <nz-upload
-            [nzFileList]="fileList"
-            [nzShowUploadList]="true"
-            nzListType="picture"
-            [nzBeforeUpload]="beforeUpload"
-          >
-            <button nz-button>
-              <nz-icon nzType="upload"></nz-icon>
-              Upload file lain
-            </button>
-          </nz-upload>
-        </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item>
-        <nz-form-label [nzRequired]="true">Visibility</nz-form-label>
-        <nz-form-control>
-            <nz-select formControlName="visibility">
-                <nz-option *ngFor="let opt of visibilityOptions" [nzValue]="opt.value" [nzLabel]="opt.label"></nz-option>
-            </nz-select>
-        </nz-form-control>
-    </nz-form-item>
-
-    <nz-form-item *ngIf="form.value.visibility === 'password'">
-      <nz-form-label [nzRequired]="true">Password</nz-form-label>
       <nz-form-control>
-        <input nz-input formControlName="password" placeholder="Password" />
+        <nz-upload
+          nzType="drag"
+          [nzBeforeUpload]="beforeUpload"
+          [nzShowUploadList]="false"
+          [(nzFileList)]="fileList"
+        >
+          <p class="ant-upload-drag-icon">
+            <nz-icon nzType="inbox"></nz-icon>
+          </p>
+          <p class="ant-upload-text">Klik atau drag file ke sini untuk upload</p>
+          <p class="ant-upload-hint">Mendukung file PDF, gambar, dll</p>
+        </nz-upload>
       </nz-form-control>
     </nz-form-item>
 
+    <div *ngIf="fileList.length && isImageFile(fileList[0].name)" class="text-center my-4">
+        <img
+          style="max-width: 30em; height: auto;"
+          [src]="fileList[0].url || ''"
+          alt="Preview"
+          class="border border-gray-200 rounded inline-block"
+        />
+        <p class="text-sm text-gray-500 mt-2">{{ fileList[0].name }}</p>
+    </div>
+
+    <!-- METADATA INFORMATION -->
+    <nz-form-item>
+      <nz-form-label [nzRequired]="true">Visibility</nz-form-label>
+      <nz-form-control>
+        <nz-select formControlName="visibility">
+          <nz-option
+            *ngFor="let opt of visibilityOptions"
+            [nzValue]="opt.value"
+            [nzLabel]="opt.label"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- PASSWORD OF FILE -->
+    <nz-form-item *ngIf="form.value.visibility === 'password_protected'">
+      <nz-input-group [nzSuffix]="suffixTemplate">
+        <input
+          [type]="passwordVisible ? 'text' : 'password'"
+          nz-input
+          formControlName="password"
+          placeholder="input password"
+          [(ngModel)]="password"
+        />
+      </nz-input-group>
+      <ng-template #suffixTemplate>
+        <nz-icon
+          class="ant-input-password-icon"
+          [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+          (click)="passwordVisible = !passwordVisible"
+        />
+      </ng-template>
+    </nz-form-item>
+
+    <!-- FILE EXPIRED DATE -->
     <nz-form-item>
       <nz-form-label>Expires At</nz-form-label>
       <nz-form-control>
@@ -58,20 +71,30 @@
       </nz-form-control>
     </nz-form-item>
 
+    <!-- FILE MAX DOWNLOAD LIMIT -->
     <nz-form-item>
       <nz-form-label>Max Download</nz-form-label>
       <nz-form-control>
-        <input nz-input type="number" formControlName="downloadLimit" placeholder="Contoh: 5" />
+        <input
+          nz-input
+          type="number"
+          formControlName="downloadLimit"
+          placeholder="Example: 5"
+        />
       </nz-form-control>
     </nz-form-item>
 
+    <!-- SUBMIT METADATA BUTTON -->
     <nz-form-item>
       <nz-form-control>
-        <button nz-button nzType="primary" [disabled]="form.invalid || isLoading">
-          {{ isLoading ? 'Uploading...' : 'Upload' }}
+        <button
+          nz-button
+          nzType="primary"
+          [disabled]="form.invalid || isLoading || !fileList.length"
+        >
+          {{ isLoading ? 'Uploading...' : 'Save Metadata' }}
         </button>
       </nz-form-control>
     </nz-form-item>
-
   </form>
 </nz-card>

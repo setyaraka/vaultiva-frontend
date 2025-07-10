@@ -13,10 +13,11 @@ import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
 import { environment } from '../../../environment/environment';
 import { getBase64 } from '../../shared/utils/file-utils';
 import { firstValueFrom } from 'rxjs';
+import { NzImageModule } from 'ng-zorro-antd/image';
 
 interface UploadResponse {
-  fileId: string,
-  filename: string
+  fileId: string;
+  filename: string;
 }
 
 @Component({
@@ -33,7 +34,8 @@ interface UploadResponse {
     NzSelectModule,
     NzInputModule,
     NzCardModule,
-    FormsModule
+    FormsModule,
+    NzImageModule
   ],
   templateUrl: './upload.component.html',
   styleUrl: './upload.component.css'
@@ -44,122 +46,58 @@ export class UploadComponent {
   private message = inject(NzMessageService);
 
   form = this.fb.group({
-    file: this.fb.control<File | null>(null),
-    visibility: this.fb.control<'public' | 'private' | 'password'>('private'),
+    visibility: this.fb.control<'public' | 'private' | 'password_protected'>('private'),
     password: this.fb.control(''),
     expiresAt: this.fb.control(''),
     downloadLimit: this.fb.control<number | null>(null),
   });
 
+  fileList: NzUploadFile[] = [];
   isLoading = false;
+  lastUploadedFileId: string | null = null;
+  passwordVisible = false;
+  password?: string;
+
   visibilityOptions = [
     { value: 'public', label: 'Public' },
     { value: 'private', label: 'Private' },
-    { value: 'password', label: 'Password' }
+    { value: 'password_protected', label: 'Password' }
   ];
-  fileList: NzUploadFile[] = [];
-
-  onFileChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files?.length) {
-      const file = input.files[0];
-      this.form.patchValue({ file });
-    }
-  }
-
-  onSubmit(): void {
-    if (!this.form.valid || !this.form.value.file) {
-      this.message.error('Lengkapi semua input.');
-      return;
-    }
-
-    this.isLoading = true;
-
-    const formData = new FormData();
-    formData.append('file', this.form.value.file);
-    formData.append('visibility', this.form.value.visibility || 'private');
-    formData.append('password', this.form.value.password || '');
-    formData.append('expiresAt', this.form.value.expiresAt || '');
-    formData.append('downloadLimit', this.form.value.downloadLimit?.toString() || '');
-
-    this.http.post(`${environment.apiUrl}/file/upload`, formData).subscribe({
-      next: () => {
-        this.message.success('File berhasil diupload!');
-        this.form.reset();
-      },
-      error: () => this.message.error('Gagal upload file'),
-      complete: () => this.isLoading = false
-    });
-  }
 
   beforeUpload = (file: NzUploadFile): boolean => {
-    this.handleFileUpload(file); // panggil async tanpa await
-    return false; // cegah upload otomatis
+    this.handleFileUpload(file);
+    return false;
   };
-  
-  // beforeUpload = (file: NzUploadFile): boolean => {
-  //   const realFile = file as unknown as File;
-  //   const formData = new FormData();
 
-  //   this.isLoading = true;
-
-  //   formData.append('file', realFile);
-
-  //   const preview = await this.getBase64(file.originFileObj as File);
-
-  //   this.http.post<UploadResponse>(`${environment.apiUrl}/file/upload`, formData).subscribe({
-  //     next: (res) => {
-  //       this.message.success(`${file.name} berhasil diupload!`);
-  //       this.fileList = [
-  //         ...this.fileList,
-  //         {
-  //           uid: res.fileId,
-  //           name: file.name,
-  //           status: 'done',
-  //           url: ``,
-  //           response: res, // opsional, kalau kamu mau simpan info full
-  //         }
-  //       ];
-  //     },
-  //     error: () => {
-  //       this.message.error(`${file.name} gagal upload`);
-  //     },
-  //     complete: () => {
-  //       this.isLoading = false;
-  //     }
-  //   })
-  //   return false;
-  // };
   private async handleFileUpload(file: NzUploadFile) {
     const realFile = file as unknown as File;
-    
     if (!realFile) {
       this.message.error('File tidak valid.');
       return;
     }
-  
+
     this.isLoading = true;
-  
+
     const formData = new FormData();
     formData.append('file', realFile);
-  
+
     try {
       const preview = await getBase64(realFile);
-  
+
       const res = await firstValueFrom(
         this.http.post<UploadResponse>(`${environment.apiUrl}/file/upload`, formData)
       );
-  
+
       this.message.success(`${file.name} berhasil diupload!`);
-  
+      this.lastUploadedFileId = res.fileId;
+
       this.fileList = [
-        ...this.fileList,
         {
           uid: res.fileId,
           name: file.name,
           status: 'done',
-          url: `${environment.apiUrl}/file/preview/${res.fileId}`,
-          thumbUrl: preview, // kalau kamu ingin pakai thumbnail
+          url: `${environment.apiUrl}/file/preview/public/${res.fileId}`,
+          thumbUrl: preview,
           response: res
         }
       ];
@@ -169,6 +107,41 @@ export class UploadComponent {
       this.isLoading = false;
     }
   }
-  
 
+  isImageFile(name: string): boolean {
+    return /\.(png|jpg|jpeg)$/i.test(name);
+  }
+
+  onSubmit(): void {
+    if (!this.lastUploadedFileId) {
+      this.message.error('Upload file terlebih dahulu.');
+      return;
+    }
+
+    const payload = {
+      fileId: this.lastUploadedFileId,
+      visibility: this.form.value.visibility,
+      password: this.form.value.password,
+      expiresAt: this.form.value.expiresAt,
+      downloadLimit: this.form.value.downloadLimit
+    };
+
+    this.isLoading = true;
+
+    this.http.patch(`${environment.apiUrl}/file/metadata`, payload).subscribe({
+      next: () => {
+        this.message.success('Metadata berhasil disimpan!');
+        this.form.reset();
+        this.fileList = [];
+        this.lastUploadedFileId = null;
+      },
+      error: () =>  {
+        this.message.error('Gagal menyimpan metadata')
+        this.form.reset();
+        this.fileList = [];
+        this.lastUploadedFileId = null;
+      },
+      complete: () => this.isLoading = false
+    });
+  }
 }
