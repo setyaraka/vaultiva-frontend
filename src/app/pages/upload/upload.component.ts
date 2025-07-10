@@ -72,7 +72,7 @@ export class UploadComponent {
   private async handleFileUpload(file: NzUploadFile) {
     const realFile = file as unknown as File;
     if (!realFile) {
-      this.message.error('File tidak valid.');
+      this.message.error('File is not valid');
       return;
     }
 
@@ -88,7 +88,7 @@ export class UploadComponent {
         this.http.post<UploadResponse>(`${environment.apiUrl}/file/upload`, formData)
       );
 
-      this.message.success(`${file.name} berhasil diupload!`);
+      this.message.success(`${file.name} success uploaded!`);
       this.lastUploadedFileId = res.fileId;
 
       this.fileList = [
@@ -102,7 +102,7 @@ export class UploadComponent {
         }
       ];
     } catch (error) {
-      this.message.error(`${file.name} gagal upload`);
+      this.message.error(`${file.name} upload failed`);
     } finally {
       this.isLoading = false;
     }
@@ -114,7 +114,7 @@ export class UploadComponent {
 
   onSubmit(): void {
     if (!this.lastUploadedFileId) {
-      this.message.error('Upload file terlebih dahulu.');
+      this.message.error('Upload File First!');
       return;
     }
 
@@ -130,13 +130,13 @@ export class UploadComponent {
 
     this.http.patch(`${environment.apiUrl}/file/metadata`, payload).subscribe({
       next: () => {
-        this.message.success('Metadata berhasil disimpan!');
+        this.message.success('Metadata Has Been Saved!');
         this.form.reset();
         this.fileList = [];
         this.lastUploadedFileId = null;
       },
       error: () =>  {
-        this.message.error('Gagal menyimpan metadata')
+        this.message.error('Metadata Save Failed')
         this.form.reset();
         this.fileList = [];
         this.lastUploadedFileId = null;
