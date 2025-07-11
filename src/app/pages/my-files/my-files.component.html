@@ -1,0 +1,45 @@
+<nz-table 
+        #basicTable 
+        [nzData]="fileState.data"
+        [nzPageSize]="fileState.limit"
+        [nzPageIndex]="fileState.page"
+        [nzTotal]="fileState.total"
+        [nzShowPagination]="true"
+        [nzLoading]="isLoading"
+        (nzPageIndexChange)="onPageChange($event)"
+        [nzFrontPagination]="false"
+        [nzScroll]="{ y: '50em' }"
+        >
+    <thead>
+        <tr>
+            <th>File Name</th>
+            <th>Download Limit</th>
+            <th>Download Counter</th>
+            <th>Share Link</th>
+            <th>Created</th>
+            <th>Updated</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let file of fileState.data">
+            <td>{{file.filename}}</td>
+            <td>{{file.downloadLimit || 0}}</td>
+            <td>{{file.downloadCount || 0}}</td>
+            <td>
+                <a>{{file.shareLink}}</a>
+            </td>
+            <td>
+                <div class="flex flex-col">
+                    <span>{{formatDateToShort(file.createdAt)}}</span>
+                    <span>{{formatTime(file.createdAt)}} WIB</span>
+                </div>
+            </td>
+            <td>
+                <div class="flex flex-col">
+                    <span>{{formatDateToShort(file.expiresAt)}}</span>
+                    <span>{{formatTime(file.expiresAt)}} WIB</span>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>

@@ -19,6 +19,10 @@ export const routes: Routes = [
         path: 'upload',
         loadChildren: () => import('./pages/upload/upload.routes').then(m => m.UPLOAD_ROUTES)
       },
+      {
+        path: 'my-files',
+        loadChildren: () => import('./pages/my-files/my-files.routes').then(m => m.MY_FILES_ROUTES)
+      }
     ]
   },
   {
