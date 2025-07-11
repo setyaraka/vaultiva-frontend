@@ -16,8 +16,10 @@
             <th>Download Limit</th>
             <th>Download Counter</th>
             <th>Share Link</th>
+            <th>Visibility</th>
             <th>Created</th>
             <th>Updated</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +30,7 @@
             <td>
                 <a>{{file.shareLink}}</a>
             </td>
+            <td>{{displayVisibility(file.visibility)}}</td>
             <td>
                 <div class="flex flex-col">
                     <span>{{formatDateToShort(file.createdAt)}}</span>
@@ -39,6 +42,9 @@
                     <span>{{formatDateToShort(file.expiresAt)}}</span>
                     <span>{{formatTime(file.expiresAt)}} WIB</span>
                 </div>
+            </td>
+            <td>
+                <button nz-button nzType="link" (click)="downloadFile(file.id, file.filename)">Download</button>
             </td>
         </tr>
     </tbody>

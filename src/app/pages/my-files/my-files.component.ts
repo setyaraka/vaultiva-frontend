@@ -6,6 +6,8 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { environment } from '../../../environment/environment';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { formatDateToShort, formatTime } from '../../core/utils/date';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { displayVisibility } from '../../core/utils/display';
 
 interface FileData {
   id: string,
@@ -14,7 +16,8 @@ interface FileData {
   expiresAt: string,
   downloadLimit?: number,
   downloadCount?: number,
-  shareLink: string
+  shareLink: string,
+  visibility: string
 }
 
 interface FileListState {
@@ -22,7 +25,7 @@ interface FileListState {
   limit: number,
   page: number,
   total: number,
-  totalPages: number
+  totalPages: number,
 }
 
 @Component({
@@ -38,17 +41,20 @@ interface FileListState {
 })
 export class MyFilesComponent implements OnInit {
   private http = inject(HttpClient);
+  private message = inject(NzMessageService);
+
+  formatDateToShort = formatDateToShort;
+  formatTime = formatTime;
+  displayVisibility = displayVisibility;
+
   fileState: FileListState = {
     data: [] as FileData[],
     page: 1,
     limit: 10,
     total: 0,
-    totalPages: 0,
+    totalPages: 0
   }
   isLoading = false;
-
-  formatDateToShort = formatDateToShort;
-  formatTime = formatTime;
 
   ngOnInit(): void {
     this.fetchFiles(1);
@@ -72,15 +78,36 @@ export class MyFilesComponent implements OnInit {
           total: res.total,
           totalPages: res.totalPages,
         };
-        console.log(this.fileState, '>>> FILE STATE')
       },
       error: () => {},
       complete: () => this.isLoading = false
     });
   }
 
-  downloadFile(fileId: string) {
-    window.open(`${environment.apiUrl}/file/download/${fileId}`, '_blank');
+  downloadFile(fileId: string, filename: string) {
+    this.http.get(`${environment.apiUrl}/file/secure-download/${fileId}`, {
+      responseType: 'blob',
+      observe: 'response'
+    }).subscribe({
+      next: (res) => {
+        const blob = new Blob([res.body!]);
+        const url = window.URL.createObjectURL(blob);
+  
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+  
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => {
+        if (err.status === 403) {
+          this.message.error('Tidak bisa download: ' + (err.error?.message || 'Akses ditolak'));
+        } else {
+          this.message.error('Gagal download file.');
+        }
+      }
+    });
   }
 
   isExpired(date: string): boolean {
