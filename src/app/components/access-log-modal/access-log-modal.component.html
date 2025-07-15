@@ -1,0 +1,19 @@
+<nz-table #basicTable [nzData]="dataSet.data">
+  <thead>
+    <tr>
+      <th>Accessed At</th>
+      <th>Ip Address</th>
+      <th>User Agent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>
+        <span>{{formatDate(data.accessedAt)}}</span><br>
+        <span>{{formatTime(data.accessedAt)}}</span>
+      </td>
+      <td>{{data.ipAddress === '::1' ? 'localhost (::1)' : data.ipAddress}}</td>
+      <td>{{data.userAgent | userAgentParser}}</td>
+    </tr>
+  </tbody>
+</nz-table>

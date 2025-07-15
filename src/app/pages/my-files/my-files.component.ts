@@ -8,6 +8,8 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { formatDateToShort, formatTime } from '../../core/utils/date';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { displayVisibility } from '../../core/utils/display';
+import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
+import { AccessLogModalComponent } from '../../components/access-log-modal/access-log-modal.component';
 
 interface FileData {
   id: string,
@@ -34,7 +36,8 @@ interface FileListState {
     CommonModule, 
     NzTableModule, 
     NzButtonModule,
-    NzDividerModule
+    NzDividerModule,
+    NzModalModule
   ],
   templateUrl: './my-files.component.html',
   styleUrl: './my-files.component.css'
@@ -42,6 +45,7 @@ interface FileListState {
 export class MyFilesComponent implements OnInit {
   private http = inject(HttpClient);
   private message = inject(NzMessageService);
+  private modal = inject(NzModalService);
 
   formatDateToShort = formatDateToShort;
   formatTime = formatTime;
@@ -55,6 +59,7 @@ export class MyFilesComponent implements OnInit {
     totalPages: 0
   }
   isLoading = false;
+  isVisible = false;
 
   ngOnInit(): void {
     this.fetchFiles(1);
@@ -112,5 +117,15 @@ export class MyFilesComponent implements OnInit {
 
   isExpired(date: string): boolean {
     return new Date(date) < new Date();
+  }
+
+  openAccessLogModal(fileId: string) {
+    this.modal.create({
+      nzTitle: 'File Access Log',
+      nzContent: AccessLogModalComponent,
+      nzData: { fileId },
+      nzFooter: null,
+      nzWidth: 1000
+    });
   }
 }
