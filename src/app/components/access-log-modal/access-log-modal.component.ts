@@ -9,6 +9,7 @@ import { formatDateToShort, formatTime } from '../../core/utils/date';
 import { UserAgentParserPipe } from '../../core/pipes/user-agent-parser.pipe';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { copyTextToClipboard } from '../../core/utils/copy';
 
 interface AccessLog {
   accessedAt: string;
@@ -118,12 +119,7 @@ export class AccessLogModalComponent implements OnInit {
       document.body.appendChild(textarea);
       textarea.focus();
       textarea.select();
-      try {
-        document.execCommand('copy');
-        console.log('Copied (fallback):', text);
-      } catch (err) {
-        console.error('Fallback copy failed:', err);
-      }
+      copyTextToClipboard(text);
       document.body.removeChild(textarea);
     }
   }
