@@ -5,34 +5,34 @@
 }
   
 .card-total {
-    background-color: #adc6ff; /* biru sedang */
-    color: #10239e; /* teks biru gelap */
-  }
+    background-color: #adc6ff;
+    color: #10239e;
+}
   
-  .card-expired {
-    background-color: #ffccc7; /* merah sedang */
+.card-expired {
+    background-color: #ffccc7;
     color: #a8071a;
-  }
-  
-  .card-private {
-    background-color: #d3adf7; /* ungu sedang */
+}
+
+.card-private {
+    background-color: #d3adf7;
     color: #531dab;
-  }
-  
-  .card-public {
-    background-color: #b7eb8f; /* hijau terang */
+}
+
+.card-public {
+    background-color: #b7eb8f;
     color: #237804;
-  }
-  
-  .card-protected {
-    background-color: #ffe58f; /* kuning terang */
+}
+
+.card-protected {
+    background-color: #ffe58f;
     color: #ad6800;
-  }
-  
-  .card-downloads {
-    background-color: #91d5ff; /* biru terang */
+}
+
+.card-downloads {
+    background-color: #91d5ff;
     color: #096dd9;
-  }
+}
 
 nz-card p {
     font-size: 1.5rem;

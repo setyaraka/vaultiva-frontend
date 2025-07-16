@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-welcome',
@@ -20,6 +21,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 })
 export class WelcomeComponent implements OnInit {
   private http = inject(HttpClient);
+  private message = inject(NzMessageService);
 
   isLoading = false;
 
@@ -42,7 +44,9 @@ export class WelcomeComponent implements OnInit {
       next: (res) => {
         this.stats = res;
       },
-      error: () => {},
+      error: () => {
+        this.message.error("Failed Get Statistic Data")
+      },
       complete: () => this.isLoading = false
     });
   }
