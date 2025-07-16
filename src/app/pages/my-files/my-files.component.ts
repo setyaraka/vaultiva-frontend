@@ -107,9 +107,9 @@ export class MyFilesComponent implements OnInit {
       },
       error: (err) => {
         if (err.status === 403) {
-          this.message.error('Tidak bisa download: ' + (err.error?.message || 'Akses ditolak'));
+          this.message.error('Download failed:' + (err.error?.message || 'You do not have permission to access this file'));
         } else {
-          this.message.error('Gagal download file.');
+          this.message.error('The file could not be downloaded');
         }
       }
     });
