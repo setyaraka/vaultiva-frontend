@@ -8,31 +8,27 @@
     <div class="sidebar-logo">
       <a href="https://ng.ant.design/" target="_blank">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
-        <h1>Ant Design of Angular</h1>
+        <h1>SECURA FILE</h1>
       </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
+      <li nz-menu-item nzMatchRouter>
+        <a routerLink="/welcome">
+          <nz-icon nzType="dashboard"></nz-icon>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li nz-submenu nzOpen nzTitle="File" nzIcon="file">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/welcome">Welcome</a>
+            <a routerLink="/upload">Upload File</a>
           </li>
           <li nz-menu-item nzMatchRouter>
-            <a>Monitor</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>Workplace</a>
+            <a routerLink="/my-files">File List</a>
           </li>
         </ul>
       </li>
-      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
-        <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a>Basic Form</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
+    </ul>    
   </nz-sider>
   <nz-layout>
     <nz-header>
@@ -40,8 +36,8 @@
         <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
           <nz-icon class="trigger" [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
         </span>
-        <button nz-button nzType="default" (click)="logout()" style="float: right; margin: 16px">
-            Logout
+        <button class="text-right" nz-button nzType="default" (click)="logout()">
+          <nz-icon title="Logout" nzType="logout" nzTheme="outline" />
         </button>
       </div>
     </nz-header>
