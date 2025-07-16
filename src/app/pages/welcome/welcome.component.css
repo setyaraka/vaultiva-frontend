@@ -1,0 +1,42 @@
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+  
+.card-total {
+    background-color: #adc6ff; /* biru sedang */
+    color: #10239e; /* teks biru gelap */
+  }
+  
+  .card-expired {
+    background-color: #ffccc7; /* merah sedang */
+    color: #a8071a;
+  }
+  
+  .card-private {
+    background-color: #d3adf7; /* ungu sedang */
+    color: #531dab;
+  }
+  
+  .card-public {
+    background-color: #b7eb8f; /* hijau terang */
+    color: #237804;
+  }
+  
+  .card-protected {
+    background-color: #ffe58f; /* kuning terang */
+    color: #ad6800;
+  }
+  
+  .card-downloads {
+    background-color: #91d5ff; /* biru terang */
+    color: #096dd9;
+  }
+
+nz-card p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+  
