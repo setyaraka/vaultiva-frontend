@@ -8,6 +8,7 @@ import { environment } from '../../../environment/environment';
 import { formatDateToShort, formatTime } from '../../core/utils/date';
 import { UserAgentParserPipe } from '../../core/pipes/user-agent-parser.pipe';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 interface AccessLog {
   accessedAt: string;
@@ -24,6 +25,7 @@ interface AccessLog {
     NzDividerModule, 
     NzTableModule,
     CommonModule,
+    NzIconModule,
     UserAgentParserPipe
   ],
   standalone: true,
@@ -101,4 +103,29 @@ export class AccessLogModalComponent implements OnInit {
     }
     this.activeTab = tabId;
   }
+
+  copyToClipboard(text: string): void {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        this.message.success('Copied to clipboard!');
+      }).catch(err => {
+        this.message.error(`Failed to copy: ${err}`);
+      });
+    } else {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        console.log('Copied (fallback):', text);
+      } catch (err) {
+        console.error('Fallback copy failed:', err);
+      }
+      document.body.removeChild(textarea);
+    }
+  }
+  
 }

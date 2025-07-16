@@ -48,8 +48,20 @@
           <span>{{formatDate(data.accessedAt)}}</span><br>
           <span>{{formatTime(data.accessedAt)}}</span>
         </td>
-        <td>{{data.ipAddress === '::1' ? 'localhost (::1)' : data.ipAddress}}</td>
-        <td>{{data.userAgent | userAgentParser}}</td>
+        <td>
+          {{ data.ipAddress === '::1' ? 'localhost (::1)' : data.ipAddress }}
+          <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy IP"
+            (click)="copyToClipboard(data.ipAddress)">
+            <nz-icon nzType="copy" nzTheme="outline" />
+          </button>
+        </td>
+        <td>
+          {{ data.userAgent | userAgentParser }}
+          <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy User Agent"
+            (click)="copyToClipboard(data.userAgent)">
+            <nz-icon nzType="copy" nzTheme="outline" />
+          </button>
+        </td>
       </tr>
     </tbody>
   </nz-table>
@@ -81,8 +93,20 @@
           <span>{{formatDate(data.accessedAt)}}</span><br>
           <span>{{formatTime(data.accessedAt)}}</span>
         </td>
-        <td>{{data.ipAddress === '::1' ? 'localhost (::1)' : data.ipAddress}}</td>
-        <td>{{data.userAgent | userAgentParser}}</td>
+        <td>
+          {{ data.ipAddress === '::1' ? 'localhost (::1)' : data.ipAddress }}
+          <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy IP"
+            (click)="copyToClipboard(data.ipAddress)">
+            <nz-icon nzType="copy" nzTheme="outline" />
+          </button>
+        </td>
+        <td>
+          {{ data.userAgent | userAgentParser }}
+          <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy User Agent"
+            (click)="copyToClipboard(data.userAgent)">
+            <nz-icon nzType="copy" nzTheme="outline" />
+          </button>
+        </td>
         <td>{{data.reason}}</td>
       </tr>
     </tbody>
