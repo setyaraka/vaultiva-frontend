@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environment/environment';
 import { FormsModule } from '@angular/forms';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -38,6 +38,7 @@ export class PasswordPageComponent implements OnInit {
   private http = inject(HttpClient);
   private sanitizer = inject(DomSanitizer);
   private message = inject(NzMessageService);
+  private router = inject(Router);
 
   fileMetadata: FileMetadata | null = null;
   fileUrl: SafeUrl | null = null;
@@ -79,9 +80,18 @@ export class PasswordPageComponent implements OnInit {
     }).subscribe({
       next: blob => {
         this.isLoading = false;
-        const url = URL.createObjectURL(blob);
-        this.fileUrl = this.sanitizer.bypassSecurityTrustUrl(url);
-        this.message.success("Success Look File")
+
+        if(this.fileMetadata?.hasPassword){
+          this.message.success("Password correct. Redirecting...");
+          // this.router.navigate(['/preview', this.fileId]);
+          this.router.navigate(['/preview', this.fileId], {
+            queryParams: { password: this.password }
+          });
+        } else {
+          const url = URL.createObjectURL(blob);
+          this.fileUrl = this.sanitizer.bypassSecurityTrustUrl(url);
+          this.message.success("Success Look File")
+        }
       },
       error: () => {
         this.isLoading = false;
