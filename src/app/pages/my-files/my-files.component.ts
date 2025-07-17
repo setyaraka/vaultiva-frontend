@@ -10,6 +10,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { displayVisibility } from '../../core/utils/display';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { AccessLogModalComponent } from '../../components/access-log-modal/access-log-modal.component';
+import { RouterLink } from '@angular/router';
 
 interface FileData {
   id: string,
@@ -37,7 +38,8 @@ interface FileListState {
     NzTableModule, 
     NzButtonModule,
     NzDividerModule,
-    NzModalModule
+    NzModalModule,
+    RouterLink
   ],
   templateUrl: './my-files.component.html',
   styleUrl: './my-files.component.css'

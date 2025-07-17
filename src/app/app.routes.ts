@@ -26,6 +26,14 @@ export const routes: Routes = [
     ]
   },
   {
+    path: 'preview/:id',
+    loadChildren: () => import('./pages/file-preview/file-preview.routes').then(m => m.FILE_PREVIEW_ROUTES)
+  },
+  {
+    path: 'password-page/:id',
+    loadChildren: () => import('./pages/password-page/password-page.routes').then(m => m.PASSWORD_PAGE_ROUTES)
+  },
+  {
     path: 'login',
     component: LayoutPassportComponent,
     children: [
