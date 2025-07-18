@@ -27,6 +27,9 @@
           class="border border-gray-200 rounded inline-block"
         />
         <p class="text-sm text-gray-500 mt-2">{{ fileList[0].name }}</p>
+        <button type="button" (click)="onDelete(fileList[0]['uid'])" nz-button nzType="primary" nzDanger>
+            Delete
+        </button>
     </div>
 
     <!-- METADATA INFORMATION -->

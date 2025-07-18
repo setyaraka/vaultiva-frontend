@@ -144,4 +144,18 @@ export class UploadComponent {
       complete: () => this.isLoading = false
     });
   }
+
+  onDelete(fileId: string): void {
+    this.http.delete(`${environment.apiUrl}/file/${fileId}`).subscribe({
+      next: () => {
+        this.message.success("File Has Been Deleted!");
+        this.isLoading = false;
+        this.fileList = [];
+      },
+      error: () => {
+        this.message.error("File Save Failed");
+        this.isLoading = false;
+      }
+    })
+  }
 }
