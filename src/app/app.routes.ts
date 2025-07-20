@@ -34,6 +34,10 @@ export const routes: Routes = [
     loadChildren: () => import('./pages/password-page/password-page.routes').then(m => m.PASSWORD_PAGE_ROUTES)
   },
   {
+    path: 'share/:token',
+    loadChildren: () => import(`./pages/share-download/share-download.routes`).then(m => m.SHARE_DOWNLOAD_ROUTES)
+  },
+  {
     path: 'login',
     component: LayoutPassportComponent,
     children: [
