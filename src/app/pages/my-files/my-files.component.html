@@ -15,7 +15,7 @@
             <th>File Name</th>
             <th>Download Limit</th>
             <th>Download Counter</th>
-            <th>Share Link</th>
+            <!-- <th>Share Link</th> -->
             <th>Visibility</th>
             <th>Created</th>
             <th>Updated</th>
@@ -24,12 +24,12 @@
     </thead>
     <tbody>
         <tr *ngFor="let file of fileState.data">
-            <td>{{file.filename}}</td>
+            <td>{{ file.filename }}</td>
             <td>{{file.downloadLimit || 0}}</td>
             <td>{{file.downloadCount || 0}}</td>
-            <td>
+            <!-- <td>
                 <a>{{file.shareLink}}</a>
-            </td>
+            </td> -->
             <td>{{displayVisibility(file.visibility)}}</td>
             <td>
                 <div class="flex flex-col">
@@ -44,9 +44,26 @@
                 </div>
             </td>
             <td class="text-center">
-                <button nz-button nzType="link" (click)="downloadFile(file.id, file.filename)">Download</button>
-                <button nz-button nzType="primary" (click)="openAccessLogModal(file.id)">Show Logs</button>
-                <button nz-button nzType="link"><a [routerLink]="['/password-page', file.id]">Preview</a></button>
+                <div class="flex gap-2">
+                    <button title="Download" nz-button nzType="primary" [nzDanger]="false" (click)="downloadFile(file.id, file.filename)">
+                      <i nz-icon nzType="download" nzTheme="outline"></i>
+                    </button>
+                  
+                    <button title="Access Log" nz-button nzType="primary" [nzDanger]="true" (click)="openAccessLogModal(file.id)">
+                      <i nz-icon nzType="file-search" nzTheme="outline"></i>
+                    </button>
+                  
+                    <!-- Preview (warna hijau) -->
+                    <!-- <button title="Preview" nz-button [ngStyle]="{ backgroundColor: '#52c41a', borderColor: '#52c41a', color: '#fff' }">
+                      <a [routerLink]="['/password-page', file.id]">
+                        <i nz-icon nzType="eye" nzTheme="outline"></i>
+                      </a>
+                    </button> -->
+
+                    <button title="Share With" nz-button nzType="primary" [nzLoading]="isLoading" (click)="openShareModal(file.id)">
+                        <i nz-icon nzType="share-alt" nzTheme="outline"></i>
+                    </button>
+                </div>
             </td>
         </tr>
     </tbody>

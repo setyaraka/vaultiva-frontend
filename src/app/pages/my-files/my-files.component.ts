@@ -11,6 +11,8 @@ import { displayVisibility } from '../../core/utils/display';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { AccessLogModalComponent } from '../../components/access-log-modal/access-log-modal.component';
 import { RouterLink } from '@angular/router';
+import { ShareFileModalComponent } from '../../components/share-file-modal/share-file-modal.component';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 interface FileData {
   id: string,
@@ -39,7 +41,8 @@ interface FileListState {
     NzButtonModule,
     NzDividerModule,
     NzModalModule,
-    RouterLink
+    // RouterLink,
+    NzIconModule
   ],
   templateUrl: './my-files.component.html',
   styleUrl: './my-files.component.css'
@@ -128,6 +131,15 @@ export class MyFilesComponent implements OnInit {
       nzData: { fileId },
       nzFooter: null,
       nzWidth: 1000
+    });
+  }
+
+  openShareModal(fileId: string): void {
+    this.modal.create({
+      nzTitle: 'Share File',
+      nzContent: ShareFileModalComponent,
+      nzData: { fileId: fileId },
+      nzFooter: null, // Biar submit handle-nya di dalam modal
     });
   }
 }
