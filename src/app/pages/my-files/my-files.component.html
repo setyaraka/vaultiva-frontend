@@ -1,0 +1,70 @@
+<nz-table 
+        #basicTable 
+        [nzData]="fileState.data"
+        [nzPageSize]="fileState.limit"
+        [nzPageIndex]="fileState.page"
+        [nzTotal]="fileState.total"
+        [nzShowPagination]="true"
+        [nzLoading]="isLoading"
+        (nzPageIndexChange)="onPageChange($event)"
+        [nzFrontPagination]="false"
+        [nzScroll]="{ y: '50em' }"
+        >
+    <thead>
+        <tr>
+            <th>File Name</th>
+            <th>Download Limit</th>
+            <th>Download Counter</th>
+            <!-- <th>Share Link</th> -->
+            <th>Visibility</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let file of fileState.data">
+            <td>{{ file.filename }}</td>
+            <td>{{file.downloadLimit || 0}}</td>
+            <td>{{file.downloadCount || 0}}</td>
+            <!-- <td>
+                <a>{{file.shareLink}}</a>
+            </td> -->
+            <td>{{displayVisibility(file.visibility)}}</td>
+            <td>
+                <div class="flex flex-col">
+                    <span>{{formatDateToShort(file.createdAt)}}</span>
+                    <span>{{formatTime(file.createdAt)}} WIB</span>
+                </div>
+            </td>
+            <td>
+                <div class="flex flex-col">
+                    <span>{{formatDateToShort(file.expiresAt)}}</span>
+                    <span>{{formatTime(file.expiresAt)}} WIB</span>
+                </div>
+            </td>
+            <td class="text-center">
+                <div class="flex gap-2">
+                    <button title="Download" nz-button nzType="primary" [nzDanger]="false" (click)="downloadFile(file.id, file.filename)">
+                      <i nz-icon nzType="download" nzTheme="outline"></i>
+                    </button>
+                  
+                    <button title="Access Log" nz-button nzType="primary" [nzDanger]="true" (click)="openAccessLogModal(file.id)">
+                      <i nz-icon nzType="file-search" nzTheme="outline"></i>
+                    </button>
+                  
+                    <!-- Preview (warna hijau) -->
+                    <!-- <button title="Preview" nz-button [ngStyle]="{ backgroundColor: '#52c41a', borderColor: '#52c41a', color: '#fff' }">
+                      <a [routerLink]="['/password-page', file.id]">
+                        <i nz-icon nzType="eye" nzTheme="outline"></i>
+                      </a>
+                    </button> -->
+
+                    <button title="Share With" nz-button nzType="primary" [nzLoading]="isLoading" (click)="openShareModal(file.id)">
+                        <i nz-icon nzType="share-alt" nzTheme="outline"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</nz-table>

@@ -1,0 +1,15 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <nz-card class="w-full max-w-xl shadow-lg" nzHoverable [nzCover]="coverTemplate">
+        <nz-card-meta nzTitle="Confidential" nzDescription="Image Of Ventilator"></nz-card-meta>
+    </nz-card>
+    
+    <ng-template #coverTemplate>
+        <div *ngIf="isLoading">Loading file preview...</div>
+        <div *ngIf="!isLoading && imageUrl">
+          <img [src]="imageUrl" alt="Preview Image" style="max-width: 100%; border: 1px solid #ccc" />
+        </div>
+        <div *ngIf="!isLoading && !imageUrl">
+          <p>Failed to load image preview.</p>
+        </div>
+    </ng-template>
+</div>

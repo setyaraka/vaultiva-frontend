@@ -1,0 +1,114 @@
+<div class="mx-auto">
+  <div class="flex border-b">
+    <button 
+      class="px-4 py-2"
+      [ngClass]="{
+        'text-blue-600 border-b-2 border-blue-600 font-semibold': activeTab === 'fileLog',
+        'text-gray-600 hover:text-blue-600': activeTab !== 'fileLog'
+      }"
+      (click)="setActiveTab('fileLog')"
+    >
+      File Access Log
+    </button>
+    <button 
+      class="px-4 py-2"
+      [ngClass]="{
+        'text-blue-600 border-b-2 border-blue-600 font-semibold': activeTab === 'failedLog',
+        'text-gray-600 hover:text-blue-600': activeTab !== 'failedLog'
+      }"
+      (click)="setActiveTab('failedLog')"
+    >
+      File Failed Access Log
+    </button>
+</div>
+
+<div class="p-4" *ngIf="activeTab === 'fileLog'">
+  <nz-table 
+    #basicTable 
+    [nzData]="dataSet.data"
+    [nzPageSize]="dataSet.limit"
+    [nzPageIndex]="dataSet.page"
+    [nzTotal]="dataSet.total"
+    [nzShowPagination]="true"
+    [nzLoading]="isLoading"
+    (nzPageIndexChange)="onPageChange($event)"
+    [nzFrontPagination]="false"
+    [nzScroll]="{ y: '50em' }"
+    >
+    <thead>
+      <tr>
+        <th>Accessed At</th>
+        <th>Ip Address</th>
+        <th>User Agent</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>
+          <span>{{formatDate(data.accessedAt)}}</span><br>
+          <span>{{formatTime(data.accessedAt)}}</span>
+        </td>
+        <td>
+          {{ data.ipAddress === '::1' ? 'localhost (::1)' : data.ipAddress }}
+          <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy IP"
+            (click)="copyToClipboard(data.ipAddress)">
+            <nz-icon nzType="copy" nzTheme="outline" />
+          </button>
+        </td>
+        <td>
+          {{ data.userAgent | userAgentParser }}
+          <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy User Agent"
+            (click)="copyToClipboard(data.userAgent)">
+            <nz-icon nzType="copy" nzTheme="outline" />
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+<div class="p-4" *ngIf="activeTab === 'failedLog'">
+  <nz-table 
+      #basicTable 
+      [nzData]="dataSet.data"
+      [nzPageSize]="dataSet.limit"
+      [nzPageIndex]="dataSet.page"
+      [nzTotal]="dataSet.total"
+      [nzShowPagination]="true"
+      [nzLoading]="isLoading"
+      (nzPageIndexChange)="onPageChange($event)"
+      [nzFrontPagination]="false"
+      [nzScroll]="{ y: '50em' }"
+    >
+    <thead>
+      <tr>
+        <th>Accessed At</th>
+        <th>Ip Address</th>
+        <th>User Agent</th>
+        <th>Reason</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>
+          <span>{{formatDate(data.accessedAt)}}</span><br>
+          <span>{{formatTime(data.accessedAt)}}</span>
+        </td>
+        <td>
+          {{ data.ipAddress === '::1' ? 'localhost (::1)' : data.ipAddress }}
+          <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy IP"
+            (click)="copyToClipboard(data.ipAddress)">
+            <nz-icon nzType="copy" nzTheme="outline" />
+          </button>
+        </td>
+        <td>
+          {{ data.userAgent | userAgentParser }}
+          <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy User Agent"
+            (click)="copyToClipboard(data.userAgent)">
+            <nz-icon nzType="copy" nzTheme="outline" />
+          </button>
+        </td>
+        <td>{{data.reason}}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
