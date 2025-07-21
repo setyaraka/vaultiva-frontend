@@ -22,7 +22,8 @@ interface FileData {
   downloadLimit?: number,
   downloadCount?: number,
   shareLink: string,
-  visibility: string
+  visibility: string,
+  originalName: string,
 }
 
 interface FileListState {

@@ -15,7 +15,6 @@
             <th>File Name</th>
             <th>Download Limit</th>
             <th>Download Counter</th>
-            <!-- <th>Share Link</th> -->
             <th>Visibility</th>
             <th>Created</th>
             <th>Updated</th>
@@ -24,12 +23,9 @@
     </thead>
     <tbody>
         <tr *ngFor="let file of fileState.data">
-            <td>{{ file.filename }}</td>
+            <td>{{file.originalName}}</td>
             <td>{{file.downloadLimit || 0}}</td>
             <td>{{file.downloadCount || 0}}</td>
-            <!-- <td>
-                <a>{{file.shareLink}}</a>
-            </td> -->
             <td>{{displayVisibility(file.visibility)}}</td>
             <td>
                 <div class="flex flex-col">
