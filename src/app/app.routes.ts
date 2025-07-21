@@ -38,6 +38,10 @@ export const routes: Routes = [
     loadChildren: () => import(`./pages/share-download/share-download.routes`).then(m => m.SHARE_DOWNLOAD_ROUTES)
   },
   {
+    path: 'preview/token/:token',
+    loadChildren: () => import(`./pages/file-preview-with-token/file-preview-with-token.routes`).then(m => m.FILE_PREVIEW_WITH_TOKEN_ROUTES)
+  },
+  {
     path: 'login',
     component: LayoutPassportComponent,
     children: [
