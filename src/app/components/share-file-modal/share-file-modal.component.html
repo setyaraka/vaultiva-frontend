@@ -1,84 +1,87 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
-    <!-- Email -->
-    <div>
-      <label for="email" class="block text-sm font-medium text-gray-700">Email <span class="text-red-500">*</span></label>
-      <input
-        type="email"
-        id="email"
-        formControlName="email"
-        placeholder="example@mail.com"
-        class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-      />
-      <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="text-sm text-red-500 mt-1">
-        <div *ngIf="form.get('email')?.errors?.['required']">Email wajib diisi</div>
-        <div *ngIf="form.get('email')?.errors?.['email']">Format email tidak valid</div>
-      </div>
+  <!-- Email -->
+  <div>
+    <label for="email" class="block text-sm font-medium text-gray-700">
+      Email <span class="text-red-500">*</span>
+    </label>
+    <input
+      type="email"
+      id="email"
+      formControlName="email"
+      placeholder="example@mail.com"
+      class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+    />
+    <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="text-sm text-red-500 mt-1">
+      <div *ngIf="form.get('email')?.errors?.['required']">Email is required</div>
+      <div *ngIf="form.get('email')?.errors?.['email']">Invalid email format</div>
     </div>
-  
-    <!-- Expired -->
-    <div>
-      <label for="expiresAt" class="block text-sm font-medium text-gray-700">Expired <span class="text-red-500">*</span></label>
-      <input
-        type="datetime-local"
-        id="expiresAt"
-        formControlName="expiresAt"
-        class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-      />
-      <div *ngIf="form.get('expiresAt')?.touched && form.get('expiresAt')?.invalid" class="text-sm text-red-500 mt-1">
-        Tanggal kedaluwarsa wajib diisi
-      </div>
+  </div>
+
+  <!-- Expired -->
+  <div>
+    <label for="expiresAt" class="block text-sm font-medium text-gray-700">
+      Expiration Date <span class="text-red-500">*</span>
+    </label>
+    <input
+      type="datetime-local"
+      id="expiresAt"
+      formControlName="expiresAt"
+      class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+    />
+    <div *ngIf="form.get('expiresAt')?.touched && form.get('expiresAt')?.invalid" class="text-sm text-red-500 mt-1">
+      Expiration date is required
     </div>
-  
-    <!-- Max Download -->
-    <div>
-      <label for="maxDownload" class="block text-sm font-medium text-gray-700">Max Download <span class="text-red-500">*</span></label>
-      <input
-        type="number"
-        id="maxDownload"
-        min="1"
-        formControlName="maxDownload"
-        class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-      />
-      <div *ngIf="form.get('maxDownload')?.touched && form.get('maxDownload')?.invalid" class="text-sm text-red-500 mt-1">
-        <div *ngIf="form.get('maxDownload')?.errors?.['required']">Jumlah maksimal wajib diisi</div>
-        <div *ngIf="form.get('maxDownload')?.errors?.['min']">Minimal 1 kali download</div>
-      </div>
+  </div>
+
+  <!-- Max Download -->
+  <div>
+    <label for="maxDownload" class="block text-sm font-medium text-gray-700">
+      Max Download <span class="text-red-500">*</span>
+    </label>
+    <input
+      type="number"
+      id="maxDownload"
+      min="1"
+      formControlName="maxDownload"
+      class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+    />
+    <div *ngIf="form.get('maxDownload')?.touched && form.get('maxDownload')?.invalid" class="text-sm text-red-500 mt-1">
+      <div *ngIf="form.get('maxDownload')?.errors?.['required']">Maximum download is required</div>
+      <div *ngIf="form.get('maxDownload')?.errors?.['min']">Minimum of 1 download</div>
     </div>
-  
-    <!-- Note -->
-    <div>
-      <label for="note" class="block text-sm font-medium text-gray-700">Notes (Optional)</label>
-      <textarea
-        id="note"
-        rows="3"
-        formControlName="note"
-        placeholder="Write notes if any..."
-        class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-      ></textarea>
-    </div>
-  
-    <!-- Submit Button -->
-    <div class="pt-2">
-      <button
-        type="submit"
-        [disabled]="loading || form.invalid"
-        class="w-full px-4 py-2 text-white font-semibold rounded-md transition-all duration-200
-                bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-        <ng-container *ngIf="!loading; else loadingTpl">Send</ng-container>
-        <ng-template #loadingTpl>
-            <div class="flex items-center justify-center gap-2">
-            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
-                viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor"
-                d="M4 12a8 8 0 018-8v8z">
-                </path>
-            </svg>
-            Sending...
-            </div>
-        </ng-template>
-        </button>
-    </div>
-  </form>
-  
+  </div>
+
+  <!-- Note -->
+  <div>
+    <label for="note" class="block text-sm font-medium text-gray-700">Notes (Optional)</label>
+    <textarea
+      id="note"
+      rows="3"
+      formControlName="note"
+      placeholder="Write notes if any..."
+      class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+    ></textarea>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="pt-2">
+    <button
+      type="submit"
+      [disabled]="loading || form.invalid"
+      class="w-full px-4 py-2 text-white font-semibold rounded-md transition-all duration-200
+              bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      <ng-container *ngIf="!loading; else loadingTpl">Send</ng-container>
+      <ng-template #loadingTpl>
+        <div class="flex items-center justify-center gap-2">
+          <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+          </svg>
+          Sending...
+        </div>
+      </ng-template>
+    </button>
+  </div>
+</form>

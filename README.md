@@ -8,9 +8,9 @@ This app allows users to securely upload, preview, and download files with rich 
 - 📤 Upload file
 - 📥 Download file
 - 📄 File list with pagination
-- 🖋 Watermark preview (in progress)
-- ⚠️ Expired / password-protected file handling (planned)
-- 📊 Statistics dashboard (planned)
+- 🖋 Watermark preview 
+- ⚠️ Expired / password-protected file handling
+- 📊 Statistics dashboard
 
 ## Tech Stack
 - **Angular**
