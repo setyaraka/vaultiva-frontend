@@ -42,7 +42,7 @@ interface FileListState {
     NzButtonModule,
     NzDividerModule,
     NzModalModule,
-    // RouterLink,
+    RouterLink,
     NzIconModule
   ],
   templateUrl: './my-files.component.html',
