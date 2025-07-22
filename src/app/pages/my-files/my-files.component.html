@@ -50,11 +50,11 @@
                     </button>
                   
                     <!-- Preview (warna hijau) -->
-                    <button title="Preview" nz-button [ngStyle]="{ backgroundColor: '#52c41a', borderColor: '#52c41a', color: '#fff' }">
+                    <!-- <button title="Preview" nz-button [ngStyle]="{ backgroundColor: '#52c41a', borderColor: '#52c41a', color: '#fff' }">
                       <a [routerLink]="['/password-page', file.id]">
                         <i nz-icon nzType="eye" nzTheme="outline"></i>
                       </a>
-                    </button>
+                    </button> -->
 
                     <button title="Share With" nz-button nzType="primary" [nzLoading]="isLoading" (click)="openShareModal(file.id)">
                         <i nz-icon nzType="share-alt" nzTheme="outline"></i>
