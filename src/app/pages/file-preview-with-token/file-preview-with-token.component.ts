@@ -41,7 +41,7 @@ export class FilePreviewWithTokenComponent implements OnInit {
   password = '';
   isLoading = false;
   passwordVisible = false;
-
+  messageError = '';
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -52,10 +52,16 @@ export class FilePreviewWithTokenComponent implements OnInit {
 
   checkTokenMetadata(token: string) {
     this.http.get<{ hasPassword: boolean }>(`${environment.apiUrl}/file/preview/token/${token}/meta`)
-    .subscribe(res => {
-      this.hasPassword = res.hasPassword;
-      if(!this.hasPassword) {
-        this.loadIframe(token);
+    .subscribe({
+      next: res => {
+        this.hasPassword = res.hasPassword;
+        if(!this.hasPassword) {
+          this.loadIframe(token);
+        }
+      },
+      error: err => {
+        this.message.error(err?.error?.message);
+        this.messageError = err?.error?.message || 'Incorrect Password';
       }
     })
   }
