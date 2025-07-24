@@ -88,9 +88,9 @@ export class MyFilesComponent implements OnInit {
           total: res.total,
           totalPages: res.totalPages,
         };
+        this.isLoading = false;
       },
-      error: () => {},
-      complete: () => this.isLoading = false
+      error: () => this.isLoading = false,
     });
   }
 
