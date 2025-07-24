@@ -9,7 +9,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { provideHttpClient } from '@angular/common/http';
 import { environment } from '../../../environment/environment';
 
-fdescribe('FilePreviewWithTokenComponent', () => {
+describe('FilePreviewWithTokenComponent', () => {
   let component: FilePreviewWithTokenComponent;
   let fixture: ComponentFixture<FilePreviewWithTokenComponent>;
   let httpMock: HttpTestingController;
@@ -49,6 +49,10 @@ fdescribe('FilePreviewWithTokenComponent', () => {
   afterEach(() => {
     httpMock.verify();
   })
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
   it('should call checkTokenMetadata on init', () => {
     fixture.detectChanges();
