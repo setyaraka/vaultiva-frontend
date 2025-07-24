@@ -8,7 +8,7 @@ import { environment } from '../../../environment/environment';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-fdescribe('ShareDownloadComponent', () => {
+describe('ShareDownloadComponent', () => {
   let component: ShareDownloadComponent;
   let fixture: ComponentFixture<ShareDownloadComponent>;
   let httpMock: HttpTestingController;
