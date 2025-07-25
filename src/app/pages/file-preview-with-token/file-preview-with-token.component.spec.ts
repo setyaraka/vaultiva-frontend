@@ -44,11 +44,7 @@ describe('FilePreviewWithTokenComponent', () => {
     fixture = TestBed.createComponent(FilePreviewWithTokenComponent);
     component = fixture.componentInstance;
     httpMock = TestBed.inject(HttpTestingController);
-  });
-
-  afterEach(() => {
-    httpMock.verify();
-  })
+  });  
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -149,5 +145,9 @@ describe('FilePreviewWithTokenComponent', () => {
   
     expect(component.passwordVisible).toBeTrue();
   });
+
+  afterEach(() => {
+    httpMock.verify();
+  })
   
 });

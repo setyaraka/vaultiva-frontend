@@ -8,7 +8,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-fdescribe('MyFilesComponent', () => {
+describe('MyFilesComponent', () => {
   let component: MyFilesComponent;
   let fixture: ComponentFixture<MyFilesComponent>;
   let httpMock: HttpTestingController;

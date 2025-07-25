@@ -78,12 +78,12 @@ export class ShareDownloadComponent implements OnInit {
           maxDownload: res?.maxDownload,
           note: res?.note,
           visibility: res?.visibility,
-          size: 0
+          size: res?.size
         };
         this.loading = false;
       },
-      error: (err) => {
-        this.error = 'Link tidak valid atau sudah expired';
+      error: () => {
+        this.error = 'The link is invalid or has expired';
         this.loading = false;
       },
     });

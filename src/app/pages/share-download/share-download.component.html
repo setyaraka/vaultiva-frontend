@@ -1,25 +1,5 @@
-<!-- <nz-card *ngIf="!loading && fileInfo" nzTitle="Unduh File">
-    <p><strong>Nama:</strong> {{ fileInfo.filename }}</p>
-    <p><strong>Ukuran:</strong> {{ fileInfo.size | number }} bytes</p>
-    <p *ngIf="fileInfo.note"><strong>Catatan:</strong> {{ fileInfo.note }}</p>
-  
-    <ng-container *ngIf="fileInfo.passwordProtected">
-      <nz-form-item>
-        <nz-form-label>Password</nz-form-label>
-        <nz-form-control>
-          <input nz-input [(ngModel)]="password" placeholder="Masukkan password" />
-        </nz-form-control>
-      </nz-form-item>
-    </ng-container>
-  
-    <button nz-button nzType="primary" (click)="downloadFile()">Download</button>
-</nz-card>
-  
-<nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error"></nz-alert>
-<nz-spin *ngIf="loading"></nz-spin>
-   -->
 <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <nz-card *ngIf="!loading && fileInfo" nzTitle="Unduh File" style="width: 300px;">
+    <nz-card *ngIf="!loading && fileInfo" nzTitle="Download File" style="width: 300px;">
         <p><strong>Name:</strong> {{ fileInfo.fileName }}</p>
         <p><strong>Size:</strong> {{ fileInfo.size | number }} bytes</p>
         <p *ngIf="fileInfo.note"><strong>Notes:</strong> {{ fileInfo.note }}</p>
