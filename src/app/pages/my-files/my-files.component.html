@@ -45,19 +45,16 @@
                       <i nz-icon nzType="download" nzTheme="outline"></i>
                     </button>
                   
-                    <button title="Access Log" nz-button nzType="primary" [nzDanger]="true" (click)="openAccessLogModal(file.id)">
+                    <button title="Access Log" nz-button nzType="primary" [nzDanger]="false" (click)="openAccessLogModal(file.id)">
                       <i nz-icon nzType="file-search" nzTheme="outline"></i>
                     </button>
-                  
-                    <!-- Preview (warna hijau) -->
-                    <!-- <button title="Preview" nz-button [ngStyle]="{ backgroundColor: '#52c41a', borderColor: '#52c41a', color: '#fff' }">
-                      <a [routerLink]="['/password-page', file.id]">
-                        <i nz-icon nzType="eye" nzTheme="outline"></i>
-                      </a>
-                    </button> -->
 
                     <button title="Share With" nz-button nzType="primary" [nzLoading]="isLoading" (click)="openShareModal(file.id)">
                         <i nz-icon nzType="share-alt" nzTheme="outline"></i>
+                    </button>
+
+                    <button class="bg-" title="Share Log" nz-button nzType="primary" [nzLoading]="isLoading" (click)="openShareTableModal(file.id)">
+                        <i nz-icon nzType="eye" nzTheme="outline"></i>
                     </button>
                 </div>
             </td>

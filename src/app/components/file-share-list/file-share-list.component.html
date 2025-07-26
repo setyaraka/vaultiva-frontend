@@ -1,0 +1,39 @@
+<nz-table 
+    #basicTable 
+    [nzData]="fileShareState.data"
+    [nzPageSize]="fileShareState.limit"
+    [nzPageIndex]="fileShareState.page"
+    [nzTotal]="fileShareState.total"
+    [nzShowPagination]="true"
+    [nzLoading]="isLoading"
+    (nzPageIndexChange)="onPageChange($event)"
+    [nzFrontPagination]="false"
+    [nzScroll]="{ y: '50em' }"
+    >
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Max Download</th>
+        <th>Download Count</th>
+        <th>Note</th>
+        <th>Created At</th>
+        <th>Expired At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.email }}</td>
+        <td>{{ data.maxDownload }}</td>
+        <td>{{ data.downloadCount }}</td>
+        <td>{{ data.note }}</td>
+        <td>
+            <span>{{formatDate(data.createdAt)}}</span><br>
+            <span>{{formatTime(data.createdAt)}} WIB</span>
+        </td>
+        <td>
+            <span>{{formatDate(data.expiresAt)}}</span><br>
+            <span>{{formatTime(data.expiresAt)}} WIB</span>
+        </td>
+      </tr>
+    </tbody>
+</nz-table>
