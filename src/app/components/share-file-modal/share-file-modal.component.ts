@@ -46,8 +46,8 @@ export class ShareFileModalComponent {
         this.loading = false;
         this.message.success("Success Send Email");
       },
-      error: () => {
-        this.message.error("Failed Created Share Email");
+      error: (err) => {
+        this.message.error(err.error.message);
         this.loading = false;
       },
       complete: () => this.modalRef.destroy()

@@ -12,6 +12,7 @@ import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { AccessLogModalComponent } from '../../components/access-log-modal/access-log-modal.component';
 import { ShareFileModalComponent } from '../../components/share-file-modal/share-file-modal.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { FileShareListComponent } from '../../components/file-share-list/file-share-list.component';
 
 interface FileData {
   id: string,
@@ -138,8 +139,18 @@ export class MyFilesComponent implements OnInit {
     this.modal.create({
       nzTitle: 'Share File',
       nzContent: ShareFileModalComponent,
-      nzData: { fileId: fileId },
-      nzFooter: null, // Biar submit handle-nya di dalam modal
+      nzData: { fileId },
+      nzFooter: null,
     });
+  }
+
+  openShareTableModal(fileId: string): void {
+    this.modal.create({
+      nzTitle: 'Share File Logs',
+      nzContent: FileShareListComponent,
+      nzData: { fileId },
+      nzFooter: null,
+      nzWidth: 1000
+    })
   }
 }
