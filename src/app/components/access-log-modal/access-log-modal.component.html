@@ -38,6 +38,7 @@
     <thead>
       <tr>
         <th>Accessed At</th>
+        <th>Email</th>
         <th>Ip Address</th>
         <th>User Agent</th>
       </tr>
@@ -48,6 +49,7 @@
           <span>{{formatDate(data.accessedAt)}}</span><br>
           <span>{{formatTime(data.accessedAt)}}</span>
         </td>
+        <td class="text-center">{{ data.email || '-' }}</td>
         <td>
           {{ data.ipAddress === '::1' ? 'localhost (::1)' : data.ipAddress }}
           <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy IP"
@@ -82,6 +84,7 @@
     <thead>
       <tr>
         <th>Accessed At</th>
+        <th>Email</th>
         <th>Ip Address</th>
         <th>User Agent</th>
         <th>Reason</th>
@@ -93,6 +96,7 @@
           <span>{{formatDate(data.accessedAt)}}</span><br>
           <span>{{formatTime(data.accessedAt)}}</span>
         </td>
+        <td class="text-center">{{ data.email || "-" }}</td>
         <td>
           {{ data.ipAddress === '::1' ? 'localhost (::1)' : data.ipAddress }}
           <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy IP"

@@ -15,7 +15,8 @@ interface fileShareData {
   downloadCount: number,
   note: string,
   expiresAt: string,
-  createdAt: string
+  createdAt: string,
+  token: string
 }
 
 interface fileShareState {

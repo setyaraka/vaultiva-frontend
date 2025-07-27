@@ -137,7 +137,7 @@ export class MyFilesComponent implements OnInit {
 
   openShareModal(fileId: string): void {
     this.modal.create({
-      nzTitle: 'Share File',
+      nzTitle: 'Share With',
       nzContent: ShareFileModalComponent,
       nzData: { fileId },
       nzFooter: null,
@@ -146,11 +146,35 @@ export class MyFilesComponent implements OnInit {
 
   openShareTableModal(fileId: string): void {
     this.modal.create({
-      nzTitle: 'Share File Logs',
+      nzTitle: 'Share File',
       nzContent: FileShareListComponent,
       nzData: { fileId },
       nzFooter: null,
       nzWidth: 1000
     })
+  }
+
+  onDeleteFile(fileId: string): void {
+    this.modal.confirm({
+      nzTitle: 'Are you sure you want to delete this file?',
+      nzContent: 'This action cannot be undone.',
+      nzOkText: 'Yes, Delete',
+      nzCentered: true,
+      nzOnOk: () => {
+        this.http.delete(`${environment.apiUrl}/file/${fileId}`)
+        .subscribe({
+          next: () => {
+            this.message.success("File has been deleted");
+            this.fetchFiles(1);
+          },
+          error: (err) => {
+            console.log(err, '>>> ER')
+            this.message.error("Failed delete file");
+          }
+        })
+      },
+      nzCancelText: 'Cancel'
+    })
+    
   }
 }
