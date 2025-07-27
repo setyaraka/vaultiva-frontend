@@ -17,6 +17,7 @@ interface AccessLog {
   userAgent: string;
   status: string;
   reason?: string;
+  email?: string;
 }
 
 @Component({

@@ -53,8 +53,12 @@
                         <i nz-icon nzType="share-alt" nzTheme="outline"></i>
                     </button>
 
-                    <button class="bg-" title="Share Log" nz-button nzType="primary" [nzLoading]="isLoading" (click)="openShareTableModal(file.id)">
+                    <button title="Share Log" nz-button nzType="primary" [nzLoading]="isLoading" (click)="openShareTableModal(file.id)">
                         <i nz-icon nzType="eye" nzTheme="outline"></i>
+                    </button>
+
+                    <button title="Delete File" nz-button nzType="primary" nzDanger [nzLoading]="isLoading" (click)="onDeleteFile(file.id)">
+                        <nz-icon nzType="delete" nzTheme="outline" />
                     </button>
                 </div>
             </td>
