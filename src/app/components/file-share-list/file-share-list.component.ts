@@ -77,7 +77,6 @@ export class FileShareListComponent implements OnInit {
       },
       error: () => {
         this.isLoading = false;
-        this.message.error("Failed Fetch Data");
       },
     });
   }
