@@ -10,7 +10,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
-import { environment } from '../../../environment/environment';
+import { environment } from '../../../environments/environment';
 import { getBase64 } from '../../shared/utils/file-utils';
 import { firstValueFrom } from 'rxjs';
 import { NzImageModule } from 'ng-zorro-antd/image';

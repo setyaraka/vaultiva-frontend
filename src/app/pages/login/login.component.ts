@@ -9,6 +9,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -43,13 +44,13 @@ export class LoginComponent {
     this.isLoading = true;
     if (this.validateForm.valid) {
       const { email, password } = this.validateForm.value;
-      this.http.post<any>('http://localhost:3000/auth/login', { email, password }).subscribe({
+      this.http.post<any>(`${environment.apiUrl}/auth/login`, { email, password }).subscribe({
         next: (res) => {
           localStorage.setItem('token', res.access_token);
           this.router.navigateByUrl('/welcome');
         },
         error: () => {
-          this.message.error('Login gagal. Cek email & password.');
+          this.message.error('Login failed. Check email or password.');
           this.isLoading = false;
         },
         complete: () => {

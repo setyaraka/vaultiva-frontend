@@ -1,25 +1,39 @@
 <div *ngIf="hasPassword && !previewUrl">
     <div class="flex items-center justify-center min-h-screen bg-gray-100">
-        <nz-card nzTitle="Protected File" [nzBordered]="false" style="width: 300px;">
-            <nz-input-group class="mb-3" [nzSuffix]="suffixTemplate">
-                <input
-                    [type]="passwordVisible ? 'text' : 'password'"
-                    nz-input
-                    placeholder="Enter file password"
-                    [(ngModel)]="password"
-                />
-            </nz-input-group>
-            <ng-template #suffixTemplate>
-                <nz-icon
-                    class="ant-input-password-icon"
-                    [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
-                    (click)="passwordVisible = !passwordVisible"
-                />
-            </ng-template>
-            <div class="mt-3">
-                <button style="width: 100%;" nz-button nzType="primary" (click)="onSubmitPassword()">Submit Password</button>
-            </div>
-        </nz-card>
+      <nz-card nzTitle="Protected File" [nzBordered]="false" style="width: 300px;">
+        
+        <nz-input-group class="mb-3" [nzSuffix]="suffixTemplate">
+          <input
+            [type]="passwordVisible ? 'text' : 'password'"
+            nz-input
+            placeholder="Enter file password"
+            [(ngModel)]="password"
+            [disabled]="isLoading"
+          />
+        </nz-input-group>
+  
+        <ng-template #suffixTemplate>
+          <nz-icon
+            class="ant-input-password-icon"
+            [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+            (click)="passwordVisible = !passwordVisible"
+          />
+        </ng-template>
+  
+        <div class="mt-3">
+          <button
+            style="width: 100%;"
+            nz-button
+            nzType="primary"
+            [nzLoading]="isLoading"
+            [disabled]="!password"
+            (click)="onSubmitPassword()"
+          >
+            Submit Password
+          </button>
+        </div>
+  
+      </nz-card>
     </div>
 </div>
 

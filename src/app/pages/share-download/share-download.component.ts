@@ -10,7 +10,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
-import { environment } from '../../../environment/environment';
+import { environment } from '../../../environments/environment';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 interface FileInfo {

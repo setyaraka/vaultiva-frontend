@@ -4,7 +4,7 @@ import { ShareDownloadComponent } from './share-download.component';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { environment } from '../../../environment/environment';
+import { environment } from '../../../environments/environment';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
