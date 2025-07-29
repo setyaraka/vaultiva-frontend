@@ -8,7 +8,7 @@ Built using Angular v19, NG Zorro, and Tailwind CSS.
 ## 🔗 Related Repository
 
 This is the frontend part of a fullstack secure file-sharing project.  
-👉 Backend repo: [secura-file-backend](https://github.com/your-username/secura-file-backend)
+👉 Backend repo: [secura-file-backend](https://github.com/setyaraka/secura-file-backend)
 
 ---
 
