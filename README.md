@@ -45,3 +45,11 @@ This is the frontend part of a fullstack secure file-sharing project.
 ```bash
 npm install
 ng serve
+```
+
+Configure environment.ts to point to your backend API.
+
+## 📌 About the Project
+
+This project is a secure file-sharing MVP, inspired by real-world platforms like Digify.
+The goal is to simulate real-world document protection, including watermarking, access control, audit logging, and automated expiry.
