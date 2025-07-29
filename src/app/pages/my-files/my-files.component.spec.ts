@@ -3,7 +3,7 @@ import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/cor
 import { MyFilesComponent } from './my-files.component';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { environment } from '../../../environment/environment';
+import { environment } from '../../../environments/environment';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';

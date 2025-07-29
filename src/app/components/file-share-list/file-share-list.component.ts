@@ -3,7 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NZ_MODAL_DATA, NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
 import { formatDateToShort, formatTime } from '../../core/utils/date';
-import { environment } from '../../../environment/environment';
+import { environment } from '../../../environments/environment';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { CommonModule } from '@angular/common';

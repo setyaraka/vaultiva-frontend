@@ -4,7 +4,7 @@ import { PasswordPageComponent } from './password-page.component';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { environment } from '../../../environment/environment';
+import { environment } from '../../../environments/environment';
 
 describe('PasswordPageComponent', () => {
   let component: PasswordPageComponent;

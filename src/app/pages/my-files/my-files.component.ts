@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { environment } from '../../../environment/environment';
+import { environment } from '../../../environments/environment';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { formatDateToShort, formatTime } from '../../core/utils/date';
 import { NzMessageService } from 'ng-zorro-antd/message';

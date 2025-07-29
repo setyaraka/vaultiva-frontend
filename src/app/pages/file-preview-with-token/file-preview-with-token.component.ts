@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { environment } from '../../../environment/environment';
+import { environment } from '../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
