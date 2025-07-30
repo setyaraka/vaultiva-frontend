@@ -66,6 +66,7 @@ export class MyFilesComponent implements OnInit {
   }
   isLoading = false;
   isVisible = false;
+  loadingMap: { [key: string]: boolean } = {};
 
   ngOnInit(): void {
     this.fetchFiles(1);
@@ -96,6 +97,7 @@ export class MyFilesComponent implements OnInit {
   }
 
   downloadFile(fileId: string, filename: string) {
+    this.loadingMap[fileId] = true;
     this.http.get(`${environment.apiUrl}/file/secure-download/${fileId}`, {
       responseType: 'blob',
       observe: 'response'
@@ -110,6 +112,7 @@ export class MyFilesComponent implements OnInit {
         a.click();
   
         window.URL.revokeObjectURL(url);
+        this.loadingMap[fileId] = false;
       },
       error: (err) => {
         if (err.status === 403) {
@@ -117,6 +120,7 @@ export class MyFilesComponent implements OnInit {
         } else {
           this.message.error('The file could not be downloaded');
         }
+        this.loadingMap[fileId] = false;
       }
     });
   }
