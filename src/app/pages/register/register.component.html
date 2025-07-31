@@ -1,0 +1,48 @@
+<nz-card style="width: 400px;" [nzBordered]="false">
+    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" class="space-y-4">
+      <div class="text-center mb-6">
+        <h1 class="text-2xl font-bold! text-gray-800">Vaultiva</h1>
+        <p class="text-sm text-gray-500">Create your new account</p>
+      </div>
+  
+      <!-- Email -->
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="'Please input a valid email!'">
+          <nz-input-group nzPrefixIcon="user">
+            <input nz-input type="email" formControlName="email" placeholder="Email" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+  
+      <!-- Password -->
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="'Please input your password!'">
+          <nz-input-group nzPrefixIcon="lock">
+            <input nz-input type="password" formControlName="password" placeholder="Password" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+  
+      <!-- Confirm Password -->
+      <nz-form-item>
+        <nz-form-control [nzErrorTip]="'Passwords do not match!'">
+          <nz-input-group nzPrefixIcon="lock">
+            <input nz-input type="password" formControlName="confirmPassword" placeholder="Confirm Password" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+  
+      <!-- Submit Button -->
+      <div class="text-center space-y-2">
+        <button nz-button [nzType]="'primary'" [nzLoading]="isLoading"
+                [disabled]="isLoading || validateForm.invalid"
+                class="w-full">
+          Register
+        </button>
+        <div class="text-sm text-gray-500">
+          Already have an account? <a [routerLink]="['/login']">Login Now!</a>
+        </div>
+      </div>
+    </form>
+  </nz-card>
+  

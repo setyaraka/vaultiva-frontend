@@ -41,9 +41,22 @@
             </td>
             <td class="text-center">
                 <div class="flex gap-2">
-                    <button title="Download" nz-button nzType="primary" [nzDanger]="false" (click)="downloadFile(file.id, file.filename)">
-                      <i nz-icon nzType="download" nzTheme="outline"></i>
+                    <button 
+                        title="Download" 
+                        nz-button 
+                        nzType="primary" 
+                        [nzDanger]="false" 
+                        (click)="downloadFile(file.id, file.filename)" 
+                        [disabled]="loadingMap[file.id]"
+                        >
+                        <ng-container *ngIf="!loadingMap[file.id]; else loadingIcon">
+                            <i nz-icon nzType="download" nzTheme="outline"></i>
+                        </ng-container>
+                        <ng-template #loadingIcon>
+                            <i nz-icon nzType="loading" nzTheme="outline" nz-spin></i>
+                        </ng-template>
                     </button>
+
                   
                     <button title="Access Log" nz-button nzType="primary" [nzDanger]="false" (click)="openAccessLogModal(file.id)">
                       <i nz-icon nzType="file-search" nzTheme="outline"></i>

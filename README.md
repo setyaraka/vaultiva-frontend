@@ -1,4 +1,4 @@
-# 🗂️ Secura File – Frontend
+# 🗂️ Vaultiva – Frontend
 
 Frontend for a secure document-sharing platform, **inspired by real-world tools like Digify**.  
 Built using Angular v19, NG Zorro, and Tailwind CSS.
