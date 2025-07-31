@@ -94,6 +94,6 @@ describe('LoginComponent', () => {
   
   it('should render the form title', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Secura File');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Vaultiva');
   });
 });
