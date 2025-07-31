@@ -14,7 +14,8 @@ This is the frontend part of a fullstack secure file-sharing project.
 
 ## 🚀 Live Demo
 
-🌐 https://vaultiva.cloud
+🌐 https://vaultiva.cloud.
+
 🔐 Try uploading a file with password protection or watermark preview.
 
 ---
