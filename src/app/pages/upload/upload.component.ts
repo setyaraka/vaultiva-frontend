@@ -14,6 +14,7 @@ import { environment } from '../../../environments/environment';
 import { getBase64 } from '../../shared/utils/file-utils';
 import { firstValueFrom } from 'rxjs';
 import { NzImageModule } from 'ng-zorro-antd/image';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 interface UploadResponse {
   fileId: string;
@@ -35,7 +36,8 @@ interface UploadResponse {
     NzInputModule,
     NzCardModule,
     FormsModule,
-    NzImageModule
+    NzImageModule,
+    NzSpinModule
   ],
   templateUrl: './upload.component.html',
   styleUrl: './upload.component.css'
@@ -52,8 +54,10 @@ export class UploadComponent {
     downloadLimit: this.fb.control<number | null>(null),
   });
 
-  fileList: NzUploadFile[] = [];
   isLoading = false;
+  isPreviewLoading = false;
+
+  fileList: NzUploadFile[] = [];
   lastUploadedFileId: string | null = null;
   passwordVisible = false;
   password?: string;
@@ -75,29 +79,30 @@ export class UploadComponent {
       this.message.error('File is not valid');
       return;
     }
-
+  
     this.isLoading = true;
-
+    this.isPreviewLoading = true;
+  
     const formData = new FormData();
     formData.append('file', realFile);
-
+  
     try {
-      const preview = await getBase64(realFile);
-
       const res = await firstValueFrom(
         this.http.post<UploadResponse>(`${environment.apiUrl}/file/upload`, formData)
       );
-
+  
       this.message.success(`${file.name} success uploaded!`);
       this.lastUploadedFileId = res.fileId;
-
+  
+      const previewUrl = `${environment.apiUrl}/file/preview/public/${res.fileId}`;
+  
       this.fileList = [
         {
           uid: res.fileId,
           name: file.name,
           status: 'done',
-          url: `${environment.apiUrl}/file/preview/public/${res.fileId}`,
-          thumbUrl: preview,
+          url: previewUrl,
+          thumbUrl: '',
           response: res
         }
       ];
@@ -105,11 +110,16 @@ export class UploadComponent {
       this.message.error(`${file.name} upload failed`);
     } finally {
       this.isLoading = false;
+      this.isPreviewLoading = false; // stop spinner
     }
   }
 
   isImageFile(name: string): boolean {
     return /\.(png|jpg|jpeg)$/i.test(name);
+  }
+
+  isPDFFile(name: string): boolean {
+    return /\.pdf$/i.test(name);
   }
 
   onSubmit(): void {
@@ -146,15 +156,18 @@ export class UploadComponent {
   }
 
   onDelete(fileId: string): void {
+    this.isPreviewLoading = true;
     this.http.delete(`${environment.apiUrl}/file/${fileId}`).subscribe({
       next: () => {
         this.message.success("File Has Been Deleted!");
         this.isLoading = false;
         this.fileList = [];
+        this.isPreviewLoading = false;
       },
       error: () => {
         this.message.error("File Save Failed");
         this.isLoading = false;
+        this.isPreviewLoading = false;
       }
     })
   }
