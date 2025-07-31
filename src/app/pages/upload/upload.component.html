@@ -18,20 +18,30 @@
         </nz-upload>
       </nz-form-control>
     </nz-form-item>
-
-    <div *ngIf="fileList.length && isImageFile(fileList[0].name)" class="text-center my-4">
+    
+    <div *ngIf="fileList.length" class="text-center my-4">
+      <ng-container *ngIf="isImageFile(fileList[0].name)">
         <img
           style="max-width: 30em; height: auto;"
           [src]="fileList[0].url || ''"
-          alt="Preview"
+          alt="Preview Image"
           class="border border-gray-200 rounded inline-block"
         />
-        <p class="text-sm text-gray-500 mt-2">{{ fileList[0].name }}</p>
-        <button type="button" (click)="onDelete(fileList[0]['uid'])" nz-button nzType="primary" nzDanger>
-            Delete
-        </button>
+      </ng-container>
+    
+      <p class="text-sm text-gray-500 mt-2">{{ fileList[0].name }}</p>
+      <button type="button" (click)="onDelete(fileList[0]['uid'])" nz-button nzType="primary" nzDanger>
+        <!-- Delete -->
+        <ng-container *ngIf="!isPreviewLoading; else loadingIcon">
+          Delete
+        </ng-container>
+        <ng-template #loadingIcon>
+            <i nz-icon nzType="loading" nzTheme="outline" nz-spin></i>
+        </ng-template>
+      </button>
     </div>
-
+    <nz-spin *ngIf="isLoading" class="block my-4"></nz-spin>
+    
     <!-- METADATA INFORMATION -->
     <nz-form-item>
       <nz-form-label [nzRequired]="true">Visibility</nz-form-label>
