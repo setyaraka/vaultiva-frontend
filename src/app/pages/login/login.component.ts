@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 
@@ -21,7 +21,8 @@ import { environment } from '../../../environments/environment';
     NzFormModule,
     NzInputModule,
     NzMessageModule,
-    NzCardModule
+    NzCardModule,
+    RouterModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']

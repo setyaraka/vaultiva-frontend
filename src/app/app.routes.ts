@@ -50,5 +50,16 @@ export const routes: Routes = [
         loadChildren: () => import('./pages/login/login.routes').then(m => m.LOGIN_ROUTES)
       }
     ]
+  },
+  {
+    path: 'register',
+    component: LayoutPassportComponent,
+    children: [
+      {
+        path: '',
+        // loadChildren: () => import('./pages/regiter').then(m => m.LOGIN_ROUTES)
+        loadChildren: () => import('./pages/register/register.routes').then(m => m.REGISTER_ROUTES)
+      }
+    ]
   }
 ];

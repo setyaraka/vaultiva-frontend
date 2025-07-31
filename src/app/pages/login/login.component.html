@@ -1,7 +1,7 @@
 <nz-card style="width:400px;" [nzBordered]="false">
   <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
       <div class="text-center mb-6">
-        <h1 class="text-2xl font-bold! text-gray-800">Secura File</h1>
+        <h1 class="text-2xl font-bold! text-gray-800">Vaultiva</h1>
         <p class="text-sm text-gray-500">Login to your account</p>
       </div>
   
@@ -21,16 +21,17 @@
         </nz-form-control>
       </nz-form-item>
     
-      <div nz-row class="login-form-margin">
+      <!-- <div nz-row class="login-form-margin">
         <div nz-col [nzSpan]="12">
           <label nz-checkbox formControlName="remember">Remember me</label>
         </div>
         <div nz-col [nzSpan]="12">
           <a class="login-form-forgot">Forgot password</a>
         </div>
-      </div>
+      </div> -->
     
       <button nz-button class="login-form-button login-form-margin" [nzLoading]="isLoading" [nzType]="'primary'" [disabled]="isLoading || validateForm.invalid">Log in</button>
-      Or <a>register now!</a>
+      Or <a [routerLink]="['/register']">register now!</a>
+
   </form>
 </nz-card>
