@@ -19,6 +19,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 interface UploadResponse {
   fileId: string;
   filename: string;
+  previewUrl: string;
 }
 
 @Component({
@@ -94,14 +95,12 @@ export class UploadComponent {
       this.message.success(`${file.name} success uploaded!`);
       this.lastUploadedFileId = res.fileId;
   
-      const previewUrl = `${environment.apiUrl}/file/preview/public/${res.fileId}`;
-  
       this.fileList = [
         {
           uid: res.fileId,
           name: file.name,
           status: 'done',
-          url: previewUrl,
+          url: res.previewUrl,
           thumbUrl: '',
           response: res
         }
