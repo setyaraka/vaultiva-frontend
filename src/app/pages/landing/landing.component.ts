@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { HeroComponent } from '../../components/hero/hero.component';
@@ -11,13 +11,19 @@ import { HeroComponent } from '../../components/hero/hero.component';
     NzButtonModule, 
     NzCarouselModule, 
     CommonModule,
-    HeroComponent
+    HeroComponent,
+    RouterModule
   ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })
 export class LandingComponent implements AfterViewInit {
   private router = inject(Router);
+  menuOpen = false;
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
 
   carouselItems = [
     {
@@ -50,6 +56,13 @@ export class LandingComponent implements AfterViewInit {
 
   goToLogin() {
     this.router.navigate(['/login']);
+  }
+
+  scrollTo(sectionId: string) {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 }
 

@@ -3,8 +3,16 @@ import { LayoutDefaultComponent } from './layout/layout-default/layout-default.c
 import { LayoutPassportComponent } from './layout/layout-passport/layout-passport.component';
 import { authGuard } from './core/guards/auth.guard';
 
-
 export const routes: Routes = [
+  {
+    path: '',
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/landing/landing.routes').then(m => m.LANDING_ROUTES)
+      }
+    ]
+  },
   {
     path: '',
     component: LayoutDefaultComponent,
@@ -61,14 +69,5 @@ export const routes: Routes = [
       }
     ]
   },
-  {
-    path: 'landing',
-    // component: LayoutPassportComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('./pages/landing/landing.routes').then(m => m.LANDING_ROUTES)
-      }
-    ]
-  }
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

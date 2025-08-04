@@ -2,9 +2,10 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
     <div class="text-xl font-bold text-gray-900">Vaultiva</div>
     <div class="hidden md:flex gap-6 text-sm text-gray-600">
-      <a href="#features" class="hover:text-[#364d79]">Features</a>
-      <a href="#testimonials" class="hover:text-[#364d79]">Testimonials</a>
-      <a href="#get-started" class="hover:text-[#364d79]">Get Started</a>
+      <button (click)="scrollTo('features')" class="hover:text-[#364d79] bg-transparent border-none cursor-pointer">Features</button>
+      <button (click)="scrollTo('why')" class="hover:text-[#364d79] bg-transparent border-none cursor-pointer">Why Choose Vaultiva?</button>
+      <button (click)="scrollTo('testimonials')" class="hover:text-[#364d79] bg-transparent border-none cursor-pointer">Testimonials</button>
+      <button (click)="scrollTo('get-started')" class="hover:text-[#364d79] bg-transparent border-none cursor-pointer">Get Started</button>
     </div>
     <button (click)="goToLogin()" class="bg-[#364d79] text-white! px-4 py-2 rounded-xl text-sm hover:bg-[#2C3E50]">
       Login
@@ -12,30 +13,30 @@
   </div>
 </nav>
 
-<section class="bg-[#F9F9F4] min-h-[80vh] flex items-center py-16 px-4 md:px-12">
-    <div class="w-full max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12">
-      <!-- TEXT -->
-      <div class="max-w-xl text-center md:text-left space-y-6 z-10">
-        <h1 class="text-3xl md:text-5xl font-semibold text-gray-900 leading-tight">
-          Share Documents Securely, Stay in Control
-        </h1>
-        <p class="text-gray-600 text-lg">
-          Vaultiva protects your documents with password locks, auto-expiration, and real-time access tracking — all in one seamless platform.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-          <button (click)="goToLogin()" nz-button nzType="primary" class="bg-[#364d79] hover:bg-[#2C3E50] text-white font-medium px-6 py-3 rounded-xl transition">
-            Try Vaultiva Now
-          </button>
-          <!-- <button nz-button nzType="default" class="border border-[#364d79] text-[#364d79] hover:text-white hover:bg-[#364d79] font-medium px-6 py-3 rounded-xl transition">
-            View Demo
-          </button> -->
-        </div>
+<section id="features" class="bg-[#F9F9F4] min-h-[80vh] flex items-center py-16 px-4 md:px-12">
+  <div class="w-full max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12">
+    <!-- TEXT -->
+    <div class="max-w-xl text-center md:text-left space-y-6 z-10">
+      <h1 class="text-3xl md:text-5xl font-semibold text-gray-900 leading-tight">
+        Share Documents Securely, Stay in Control
+      </h1>
+      <p class="text-gray-600 text-lg">
+        Vaultiva protects your documents with password locks, auto-expiration, and real-time access tracking — all in one seamless platform.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+        <button (click)="goToLogin()" nz-button nzType="primary" class="bg-[#364d79] hover:bg-[#2C3E50] text-white font-medium px-6 py-3 rounded-xl transition">
+          Try Vaultiva Now
+        </button>
+        <!-- <button nz-button nzType="default" class="border border-[#364d79] text-[#364d79] hover:text-white hover:bg-[#364d79] font-medium px-6 py-3 rounded-xl transition">
+          View Demo
+        </button> -->
       </div>
-      <app-hero></app-hero>
     </div>
+    <app-hero></app-hero>
+  </div>
 </section>
 
-<section class="bg-white py-20 px-6">
+<section id="why" class="bg-white py-20 px-6">
   <div class="max-w-4xl mx-auto text-center">
     <h2 class="text-3xl font-bold text-gray-900 mb-8">Why Choose Vaultiva?</h2>
 
@@ -49,7 +50,7 @@
       <div class="bg-[#F9F9F4] p-6 rounded-2xl shadow-md">
         <h3 class="text-xl font-semibold mb-2 text-gray-900! mb-3!">⚙️ Full Control</h3>
         <p class="text-gray-600 text-sm">
-          Set access limits, restrict downloads, and control visibility — all from your dashboard.
+          Set access limits, restrict downloads, and control visibility. All from your dashboard.
         </p>
       </div>
       <div class="bg-[#F9F9F4] p-6 rounded-2xl shadow-md">
@@ -94,13 +95,13 @@
   </div>
 </section>
 
-<section class="bg-white py-20 px-6">
+<section id="testimonials" class="bg-white py-20 px-6">
   <div class="max-w-4xl mx-auto text-center">
     <h2 class="text-3xl font-bold text-gray-900 mb-10">What People Are Saying</h2>
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div class="bg-[#F9F9F4] p-6 rounded-2xl shadow-md text-left">
-        <p class="text-gray-700 italic">“Vaultiva makes sharing contracts with clients much easier — no more email attachments or wondering who opened what.”</p>
+        <p class="text-gray-700 italic">“Vaultiva makes sharing contracts with clients much easier, no more email attachments or wondering who opened what.”</p>
         <div class="mt-4 font-semibold text-gray-900">– Sarah T., Legal Consultant</div>
       </div>
       
@@ -141,11 +142,16 @@
         <h3 class="font-semibold text-gray-900! mb-1!">✉️ Email Delivery</h3>
         <p class="text-gray-600 text-sm">Send file links directly to recipients via email.</p>
       </div>
+      <div></div>
+      <div class="p-5 rounded-xl bg-white shadow">
+        <h3 class="font-semibold text-gray-900! mb-1">📥 Download Limit</h3>
+        <p class="text-gray-600 text-sm">Restrict how many times your file can be downloaded.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="bg-[#364d79] py-20 px-6">
+<section id="get-started" class="bg-[#364d79] py-20 px-6">
   <div class="max-w-2xl mx-auto text-center">
     <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white!">Ready to Share Your Documents Securely?</h2>
     <p class="text-lg mb-6 text-white">Start using Vaultiva now</p>
