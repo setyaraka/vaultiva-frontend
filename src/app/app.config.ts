@@ -11,9 +11,22 @@ import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { provideLottieOptions } from 'ngx-lottie';
+import player from 'lottie-web';
 
 registerLocaleData(en);
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideNzIcons(icons), provideNzI18n(en_US), importProvidersFrom(FormsModule), provideAnimationsAsync(), provideHttpClient(withInterceptors([authInterceptor]))]
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }), 
+    provideRouter(routes), 
+    provideNzIcons(icons), 
+    provideNzI18n(en_US), 
+    importProvidersFrom(FormsModule), 
+    provideAnimationsAsync(), 
+    provideHttpClient(withInterceptors([authInterceptor])),
+    provideLottieOptions({
+      player: () => player,
+    }),
+  ],
 };

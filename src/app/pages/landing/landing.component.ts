@@ -1,18 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
+import { HeroComponent } from '../../components/hero/hero.component';
 
 @Component({
   selector: 'app-landing',
-  imports: [NzButtonModule, NzCarouselModule, CommonModule],
+  imports: [
+    NzButtonModule, 
+    NzCarouselModule, 
+    CommonModule,
+    HeroComponent
+  ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })
-export class LandingComponent {
-  carouselReady = false;
+export class LandingComponent implements AfterViewInit {
+  private router = inject(Router);
 
-  array = ["Mantap", "Jika", 3, 4];
   carouselItems = [
     {
       image: 'assets/images/authentication.png',
@@ -35,5 +41,15 @@ export class LandingComponent {
       caption: 'Get real-time insights into file views and downloads.'
     }
   ];
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 100);
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
 }
 
