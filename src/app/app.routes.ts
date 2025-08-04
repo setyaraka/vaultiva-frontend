@@ -57,8 +57,17 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        // loadChildren: () => import('./pages/regiter').then(m => m.LOGIN_ROUTES)
         loadChildren: () => import('./pages/register/register.routes').then(m => m.REGISTER_ROUTES)
+      }
+    ]
+  },
+  {
+    path: 'landing',
+    // component: LayoutPassportComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/landing/landing.routes').then(m => m.LANDING_ROUTES)
       }
     ]
   }

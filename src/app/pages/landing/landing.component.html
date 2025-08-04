@@ -1,0 +1,146 @@
+<section class="bg-[#F9F9F4] min-h-[80vh] flex items-center py-16 px-4 md:px-12">
+    <div class="w-full max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12">
+      <!-- TEXT -->
+      <div class="max-w-xl text-center md:text-left space-y-6 z-10">
+        <h1 class="text-3xl md:text-5xl font-semibold text-gray-900 leading-tight">
+          Share Documents Confidently, Without Losing Control
+        </h1>
+        <p class="text-gray-600 text-lg">
+          Protect your files with password locks, expirations, and real-time access logs — all in one seamless platform.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+          <button nz-button nzType="primary" class="bg-[#364d79] hover:bg-[#2C3E50] text-white font-medium px-6 py-3 rounded-xl transition">
+            Try Now
+          </button>
+          <!-- <button nz-button nzType="default" class="border border-[#364d79] text-[#364d79] hover:text-white hover:bg-[#364d79] font-medium px-6 py-3 rounded-xl transition">
+            View Demo
+          </button> -->
+        </div>
+      </div>
+      <nz-carousel nzEffect="scrollx" nzAutoPlay [nzDotPosition]="'bottom'">
+        @for (item of carouselItems; track item) {
+          <div nz-carousel-content class="!bg-transparent !overflow-visible">
+            <div class="flex justify-center items-center">
+              <img
+                [src]="item.image"
+                alt="Mockup"
+                class="w-full max-w-[600px] h-[340px] min-h-[340px] object-contain"
+              />
+            </div>
+          </div>
+        }
+      </nz-carousel>
+    </div>
+</section>
+
+<section class="bg-white py-20 px-6">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-3xl font-bold text-gray-900 mb-8">Why Choose Vaultiva?</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-[#F9F9F4] p-6 rounded-2xl shadow-md">
+        <h3 class="text-xl font-semibold mb-2 text-gray-900! mb-3!">🔐 Privacy First</h3>
+        <p class="text-gray-600 text-sm">
+          Your documents are protected with password, expiry settings, and watermarking.
+        </p>
+      </div>
+      <div class="bg-[#F9F9F4] p-6 rounded-2xl shadow-md">
+        <h3 class="text-xl font-semibold mb-2 text-gray-900! mb-3!">⚙️ Full Control</h3>
+        <p class="text-gray-600 text-sm">
+          Set access limits, restrict downloads, and control visibility — all from your dashboard.
+        </p>
+      </div>
+      <div class="bg-[#F9F9F4] p-6 rounded-2xl shadow-md">
+        <h3 class="text-xl font-semibold mb-2 text-gray-900! mb-3!">📈 Transparent Logs</h3>
+        <p class="text-gray-600 text-sm">
+          Know exactly who accessed your file, when, and from where.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-[#F9F9F4] py-20 px-6">
+  <div class="max-w-5xl mx-auto text-center">
+    <h2 class="text-3xl font-bold text-gray-900 mb-8">Focused on Your File Security</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div class="p-6 border rounded-xl shadow hover:shadow-lg transition">
+        <img src="assets/images/password-share.png" alt="Password Protection" class="mx-auto mb-4 max-h-40 object-contain" />
+        <h3 class="text-xl text-gray-900! font-semibold mb-2">Password-Protected Sharing</h3>
+        <p class="text-gray-600 mt-1 text-sm">
+          Require passwords for file access to keep your documents safe and private.
+        </p>
+      </div>
+      <div class="p-6 border rounded-xl shadow hover:shadow-lg transition">
+        <img src="assets/images/watermark-preview.png" alt="Watermark Preview" class="mx-auto mb-4 max-h-40 object-contain" />
+        <h3 class="text-xl text-gray-900! font-semibold mb-2">Watermark Preview</h3>
+        <p class="text-gray-600 text-sm">
+          Add dynamic watermarks on PDFs and images to protect your intellectual property.
+        </p>
+      </div>
+      <div class="p-6 border rounded-xl shadow hover:shadow-lg transition">
+        <img src="assets/images/access-log.png" alt="Statistics and Logs" class="mx-auto mb-4 max-h-40 object-contain" />
+        <h3 class="text-xl text-gray-900! font-semibold mb-2">Detailed Access Logs</h3>
+        <p class="text-gray-600 text-sm">
+          Track who viewed or downloaded your files, including IP and device info.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-white py-20 px-6">
+  <div class="max-w-5xl mx-auto text-center">
+    <h2 class="text-3xl font-bold text-gray-900 mb-8">Everything You Need for Secure Document Sharing</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+      <div class="p-5 rounded-xl bg-white shadow">
+        <h3 class="font-semibold text-gray-900! mb-1!">📤 Upload & Share Files</h3>
+        <p class="text-gray-600 text-sm">Supports PDF, images, and documents.</p>
+      </div>
+      <div class="p-5 rounded-xl bg-white shadow">
+        <h3 class="font-semibold text-gray-900! mb-1!">🔑 Password Protection</h3>
+        <p class="text-gray-600 text-sm">Require password to access downloads.</p>
+      </div>
+      <div class="p-5 rounded-xl bg-white shadow">
+        <h3 class="font-semibold text-gray-900! mb-1!">⏳ Expiry Links</h3>
+        <p class="text-gray-600 text-sm">Set time-based or view/download limits.</p>
+      </div>
+      <div class="p-5 rounded-xl bg-white shadow">
+        <h3 class="font-semibold text-gray-900! mb-1!">🖋️ Watermark Preview</h3>
+        <p class="text-gray-600 text-sm">Embed viewer-specific watermark for extra security.</p>
+      </div>
+      <div class="p-5 rounded-xl bg-white shadow">
+        <h3 class="font-semibold text-gray-900! mb-1!">📊 Statistics & Logs</h3>
+        <p class="text-gray-600 text-sm">Track downloads and views in real time.</p>
+      </div>
+      <div class="p-5 rounded-xl bg-white shadow">
+        <h3 class="font-semibold text-gray-900! mb-1!">✉️ Email Delivery</h3>
+        <p class="text-gray-600 text-sm">Send file links directly to recipients via email.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-[#364d79] py-20 px-6">
+  <div class="max-w-2xl mx-auto text-center">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white!">Ready to Share Your Documents Securely?</h2>
+    <p class="text-lg mb-6 text-white">Start using Vaultiva now</p>
+    <button nz-button nzType="primary" class="bg-white font-medium px-8 py-3 rounded-2xl!">
+      Get Started
+    </button>
+  </div>
+</section>
+
+<footer class="bg-[#F9F9F4] text-gray-600 py-10 px-6">
+  <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="text-sm">
+      © 2025 Vaultiva. Built with ❤️ by Setya Raka.
+    </div>
+    <div class="flex gap-6 text-sm">
+      <a href="https://github.com/setyaraka/vaultiva-frontend" target="_blank" class="hover:underline">Frontend</a>
+      <a href="https://github.com/setyaraka/vaultiva-backend" target="_blank" class="hover:underline">Backend</a>
+      <a href="https://linkedin.com/in/your-profile" target="_blank" class="hover:underline">LinkedIn</a>
+    </div>
+  </div>
+</footer>
