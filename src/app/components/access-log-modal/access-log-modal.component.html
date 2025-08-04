@@ -40,14 +40,14 @@
         <th>Accessed At</th>
         <th>Email</th>
         <th>Ip Address</th>
-        <th>User Agent</th>
+        <th>Browser & OS</th>
+        <th>Access Type</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let data of basicTable.data">
         <td>
-          <span>{{formatDate(data.accessedAt)}}</span><br>
-          <span>{{formatTime(data.accessedAt)}}</span>
+          <span>{{formatDateWithTime(data.accessedAt)}} WIB</span><br>
         </td>
         <td class="text-center">{{ data.email || '-' }}</td>
         <td>
@@ -64,6 +64,7 @@
             <nz-icon nzType="copy" nzTheme="outline" />
           </button>
         </td>
+        <td>{{ data.email === null ? "Uploader" : "External User" }}</td>
       </tr>
     </tbody>
   </nz-table>
@@ -93,8 +94,7 @@
     <tbody>
       <tr *ngFor="let data of basicTable.data">
         <td>
-          <span>{{formatDate(data.accessedAt)}}</span><br>
-          <span>{{formatTime(data.accessedAt)}}</span>
+          <span>{{formatDateWithTime(data.accessedAt)}} WIB</span><br>
         </td>
         <td class="text-center">{{ data.email || "-" }}</td>
         <td>

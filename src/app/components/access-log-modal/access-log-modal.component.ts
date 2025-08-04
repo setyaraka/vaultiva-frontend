@@ -5,7 +5,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NZ_MODAL_DATA, NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { environment } from '../../../environments/environment';
-import { formatDateToShort, formatTime } from '../../core/utils/date';
+import { formatDateWithTime } from '../../core/utils/date';
 import { UserAgentParserPipe } from '../../core/pipes/user-agent-parser.pipe';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -41,8 +41,8 @@ export class AccessLogModalComponent implements OnInit {
   fileId: string = inject(NZ_MODAL_DATA).fileId;
   http = inject(HttpClient);
 
-  formatDate = formatDateToShort;
-  formatTime = formatTime;
+  formatDateWithTime = formatDateWithTime;
+  // formatTime = formatTime;
 
   isLoading = false;
   activeTab = 'fileLog';
