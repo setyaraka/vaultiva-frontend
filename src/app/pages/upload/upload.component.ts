@@ -11,7 +11,6 @@ import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzUploadFile, NzUploadModule } from 'ng-zorro-antd/upload';
 import { environment } from '../../../environments/environment';
-import { getBase64 } from '../../shared/utils/file-utils';
 import { firstValueFrom } from 'rxjs';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
@@ -119,6 +118,50 @@ export class UploadComponent {
 
   isPDFFile(name: string): boolean {
     return /\.pdf$/i.test(name);
+  }
+
+  getFileIconType(fileName: string): string {
+    const ext = fileName.split('.').pop()?.toLowerCase();
+    switch (ext) {
+      case 'pdf':
+        return 'file-pdf';
+      case 'doc':
+      case 'docx':
+        return 'file-word';
+      case 'xls':
+      case 'xlsx':
+        return 'file-excel';
+      case 'ppt':
+      case 'pptx':
+        return 'file-ppt';
+      case 'zip':
+      case 'rar':
+        return 'file-zip';
+      default:
+        return 'file';
+    }
+  }
+
+  getFileIconColor(fileName: string): string {
+    const ext = fileName.split('.').pop()?.toLowerCase();
+    switch (ext) {
+      case 'pdf':
+        return '#f5222d'; // Red
+      case 'doc':
+      case 'docx':
+        return '#2b6cb0'; // Blue
+      case 'xls':
+      case 'xlsx':
+        return '#237804'; // Green
+      case 'ppt':
+      case 'pptx':
+        return '#d46b08'; // Orange
+      case 'zip':
+      case 'rar':
+        return '#722ed1'; // Purple
+      default:
+        return '#595959'; // Gray
+    }
   }
 
   onSubmit(): void {
