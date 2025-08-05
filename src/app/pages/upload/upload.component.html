@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
       <div class="lg:col-span-2">
         <ng-container *ngIf="fileList.length; else uploadPlaceholder">
-          <ng-container *ngIf="isImageFile(fileList[0].name); else fileIcon">
+          <ng-container *ngIf="isImageFile(fileList[0].name); else checkPdf">
             <div class="w-full aspect-square bg-gray-100 border rounded-lg overflow-hidden shadow flex items-center justify-center">
               <img
                 [src]="fileList[0].url || ''"
@@ -12,18 +12,6 @@
               />
             </div>
           </ng-container>
-          
-          <ng-template #fileIcon>
-            <div class="w-full aspect-square bg-gray-100 border rounded-lg overflow-hidden shadow flex justify-center items-center">
-              <i
-                nz-icon
-                [nzType]="getFileIconType(fileList[0].name)"
-                nzTheme="twotone"
-                [nzTwotoneColor]="getFileIconColor(fileList[0].name)"
-                class="text-[64px] text-gray-400 mx-auto block"
-                ></i>
-            </div>
-          </ng-template>
   
           <p class="mt-2 text-gray-600 text-sm italic text-center">
             {{ fileList[0].name }}
@@ -42,33 +30,10 @@
               <i nz-icon nzType="delete" class="mr-1"></i>
               Delete File
             </ng-container>
-            <ng-template #loadingIcon>
-              <i nz-icon nzType="loading" nzTheme="outline" nzSpin></i>
-            </ng-template>
           </button>
         </ng-container>
   
-        <ng-template #uploadPlaceholder>
-          <nz-form-item>
-            <nz-form-control>
-              <nz-upload
-                nzType="drag"
-                [nzBeforeUpload]="beforeUpload"
-                [nzShowUploadList]="false"
-                [(nzFileList)]="fileList"
-                class="w-full"
-              >
-                <p class="ant-upload-drag-icon">
-                  <nz-icon nzType="inbox"></nz-icon>
-                </p>
-                <p class="ant-upload-text">Click or drag file here to upload</p>
-                <p class="ant-upload-hint">PDF, Image, etc</p>
-              </nz-upload>
-            </nz-form-control>
-          </nz-form-item>
-        </ng-template>
       </div>
-  
       <form
         [formGroup]="form"
         (ngSubmit)="onSubmit()"
@@ -102,13 +67,6 @@
                 placeholder="Enter password"
               />
             </nz-input-group>
-            <ng-template #suffixTemplate>
-              <nz-icon
-                class="ant-input-password-icon cursor-pointer"
-                [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
-                (click)="passwordVisible = !passwordVisible"
-              />
-            </ng-template>
           </nz-form-control>
         </nz-form-item>
   
@@ -150,3 +108,50 @@
     </div>
   </nz-card>
 </div>
+
+<ng-template #uploadPlaceholder>
+  <nz-form-item>
+    <nz-form-control>
+      <nz-upload
+        nzType="drag"
+        [nzBeforeUpload]="beforeUpload"
+        [nzShowUploadList]="false"
+        [(nzFileList)]="fileList"
+        class="w-full"
+      >
+        <p class="ant-upload-drag-icon">
+          <nz-icon nzType="inbox"></nz-icon>
+        </p>
+        <div *ngIf="!isPreviewLoading; else loadingIcon">
+          <p class="ant-upload-text">Click or drag file here to upload</p>
+          <p class="ant-upload-hint">PDF or Image</p>
+        </div>
+        
+      </nz-upload>
+    </nz-form-control>
+  </nz-form-item>
+</ng-template>
+
+<ng-template #checkPdf>
+  <ng-container *ngIf="isPDFFile(fileList[0].name);">
+    <div class="w-full aspect-square bg-gray-100 border rounded-lg overflow-hidden shadow flex items-center justify-center">
+      <iframe
+        [src]="pdfPreviewUrl"
+        class="w-full h-full border-0"
+        role="document"
+      ></iframe>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #suffixTemplate>
+  <nz-icon
+    class="ant-input-password-icon cursor-pointer"
+    [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+    (click)="passwordVisible = !passwordVisible"
+  />
+</ng-template>
+
+<ng-template #loadingIcon>
+  <i nz-icon nzType="loading" nzTheme="outline" nzSpin></i>
+</ng-template>

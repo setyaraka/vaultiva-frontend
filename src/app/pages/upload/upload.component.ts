@@ -14,6 +14,7 @@ import { environment } from '../../../environments/environment';
 import { firstValueFrom } from 'rxjs';
 import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 interface UploadResponse {
   fileId: string;
@@ -46,6 +47,7 @@ export class UploadComponent {
   private fb = inject(NonNullableFormBuilder);
   private http = inject(HttpClient);
   private message = inject(NzMessageService);
+  private sanitizer = inject(DomSanitizer);
 
   form = this.fb.group({
     visibility: this.fb.control<'public' | 'private' | 'password_protected'>('private'),
@@ -56,11 +58,13 @@ export class UploadComponent {
 
   isLoading = false;
   isPreviewLoading = false;
+  isUploadLoading = false;
 
   fileList: NzUploadFile[] = [];
   lastUploadedFileId: string | null = null;
   passwordVisible = false;
   password?: string;
+  pdfPreviewUrl!: SafeResourceUrl;
 
   visibilityOptions = [
     { value: 'public', label: 'Public' },
@@ -72,6 +76,47 @@ export class UploadComponent {
     this.handleFileUpload(file);
     return false;
   };
+  
+  private handleImageUpload(res: UploadResponse, file: NzUploadFile): void {
+    this.lastUploadedFileId = res.fileId;
+    this.isUploadLoading = false;
+    this.fileList = [
+      {
+        uid: res.fileId,
+        name: file.name,
+        status: 'done',
+        url: res.previewUrl,
+        thumbUrl: '',
+        response: res
+      }
+    ];
+  }
+  
+  private handlePDFUpload(res: UploadResponse, file: NzUploadFile): void {
+    this.http.get(`${environment.apiUrl}/file/proxy/${res.fileId}`, {
+      responseType: 'blob'
+    }).subscribe({
+      next: blob => {
+        this.lastUploadedFileId = res.fileId;
+        const previewUrl = URL.createObjectURL(blob);
+        this.fileList = [
+          {
+            uid: res.fileId,
+            name: file.name,
+            status: 'done',
+            url: previewUrl,
+            thumbUrl: '',
+            response: res
+          }
+        ];
+        this.pdfPreviewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(previewUrl);
+        this.isUploadLoading = false;
+      },
+      error: () => {
+        this.isUploadLoading = false;
+      }
+    })
+  }
 
   private async handleFileUpload(file: NzUploadFile) {
     const realFile = file as unknown as File;
@@ -82,6 +127,7 @@ export class UploadComponent {
   
     this.isLoading = true;
     this.isPreviewLoading = true;
+    this.isUploadLoading = true;
   
     const formData = new FormData();
     formData.append('file', realFile);
@@ -90,25 +136,17 @@ export class UploadComponent {
       const res = await firstValueFrom(
         this.http.post<UploadResponse>(`${environment.apiUrl}/file/upload`, formData)
       );
-  
+      const isImage = this.isImageFile(file.name);
+      
+      if(isImage) this.handleImageUpload(res, file);
+      else this.handlePDFUpload(res, file);
+
       this.message.success(`${file.name} success uploaded!`);
-      this.lastUploadedFileId = res.fileId;
-  
-      this.fileList = [
-        {
-          uid: res.fileId,
-          name: file.name,
-          status: 'done',
-          url: res.previewUrl,
-          thumbUrl: '',
-          response: res
-        }
-      ];
     } catch (error) {
       this.message.error(`${file.name} upload failed`);
     } finally {
       this.isLoading = false;
-      this.isPreviewLoading = false; // stop spinner
+      this.isPreviewLoading = false;
     }
   }
 
@@ -118,50 +156,6 @@ export class UploadComponent {
 
   isPDFFile(name: string): boolean {
     return /\.pdf$/i.test(name);
-  }
-
-  getFileIconType(fileName: string): string {
-    const ext = fileName.split('.').pop()?.toLowerCase();
-    switch (ext) {
-      case 'pdf':
-        return 'file-pdf';
-      case 'doc':
-      case 'docx':
-        return 'file-word';
-      case 'xls':
-      case 'xlsx':
-        return 'file-excel';
-      case 'ppt':
-      case 'pptx':
-        return 'file-ppt';
-      case 'zip':
-      case 'rar':
-        return 'file-zip';
-      default:
-        return 'file';
-    }
-  }
-
-  getFileIconColor(fileName: string): string {
-    const ext = fileName.split('.').pop()?.toLowerCase();
-    switch (ext) {
-      case 'pdf':
-        return '#f5222d'; // Red
-      case 'doc':
-      case 'docx':
-        return '#2b6cb0'; // Blue
-      case 'xls':
-      case 'xlsx':
-        return '#237804'; // Green
-      case 'ppt':
-      case 'pptx':
-        return '#d46b08'; // Orange
-      case 'zip':
-      case 'rar':
-        return '#722ed1'; // Purple
-      default:
-        return '#595959'; // Gray
-    }
   }
 
   onSubmit(): void {
