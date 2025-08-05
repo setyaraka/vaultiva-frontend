@@ -15,21 +15,21 @@
 
 <section id="features" class="bg-[#F9F9F4] min-h-[80vh] flex items-center py-16 px-4 md:px-12">
   <div class="w-full max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12">
-    <div class="max-w-xl text-center md:text-left space-y-6 z-10">
-      <h1 class="text-3xl md:text-5xl font-semibold text-gray-900 leading-tight">
-        Share Documents Securely, Stay in Control
+    <div class="text-center md:text-left max-w-3xl space-y-6">
+      <h1 class="text-4xl md:text-5xl font-semibold leading-snug">
+        Share Documents Securely<br />
+        Stay in Control
       </h1>
-      <p class="text-gray-600 text-lg">
-        Vaultiva protects your documents with password locks, auto-expiration, and real-time access tracking — all in one seamless platform.
+      <p class="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl">
+        Vaultiva protects your documents with password locks, auto-expiration, and
+        real-time access tracking. All in one seamless platform.
       </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-        <button (click)="goToLogin()" nz-button nzType="primary" class="bg-[#364d79] hover:bg-[#2C3E50] text-white font-medium px-6 py-3 rounded-xl transition">
-          Try Vaultiva Now
-        </button>
-        <!-- <button nz-button nzType="default" class="border border-[#364d79] text-[#364d79] hover:text-white hover:bg-[#364d79] font-medium px-6 py-3 rounded-xl transition">
-          View Demo
-        </button> -->
-      </div>
+      <button class="bg-[#364d79]! hover:bg-[#2C3E50]! border-none! text-white font-medium px-6 py-3 rounded! transition" (click)="goToLogin()" nzSize="large" nz-button nzType="primary">
+        <span class="text-sm">Try Vaultiva Now</span>
+      </button>
+      <!-- <button nz-button nzType="default" class="border border-[#364d79] text-[#364d79] hover:text-white hover:bg-[#364d79] font-medium px-6 py-3 rounded-xl transition">
+        View Demo
+      </button> -->
     </div>
     <app-hero></app-hero>
   </div>
@@ -115,11 +115,10 @@
 <section class="bg-[#F9F9F4] py-20 px-6">
   <div class="max-w-5xl mx-auto text-center">
     <h2 class="text-3xl font-bold text-gray-900 mb-8">Everything You Need for Secure Document Sharing</h2>
-
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
       <div class="p-5 rounded-xl bg-white shadow">
         <h3 class="font-semibold text-gray-900! mb-1!">📤 Upload & Share Files</h3>
-        <p class="text-gray-600 text-sm">Supports PDF, images, and documents.</p>
+        <p class="text-gray-600 text-sm">Supports PDF and images.</p>
       </div>
       <div class="p-5 rounded-xl bg-white shadow">
         <h3 class="font-semibold text-gray-900! mb-1!">🔑 Password Protection</h3>
@@ -127,7 +126,7 @@
       </div>
       <div class="p-5 rounded-xl bg-white shadow">
         <h3 class="font-semibold text-gray-900! mb-1!">⏳ Expiry Links</h3>
-        <p class="text-gray-600 text-sm">Set time-based or view/download limits.</p>
+        <p class="text-gray-600 text-sm">Set time-based for view/download file.</p>
       </div>
       <div class="p-5 rounded-xl bg-white shadow">
         <h3 class="font-semibold text-gray-900! mb-1!">🖋️ Watermark Preview</h3>
@@ -141,7 +140,6 @@
         <h3 class="font-semibold text-gray-900! mb-1!">✉️ Email Delivery</h3>
         <p class="text-gray-600 text-sm">Send file links directly to recipients via email.</p>
       </div>
-      <div></div>
       <div class="p-5 rounded-xl bg-white shadow">
         <h3 class="font-semibold text-gray-900! mb-1">📥 Download Limit</h3>
         <p class="text-gray-600 text-sm">Restrict how many times your file can be downloaded.</p>
@@ -150,12 +148,16 @@
   </div>
 </section>
 
-<section id="get-started" class="bg-[#364d79] py-20 px-6">
-  <div class="max-w-2xl mx-auto text-center">
-    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white!">Ready to Share Your Documents Securely?</h2>
-    <p class="text-lg mb-6 text-white">Start using Vaultiva now</p>
-    <button (click)="goToLogin()" nz-button nzType="primary" class="bg-white font-medium px-8 py-3 rounded-2xl!">
-      Get Started
+<section id="get-started" class="bg-[#2f436e] text-white py-24 px-6">
+  <div class="max-w-xl mx-auto text-center">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white! leading-tight">
+      Ready to Share Your Documents Securely?
+    </h2>
+    <p class="text-base md:text-lg opacity-90">
+      Start using <span class="font-semibold text-white">Vaultiva</span> now — no setup required.
+    </p>
+    <button (click)="goToLogin()" nz-button nzSize="large" nzType="primary" class="bg-white font-medium px-8 py-3 rounded-2xl!">
+      <span class="text-sm">Get Started</span>
     </button>
   </div>
 </section>
