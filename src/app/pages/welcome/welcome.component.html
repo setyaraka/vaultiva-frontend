@@ -1,28 +1,36 @@
-<nz-spin [nzSpinning]="isLoading">
-    <div class="dashboard-grid">
-        <nz-card nzTitle="Total Files" [nzBordered]="false" class="card-total">
-            <p>{{ stats.totalFiles }}</p>
+<div class="max-h-[80vh] overflow-y-auto p-4">
+    <nz-spin [nzSpinning]="isLoading">
+      <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+        <!-- Total Files -->
+        <nz-card nzTitle="Total Files" [nzBordered]="false" class="card-total font-semibold p-4">
+          <p class="text-2xl font-bold">{{ stats.totalFiles }}</p>
         </nz-card>
-    
-        <nz-card nzTitle="Expired Files" [nzBordered]="false" class="card-expired">
-            <p>{{ stats.expiredFiles }}</p>
+  
+        <!-- Expired Files -->
+        <nz-card nzTitle="Expired Files" [nzBordered]="false" class="card-expired font-semibold p-4">
+          <p class="text-2xl font-bold">{{ stats.expiredFiles }}</p>
         </nz-card>
-    
-        <nz-card nzTitle="Private Files" [nzBordered]="false" class="card-private">
-            <p>{{ stats.privateFiles }}</p>
+  
+        <!-- Private Files -->
+        <nz-card nzTitle="Private Files" [nzBordered]="false" class="card-private font-semibold p-4">
+          <p class="text-2xl font-bold">{{ stats.privateFiles }}</p>
         </nz-card>
-    </div>
-    <div class="dashboard-grid mt-5">
-        <nz-card nzTitle="Public Files" [nzBordered]="false" class="card-public">
-            <p>{{ stats.publicFiles }}</p>
+  
+        <!-- Public Files -->
+        <nz-card nzTitle="Public Files" [nzBordered]="false" class="card-public font-semibold p-4">
+          <p class="text-2xl font-bold">{{ stats.publicFiles }}</p>
         </nz-card>
-    
-        <nz-card nzTitle="Protected Files" [nzBordered]="false" class="card-protected">
-            <p>{{ stats.passwordProtectedFiles }}</p>
+  
+        <!-- Protected Files -->
+        <nz-card nzTitle="Protected Files" [nzBordered]="false" class="card-protected font-semibold p-4">
+          <p class="text-2xl font-bold">{{ stats.passwordProtectedFiles }}</p>
         </nz-card>
-    
-        <nz-card nzTitle="Total Downloads" [nzBordered]="false" class="card-downloads">
-            <p>{{ stats.totalDownloads }}</p>
+  
+        <!-- Total Downloads -->
+        <nz-card nzTitle="Total Downloads" [nzBordered]="false" class="card-downloads font-semibold p-4">
+          <p class="text-2xl font-bold">{{ stats.totalDownloads }}</p>
         </nz-card>
-    </div>
-</nz-spin>
+      </div>
+    </nz-spin>
+  </div>
+  
