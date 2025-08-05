@@ -1,81 +1,96 @@
-# 🗂️ Vaultiva – Frontend
+# 🗂️ Vaultiva – Secure File Sharing Frontend
 
-Secure file-sharing frontend with features like watermarking, access control, and activity tracking. Designed for privacy-focused document workflows.
-Built using Angular v19, NG Zorro, and Tailwind CSS.
+A modern, secure file-sharing frontend with watermarking, access control, and activity tracking — built for privacy-focused document workflows.
+
+> ⚙️ Built with Angular 19, NG Zorro (Ant Design), and Tailwind CSS.
 
 ---
 
 ## 🔗 Related Repository
 
-This is the frontend part of a fullstack secure file-sharing project.  
-👉 Backend repo: [vaultiva-backend](https://github.com/setyaraka/vaultiva-backend)
+This is the **frontend** of a full-stack secure file-sharing project.
+
+👉 Backend Repo: [vaultiva-backend](https://github.com/setyaraka/vaultiva-backend)
 
 ---
 
 ## 🚀 Live Demo
 
-🌐 https://vaultiva.cloud.
+🌐 [https://vaultiva.cloud](https://vaultiva.cloud)
 
-🔐 Try uploading a file with password protection or watermark preview.
+🔐 Try uploading a file with password protection and see the watermark preview feature in action.
 
 ---
 
 ## 🧰 Tech Stack
 
-- **Framework**: Angular v19
-- **UI**: NG Zorro (Ant Design)
-- **Styling**: Tailwind CSS  
-- **Testing**: Jasmine + Karma
-- **API Integration**: RESTful with NestJS backend
+| Layer         | Tech                     |
+|---------------|--------------------------|
+| Framework     | Angular v19              |
+| UI Components | NG Zorro (Ant Design)    |
+| Styling       | Tailwind CSS             |
+| Animation     | Lottie (ngx-lottie + lottie-web) |
+| Testing       | Jasmine + Karma          |
+| API           | RESTful (NestJS backend) |
 
 ---
 
 ## 🔐 Key Features
 
-- User Authentication (JWT)
-- File Upload with Preview
-- Password-Protected File Sharing
-- Expired File Handling
-- Watermark Preview (PDF & Image)
-- Download & View Statistics
-- Dashboard: File list, stats, activity log
+- ✅ User Authentication (JWT)
+- 📁 File Upload with Preview
+- 🔒 Password-Protected File Sharing
+- ⏰ Expiration Handling
+- 🖋️ Watermark Preview (PDF & Images)
+- 📥 Download & View Tracking
+- 📊 Dashboard with Stats & Activity Log
 
 ---
 
-## 🛠️ Setup
+## 🛠️ Getting Started
+
+### 1. Install dependencies and start dev server
 
 ```bash
 npm install
 ng serve
 ```
 
-Configure environment.ts to point to your backend API:
+### 2. Configure environment
+
+Edit src/environments/environment.ts:
 ```
-// src/environments/environment.ts
 export const environment = {
   production: false,
   apiUrl: 'https://your-backend-url.com',
 };
 ```
+---
 
 ## 📌 About the Project
 
-Vaultiva is a secure file-sharing MVP built to address the real-world needs of protecting sensitive documents.
+Vaultiva is a secure file-sharing MVP designed to simulate enterprise-grade document workflows with a focus on privacy, auditability, and access control.
+It includes:
+- 🖋️ Watermarking for PDF & image previews
+- 🔐 Password and expiry-based access control
+- 🧾 Audit logging for user traceability
+- 📊 Stats dashboard for monitoring views and downloads
+- ⚙️ Flexible file visibility (public / protected / private)
 
-It focuses on simulating enterprise-grade document workflows, including:
-
-- 🖋️ Watermarking for PDF and image previews  
-- 🔐 Password and expiration-based access control  
-- 🧾 Audit logging and user traceability  
-- 📊 Stats dashboard for views and downloads  
-- ⚙️ Flexible file visibility settings (public, protected, private)
-
-The project emphasizes both **user-friendly file sharing** and **backend traceability**, making it suitable for professional environments where document access needs to be controlled and monitored.
+---
 
 ## 🎯 Why This Project Matters
 
-Vaultiva was built as a practical exploration of how document-sharing systems work in real business contexts. It demonstrates:
+Vaultiva is built as a practical exploration of document-sharing systems in real-world contexts. It demonstrates:
 
 - ⚙️ Component-based Angular architecture
-- 🔐 Real-world security flows (password, watermark, expiry)
-- 📊 Integration of stats and activity monitoring
+- 🔐 Secure file workflows (password, watermark, expiry)
+- 📊 Real-time stats & activity tracking integration
+- 🧠 A clean and scalable frontend codebase for modern Angular projects
+
+---
+
+## 🙋 Feedback
+
+Have thoughts or found a bug?  
+Feel free to open an issue for any suggestions or questions.
