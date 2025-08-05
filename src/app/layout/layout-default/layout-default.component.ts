@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -27,11 +27,35 @@ import { AuthService } from '../../core/services/auth.service';
 })
 export class LayoutDefaultComponent {
   isCollapsed = false;
+  isMobile = false;
+  sidebarVisible = false;
 
   constructor(
     private authService: AuthService,
     private message: NzMessageService
-  ) {}
+  ) {
+    this.checkScreenSize();
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    this.isMobile = window.innerWidth < 768;
+    if (this.isMobile) {
+      this.isCollapsed = true;
+      this.sidebarVisible = false;
+    } else {
+      this.isCollapsed = false;
+      this.sidebarVisible = true;
+    }
+  }
+
+  toggleSidebar() {
+    this.sidebarVisible = !this.sidebarVisible;
+  }
 
   logout() {
     this.authService.logout();

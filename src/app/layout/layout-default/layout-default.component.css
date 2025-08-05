@@ -61,13 +61,6 @@ nz-header {
   z-index: 2;
 }
 
-/* .app-header {
-  position: relative;
-  height: 64px;
-  padding: 0;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
-} */
 .app-header {
   display: flex;
   align-items: center;
@@ -86,4 +79,14 @@ nz-content {
   padding: 24px;
   background: #fff;
   height: 100%;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
 }
