@@ -1,15 +1,15 @@
 <nz-table 
-        #basicTable 
-        [nzData]="fileState.data"
-        [nzPageSize]="fileState.limit"
-        [nzPageIndex]="fileState.page"
-        [nzTotal]="fileState.total"
-        [nzShowPagination]="true"
-        [nzLoading]="isLoading"
-        (nzPageIndexChange)="onPageChange($event)"
-        [nzFrontPagination]="false"
-        [nzScroll]="{ y: '50em' }"
-        >
+    #basicTable 
+    [nzData]="fileState.data"
+    [nzPageSize]="fileState.limit"
+    [nzPageIndex]="fileState.page"
+    [nzTotal]="fileState.total"
+    [nzShowPagination]="true"
+    [nzLoading]="isLoading"
+    (nzPageIndexChange)="onPageChange($event)"
+    [nzFrontPagination]="false"
+    [nzScroll]="{ y: '50em' }"
+    >
     <thead>
         <tr>
             <th>File Name</th>
@@ -56,7 +56,6 @@
                             <i nz-icon nzType="loading" nzTheme="outline" nz-spin></i>
                         </ng-template>
                     </button>
-
                   
                     <button title="Access Log" nz-button nzType="primary" [nzDanger]="false" (click)="openAccessLogModal(file.id)">
                       <i nz-icon nzType="file-search" nzTheme="outline"></i>
