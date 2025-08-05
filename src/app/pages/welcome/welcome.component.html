@@ -1,28 +1,30 @@
-<nz-spin [nzSpinning]="isLoading">
-    <div class="dashboard-grid">
-        <nz-card nzTitle="Total Files" [nzBordered]="false" class="card-total">
-            <p>{{ stats.totalFiles }}</p>
-        </nz-card>
-    
-        <nz-card nzTitle="Expired Files" [nzBordered]="false" class="card-expired">
-            <p>{{ stats.expiredFiles }}</p>
-        </nz-card>
-    
-        <nz-card nzTitle="Private Files" [nzBordered]="false" class="card-private">
-            <p>{{ stats.privateFiles }}</p>
-        </nz-card>
-    </div>
-    <div class="dashboard-grid mt-5">
-        <nz-card nzTitle="Public Files" [nzBordered]="false" class="card-public">
-            <p>{{ stats.publicFiles }}</p>
-        </nz-card>
-    
-        <nz-card nzTitle="Protected Files" [nzBordered]="false" class="card-protected">
-            <p>{{ stats.passwordProtectedFiles }}</p>
-        </nz-card>
-    
-        <nz-card nzTitle="Total Downloads" [nzBordered]="false" class="card-downloads">
-            <p>{{ stats.totalDownloads }}</p>
-        </nz-card>
-    </div>
-</nz-spin>
+<div class="h-[500px] overflow-y-auto">
+    <nz-spin [nzSpinning]="isLoading">
+        <div class="dashboard-grid">
+            <nz-card nzTitle="Total Files" [nzBordered]="false" class="card-total">
+                <p>{{ stats.totalFiles }}</p>
+            </nz-card>
+        
+            <nz-card nzTitle="Expired Files" [nzBordered]="false" class="card-expired">
+                <p>{{ stats.expiredFiles }}</p>
+            </nz-card>
+        
+            <nz-card nzTitle="Private Files" [nzBordered]="false" class="card-private">
+                <p>{{ stats.privateFiles }}</p>
+            </nz-card>
+        </div>
+        <div class="dashboard-grid mt-5">
+            <nz-card nzTitle="Public Files" [nzBordered]="false" class="card-public">
+                <p>{{ stats.publicFiles }}</p>
+            </nz-card>
+        
+            <nz-card nzTitle="Protected Files" [nzBordered]="false" class="card-protected">
+                <p>{{ stats.passwordProtectedFiles }}</p>
+            </nz-card>
+        
+            <nz-card nzTitle="Total Downloads" [nzBordered]="false" class="card-downloads">
+                <p>{{ stats.totalDownloads }}</p>
+            </nz-card>
+        </div>
+    </nz-spin>
+</div>
