@@ -47,7 +47,8 @@
         Expired: {{file.expiresAt ? formatDateToShort(file.expiresAt) : '-'}}
       </div>
 
-      <div class="absolute top-2 right-2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <!-- Hover Action in Desktop View -->
+      <div class="absolute top-2 right-2 hidden lg:flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="downloadFile(file.id, file.filename)" [disabled]="loadingMap[file.id]">
           <ng-container *ngIf="!loadingMap[file.id]; else loadingIcon">
             <i nz-icon nzType="download"></i>
@@ -67,6 +68,36 @@
         </button>
         <button nz-button nzType="text" nzShape="circle" nzSize="small" nzDanger (click)="onDeleteFile(file.id)">
           <i nz-icon nzType="delete"></i>
+        </button>
+      </div>
+
+      <!-- More Button for Mobile -->
+      <div class="absolute top-2 right-2 lg:hidden">
+        <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="toggleMobileMenu(file.id)">
+          <i nz-icon nzType="more" nzTheme="outline"></i>
+        </button>
+      </div>
+      <!-- Action Menu Mobile -->
+      <div *ngIf="activeMobileMenuId === file.id" class="lg:hidden mt-2 border-t pt-2 space-y-2 text-sm">
+        <button class="flex items-center space-x-2 w-full" (click)="downloadFile(file.id, file.filename)">
+          <i nz-icon nzType="download"></i>
+          <span>Download</span>
+        </button>
+        <button class="flex items-center space-x-2 w-full" (click)="openAccessLogModal(file.id)">
+          <i nz-icon nzType="file-search"></i>
+          <span>Details</span>
+        </button>
+        <button *ngIf="isShareable(file)" class="flex items-center space-x-2 w-full" (click)="openShareModal(file.id)">
+          <i nz-icon nzType="share-alt"></i>
+          <span>Share</span>
+        </button>
+        <button class="flex items-center space-x-2 w-full" (click)="openShareTableModal(file.id)">
+          <i nz-icon nzType="eye"></i>
+          <span>Access Log</span>
+        </button>
+        <button class="flex items-center space-x-2 w-full text-red-600" (click)="onDeleteFile(file.id)">
+          <i nz-icon nzType="delete"></i>
+          <span>Delete</span>
         </button>
       </div>
     </div>

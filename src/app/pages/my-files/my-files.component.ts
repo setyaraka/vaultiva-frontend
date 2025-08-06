@@ -72,6 +72,7 @@ export class MyFilesComponent implements OnInit {
   isLoading = false;
   isVisible = false;
   loadingMap: { [key: string]: boolean } = {};
+  activeMobileMenuId: string | null = null;
 
   ngOnInit(): void {
     this.fetchFiles(1);
@@ -154,6 +155,10 @@ export class MyFilesComponent implements OnInit {
     return `${environment.apiUrl}/${filename}`;
   }
 
+  toggleMobileMenu(id: string): void {
+    this.activeMobileMenuId = this.activeMobileMenuId === id ? null : id;
+  }
+
   openAccessLogModal(fileId: string) {
     this.modal.create({
       nzTitle: 'File Access Log',
@@ -197,7 +202,6 @@ export class MyFilesComponent implements OnInit {
             this.fetchFiles(1);
           },
           error: (err) => {
-            console.log(err, '>>> ER')
             this.message.error("Failed delete file");
           }
         })
