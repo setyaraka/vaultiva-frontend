@@ -8,6 +8,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 import { environment } from '../../../environments/environment';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'app-register',
@@ -19,13 +20,16 @@ import { environment } from '../../../environments/environment';
     NzInputModule,
     NzMessageModule,
     NzCardModule,
-    RouterModule
+    RouterModule,
+    NzIconModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent implements OnInit {
   isLoading = false;
+  showPassword = false;
+  showConfirmPassword = false;
 
   private fb = inject(NonNullableFormBuilder);
   private http = inject(HttpClient);
@@ -37,14 +41,19 @@ export class RegisterComponent implements OnInit {
     password: ['', [Validators.required]],
     confirmPassword: ['', [Validators.required, this.matchPasswordValidator.bind(this)]]
   });
-  
+
   matchPasswordValidator(control: AbstractControl): { [key: string]: boolean } | null {
     if (!this.validateForm) return null;
     const password = this.validateForm.get('password')?.value;
-    if (control.value !== password) {
-      return { mismatch: true };
-    }
-    return null;
+    return control.value !== password ? { mismatch: true } : null;
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleConfirmPassword(): void {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 
   submitForm(): void {

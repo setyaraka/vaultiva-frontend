@@ -1,6 +1,6 @@
-<div class="min-h-screen bg-[#f0f2f5]! flex items-center justify-center px-4">
+<div class="min-h-screen flex items-center justify-center px-4">
   <nz-card
-    class="w-full max-w-sm shadow-sm border border-gray-600 rounded-lg"
+    class="w-full max-w-sm shadow-lg border border-gray-300 rounded-xl transition-transform duration-300 hover:scale-[1.01]"
     [nzBordered]="true"
     [nzBodyStyle]="{ padding: '2rem' }"
   >
@@ -10,11 +10,14 @@
       class="login-form"
       (ngSubmit)="submitForm()"
     >
+      <!-- Branding -->
       <div class="text-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Vaultiva</h1>
-        <p class="text-sm text-gray-500">Login to your account</p>
+        <img src="assets/images/logo.png" alt="Vaultiva Logo" class="mx-auto w-16 mb-2" />
+        <h1 class="text-3xl font-bold text-[#364d79]">Vaultiva</h1>
+        <p class="text-sm text-gray-600">Login to your account</p>
       </div>
 
+      <!-- Email Input -->
       <nz-form-item>
         <nz-form-control nzErrorTip="Please input your email!">
           <nz-input-group nzPrefixIcon="user">
@@ -28,6 +31,7 @@
         </nz-form-control>
       </nz-form-item>
 
+      <!-- Password Input -->
       <nz-form-item>
         <nz-form-control nzErrorTip="Please input your password!">
           <nz-input-group nzPrefixIcon="lock">
@@ -46,17 +50,24 @@
         </nz-form-control>
       </nz-form-item>
 
+      <!-- Forgot Password -->
+      <!-- <div class="text-right text-xs text-blue-600 hover:underline cursor-pointer mb-2">
+        <a [routerLink]="['/forgot-password']">Forgot password?</a>
+      </div> -->
+
+      <!-- Login Button -->
       <button
         nz-button
         [nzLoading]="isLoading"
         [nzType]="'primary'"
         [disabled]="isLoading || validateForm.invalid"
-        class="w-full bg-[#364d79]! hover:bg-[#2C3E50]! text-white! mt-4"
+        class="w-full bg-[#364d79]! hover:bg-[#2C3E50]! text-white! font-semibold tracking-wide"
       >
         Log in
       </button>
 
-      <div class="mt-4 text-center text-sm text-gray-600">
+      <!-- Register Link -->
+      <div class="mt-4 text-center text-sm text-gray-700">
         Or
         <a
           [routerLink]="['/register']"
@@ -65,6 +76,7 @@
         >
       </div>
 
+      <!-- Security Note -->
       <p class="text-xs text-gray-400 text-center mt-6">
         Your documents stay secure with Vaultiva.
       </p>

@@ -15,6 +15,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { FileShareListComponent } from '../../components/file-share-list/file-share-list.component';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { ImagePreviewComponent } from '../image-preview/image-preview.component';
+import { Router } from '@angular/router';
 
 interface FileData {
   id: string,
@@ -55,6 +56,7 @@ export class MyFilesComponent implements OnInit {
   private http = inject(HttpClient);
   private message = inject(NzMessageService);
   private modal = inject(NzModalService);
+  private router = inject(Router);
 
   formatDateToShort = formatDateToShort;
   formatTime = formatTime;
@@ -73,6 +75,10 @@ export class MyFilesComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchFiles(1);
+  }
+
+  goToUpload(): void {
+    this.router.navigate(['/upload']);
   }
 
   onPageChange(page: number) {

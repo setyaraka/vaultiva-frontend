@@ -1,16 +1,24 @@
-<div class="min-h-screen bg-[#f0f2f5] flex items-center justify-center px-4">
+<div class="min-h-screen flex items-center justify-center px-4">
   <nz-card 
-    class="w-full max-w-sm shadow-md border border-gray-200 rounded-lg"
+    class="w-full max-w-sm shadow-lg rounded-lg transition-transform duration-300 hover:scale-[1.01]"
     [nzBordered]="false" 
-    [nzBodyStyle]="{ padding: '2rem' }"
+    [nzBodyStyle]="{ padding: '2.5rem 2rem' }"
   >
-    <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" class="space-y-6">
+    <form 
+      nz-form 
+      [formGroup]="validateForm" 
+      (ngSubmit)="submitForm()" 
+      class="space-y-6"
+    >
       <div class="text-center mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Vaultiva</h1>
-        <p class="text-sm text-gray-500 mt-1">Create your new account</p>
+        <!-- Optional illustration -->
+        <img src="assets/images/logo.png" alt="Vaultiva Logo" class="mx-auto w-16 mb-2" />
+        <h1 class="text-2xl font-bold text-[#364d79]">Vaultiva</h1>
+        <p class="text-sm text-gray-600 mt-1">Create your new account</p>
         <p class="text-xs text-gray-400 mt-1">Securely manage your documents with Vaultiva.</p>
       </div>
 
+      <!-- Email -->
       <nz-form-item>
         <nz-form-control [nzErrorTip]="'Please input a valid email!'">
           <nz-input-group nzPrefixIcon="user">
@@ -19,55 +27,70 @@
               type="email" 
               formControlName="email" 
               placeholder="Email" 
-              class="focus:ring-2 focus:ring-[#1677ff] focus:border-[#1677ff]" 
+              class="focus:ring-2 focus:ring-[#1677ff] focus:outline-none"
             />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
 
+      <!-- Password -->
       <nz-form-item>
         <nz-form-control [nzErrorTip]="'Please input your password!'">
           <nz-input-group nzPrefixIcon="lock">
             <input 
               nz-input 
-              type="password" 
+              [type]="showPassword ? 'text' : 'password'" 
               formControlName="password" 
-              placeholder="Password" 
-              class="focus:ring-2 focus:ring-[#1677ff] focus:border-[#1677ff]" 
+              placeholder="Password"
+              class="focus:ring-2 focus:ring-[#1677ff] focus:outline-none"
+            />
+            <nz-icon 
+              class="ml-2 cursor-pointer text-gray-400 hover:text-gray-600"
+              [nzType]="showPassword ? 'eye-invisible' : 'eye'" 
+              (click)="togglePassword()"
             />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
 
+      <!-- Confirm Password -->
       <nz-form-item>
         <nz-form-control [nzErrorTip]="'Passwords do not match!'">
           <nz-input-group nzPrefixIcon="lock">
             <input 
               nz-input 
-              type="password" 
+              [type]="showConfirmPassword ? 'text' : 'password'" 
               formControlName="confirmPassword" 
               placeholder="Confirm Password" 
-              class="focus:ring-2 focus:ring-[#1677ff] focus:border-[#1677ff]" 
+              class="focus:ring-2 focus:ring-[#1677ff] focus:outline-none"
+            />
+            <nz-icon 
+              class="ml-2 cursor-pointer text-gray-400 hover:text-gray-600"
+              [nzType]="showConfirmPassword ? 'eye-invisible' : 'eye'" 
+              (click)="toggleConfirmPassword()"
             />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
 
+      <!-- Register Button -->
       <div class="text-center space-y-3">
         <button 
           nz-button 
           [nzType]="'default'" 
           [nzLoading]="isLoading"
           [disabled]="isLoading || validateForm.invalid"
-          class="w-full bg-[#364d79]! hover:bg-[#2C3E50]! text-white! font-semibold transition-colors duration-200 rounded-md py-2"
+          class="w-full bg-[#364d79]! hover:bg-[#2C3E50]! text-white! font-semibold tracking-wide rounded-md py-2 transition-colors duration-200"
         >
           Register
         </button>
-        <div class="text-sm mt-2 text-gray-600">
+
+        <!-- Redirect to login -->
+        <div class="text-sm text-gray-600 mt-3">
           Already have an account? 
           <a 
             [routerLink]="['/login']" 
-            class="text-[#1677ff]! hover:underline font-medium"
+            class="text-[#1677ff] hover:underline font-medium"
           >
             Login Now!
           </a>
