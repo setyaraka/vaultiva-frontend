@@ -13,6 +13,8 @@ import { AccessLogModalComponent } from '../../components/access-log-modal/acces
 import { ShareFileModalComponent } from '../../components/share-file-modal/share-file-modal.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { FileShareListComponent } from '../../components/file-share-list/file-share-list.component';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { ImagePreviewComponent } from '../image-preview/image-preview.component';
 
 interface FileData {
   id: string,
@@ -24,6 +26,7 @@ interface FileData {
   shareLink: string,
   visibility: string,
   originalName: string,
+  url: string
 }
 
 interface FileListState {
@@ -42,8 +45,8 @@ interface FileListState {
     NzButtonModule,
     NzDividerModule,
     NzModalModule,
-    // RouterLink,
-    NzIconModule
+    NzIconModule,
+    NzPaginationModule
   ],
   templateUrl: './my-files.component.html',
   styleUrl: './my-files.component.css'
@@ -129,6 +132,22 @@ export class MyFilesComponent implements OnInit {
     return new Date(date) < new Date();
   }
 
+  isImage(filename: string): boolean {
+    return /\.(jpg|jpeg|png|gif|bmp|webp)$/i.test(filename);
+  }
+  
+  isPdf(filename: string): boolean {
+    return /\.pdf$/i.test(filename);
+  }
+
+  isShareable(file: FileData): boolean {
+    return file.visibility !== 'private';
+  }  
+
+  getFileUrl(filename: string): string {
+    return `${environment.apiUrl}/${filename}`;
+  }
+
   openAccessLogModal(fileId: string) {
     this.modal.create({
       nzTitle: 'File Access Log',
@@ -179,6 +198,21 @@ export class MyFilesComponent implements OnInit {
       },
       nzCancelText: 'Cancel'
     })
-    
+  }
+
+  openImagePreview(file: FileData): void {
+    console.log(file.url, '>>> FILE URL')
+    this.modal.create({
+      nzTitle: file.originalName,
+      nzContent: ImagePreviewComponent,
+      nzData: {
+        url: file.url,
+        alt: file.originalName,
+      },
+      nzFooter: null,
+      nzWidth: 'auto',
+      nzClosable: true,
+      nzBodyStyle: { padding: '0' },
+    });
   }
 }

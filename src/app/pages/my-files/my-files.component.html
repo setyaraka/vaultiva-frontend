@@ -1,4 +1,4 @@
-<nz-table 
+<!-- <nz-table 
     #basicTable 
     [nzData]="fileState.data"
     [nzPageSize]="fileState.limit"
@@ -76,4 +76,80 @@
             </td>
         </tr>
     </tbody>
-</nz-table>
+</nz-table> -->
+<div class="p-4 max-h-[78vh] overflow-y-auto">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div *ngFor="let file of fileState.data" class="bg-white rounded-lg shadow hover:shadow-lg p-4 relative group">
+        <div class="flex justify-center mb-3">
+            <img 
+                *ngIf="isImage(file.filename)" 
+                [src]="file.url" 
+                alt="url" 
+                (click)="openImagePreview(file)"
+                class="w-24 h-24 object-contain" 
+            />
+            <nz-icon 
+              *ngIf="!isImage(file.filename) && isPdf(file.filename)" 
+              nzType="file-pdf"
+              nzTheme="fill" 
+              class="text-6xl text-red-600! h-24 w-24"
+            />
+            <nz-icon 
+              *ngIf="!isImage(file.filename) && !isPdf(file.filename)" 
+              nzType="file"
+              nzTheme="fill" 
+              class="text-6xl text-gray-300"
+            />
+        </div>
+  
+        <div class="text-sm font-medium truncate" title="{{file.originalName}}">
+          {{file.originalName}}
+        </div>
+
+        <div class="text-xs text-gray-500 mt-1">
+          {{displayVisibility(file.visibility)}} • Limit: {{file.downloadLimit || 0}}
+        </div>
+  
+        <div class="text-xs text-gray-400 mt-2">
+          Created: {{formatDateToShort(file.createdAt)}}
+        </div>
+        <div class="text-xs text-gray-400">
+          Expired: {{file.expiresAt ? formatDateToShort(file.expiresAt) : '-'}}
+        </div>
+  
+        <div class="absolute top-2 right-2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="downloadFile(file.id, file.filename)" [disabled]="loadingMap[file.id]">
+            <ng-container *ngIf="!loadingMap[file.id]; else loadingIcon">
+              <i nz-icon nzType="download"></i>
+            </ng-container>
+            <ng-template #loadingIcon>
+              <i nz-icon nzType="loading" nzSpin></i>
+            </ng-template>
+          </button>
+          <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="openAccessLogModal(file.id)">
+            <i nz-icon nzType="file-search"></i>
+          </button>
+          <button *ngIf="isShareable(file)" nz-button nzType="text" nzShape="circle" nzSize="small" (click)="openShareModal(file.id)">
+            <i nz-icon nzType="share-alt"></i>
+          </button>
+          <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="openShareTableModal(file.id)">
+            <i nz-icon nzType="eye"></i>
+          </button>
+          <button nz-button nzType="text" nzShape="circle" nzSize="small" nzDanger (click)="onDeleteFile(file.id)">
+            <i nz-icon nzType="delete"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Pagination -->
+    <nz-pagination
+      [nzPageIndex]="fileState.page"
+      [nzPageSize]="fileState.limit"
+      [nzTotal]="fileState.total"
+      (nzPageIndexChange)="onPageChange($event)"
+      [nzShowSizeChanger]="false"
+      class="mt-4! flex justify-center"
+    ></nz-pagination>
+  </div>
+  
