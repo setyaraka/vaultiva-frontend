@@ -201,7 +201,6 @@ export class MyFilesComponent implements OnInit {
   }
 
   openImagePreview(file: FileData): void {
-    console.log(file.url, '>>> FILE URL')
     this.modal.create({
       nzTitle: file.originalName,
       nzContent: ImagePreviewComponent,
