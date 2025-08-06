@@ -47,7 +47,7 @@
         Expired: {{file.expiresAt ? formatDateToShort(file.expiresAt) : '-'}}
       </div>
 
-      <!-- Tombol aksi untuk desktop (hover) -->
+      <!-- Hover Action in Desktop View -->
       <div class="absolute top-2 right-2 hidden lg:flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="downloadFile(file.id, file.filename)" [disabled]="loadingMap[file.id]">
           <ng-container *ngIf="!loadingMap[file.id]; else loadingIcon">
