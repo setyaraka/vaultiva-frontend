@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
@@ -10,6 +10,8 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { environment } from '../../../environments/environment';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'app-login',
@@ -20,15 +22,17 @@ import { environment } from '../../../environments/environment';
     NzCheckboxModule,
     NzFormModule,
     NzInputModule,
-    NzMessageModule,
     NzCardModule,
-    RouterModule
+    RouterModule,
+    NzToolTipModule,
+    NzIconModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   isLoading = false;
+  passwordVisible = false;
 
   private fb = inject(NonNullableFormBuilder);
   private http = inject(HttpClient);
