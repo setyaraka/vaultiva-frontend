@@ -1,16 +1,21 @@
 <nz-layout class="app-layout">
-  <nz-sider class="menu-sidebar"
+  <nz-sider
+    class="menu-sidebar"
+    *ngIf="sidebarVisible"
+    [nzBreakpoint]="'md'"
     nzCollapsible
     nzWidth="256px"
-    nzBreakpoint="md"
     [(nzCollapsed)]="isCollapsed"
-    [nzTrigger]="null">
+    [nzTrigger]="null"
+    [ngClass]="{ 'fixed z-50 h-screen top-0 left-0 md:relative': isMobile }"
+  >
     <div class="sidebar-logo">
       <a href="https://ng.ant.design/" target="_blank">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
         <h1>VAULTIVA</h1>
       </a>
     </div>
+
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
       <li nz-menu-item nzMatchRouter>
         <a routerLink="/welcome">
@@ -28,19 +33,30 @@
           </li>
         </ul>
       </li>
-    </ul>    
+    </ul>
   </nz-sider>
+
   <nz-layout>
     <nz-header>
-      <div class="app-header">
-        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-          <nz-icon class="trigger" [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
+      <div class="app-header flex justify-between items-center px-4">
+        
+        <span class="md:hidden cursor-pointer" (click)="toggleSidebar()">
+          <nz-icon nzType="menu" nzTheme="outline"></nz-icon>
         </span>
+
+        <span
+          class="header-trigger hidden! md:inline-block! cursor-pointer"
+          (click)="isCollapsed = !isCollapsed"
+        >
+          <nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
+        </span>
+
         <button class="text-right" nz-button nzType="default" (click)="logout()">
           <nz-icon title="Logout" nzType="logout" nzTheme="outline" />
         </button>
       </div>
     </nz-header>
+
     <nz-content>
       <div class="inner-content">
         <router-outlet></router-outlet>
