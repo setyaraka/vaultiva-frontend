@@ -23,54 +23,24 @@
 </div>
 
 <div class="p-4" *ngIf="activeTab === 'fileLog'">
-  <nz-table 
-    #basicTable 
-    [nzData]="dataSet.data"
-    [nzPageSize]="dataSet.limit"
-    [nzPageIndex]="dataSet.page"
-    [nzTotal]="dataSet.total"
-    [nzShowPagination]="true"
-    [nzLoading]="isLoading"
-    (nzPageIndexChange)="onPageChange($event)"
-    [nzFrontPagination]="false"
-    [nzScroll]="{ y: '50em' }"
+  <ng-container *ngIf="!isLoading && dataSet.data.length === 0; else tableFileLog">
+    <nz-empty
+      nzNotFoundImage="simple"
+      [nzNotFoundContent]="contentTpl"
     >
-    <thead>
-      <tr>
-        <th>Accessed At</th>
-        <th>Email</th>
-        <th>Ip Address</th>
-        <th>Browser & OS</th>
-        <th>Access Type</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of basicTable.data">
-        <td>
-          <span>{{formatDateWithTime(data.accessedAt)}} WIB</span><br>
-        </td>
-        <td class="text-center">{{ data.email || '-' }}</td>
-        <td>
-          {{ data.ipAddress === '::1' ? 'localhost (::1)' : data.ipAddress }}
-          <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy IP"
-            (click)="copyToClipboard(data.ipAddress)">
-            <nz-icon nzType="copy" nzTheme="outline" />
-          </button>
-        </td>
-        <td>
-          {{ data.userAgent | userAgentParser }}
-          <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy User Agent"
-            (click)="copyToClipboard(data.userAgent)">
-            <nz-icon nzType="copy" nzTheme="outline" />
-          </button>
-        </td>
-        <td>{{ data.email === null ? "Uploader" : "External User" }}</td>
-      </tr>
-    </tbody>
-  </nz-table>
-</div>
-<div class="p-4" *ngIf="activeTab === 'failedLog'">
-  <nz-table 
+      <ng-template #contentTpl>
+        <span>
+          No access logs available
+          <span nz-tooltip nzTooltipTitle="This will show who accessed or attempted to access the file.">
+            <nz-icon nzType="question-circle" class="ml-1 text-gray-400" />
+          </span>
+        </span>
+      </ng-template>
+    </nz-empty>
+  </ng-container>
+
+  <ng-template #tableFileLog>
+    <nz-table 
       #basicTable 
       [nzData]="dataSet.data"
       [nzPageSize]="dataSet.limit"
@@ -82,37 +52,99 @@
       [nzFrontPagination]="false"
       [nzScroll]="{ y: '50em' }"
     >
-    <thead>
-      <tr>
-        <th>Accessed At</th>
-        <th>Email</th>
-        <th>Ip Address</th>
-        <th>User Agent</th>
-        <th>Reason</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of basicTable.data">
-        <td>
-          <span>{{formatDateWithTime(data.accessedAt)}} WIB</span><br>
-        </td>
-        <td class="text-center">{{ data.email || "-" }}</td>
-        <td>
-          {{ data.ipAddress === '::1' ? 'localhost (::1)' : data.ipAddress }}
-          <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy IP"
-            (click)="copyToClipboard(data.ipAddress)">
-            <nz-icon nzType="copy" nzTheme="outline" />
-          </button>
-        </td>
-        <td>
-          {{ data.userAgent | userAgentParser }}
-          <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy User Agent"
-            (click)="copyToClipboard(data.userAgent)">
-            <nz-icon nzType="copy" nzTheme="outline" />
-          </button>
-        </td>
-        <td>{{data.reason}}</td>
-      </tr>
-    </tbody>
-  </nz-table>
+      <thead>
+        <tr>
+          <th>Accessed At</th>
+          <th>Email</th>
+          <th>Ip Address</th>
+          <th>Browser & OS</th>
+          <th>Access Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{formatDateWithTime(data.accessedAt)}} WIB</td>
+          <td class="text-center">{{ data.email || '-' }}</td>
+          <td>
+            {{ data.ipAddress === '::1' ? 'localhost (::1)' : data.ipAddress }}
+            <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy IP"
+              (click)="copyToClipboard(data.ipAddress)">
+              <nz-icon nzType="copy" nzTheme="outline" />
+            </button>
+          </td>
+          <td>
+            {{ data.userAgent | userAgentParser }}
+            <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy User Agent"
+              (click)="copyToClipboard(data.userAgent)">
+              <nz-icon nzType="copy" nzTheme="outline" />
+            </button>
+          </td>
+          <td>{{ data.email === null ? "Uploader" : "External User" }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-template>
+</div>
+<div class="p-4" *ngIf="activeTab === 'failedLog'">
+  <ng-container *ngIf="!isLoading && dataSet.data.length === 0; else tableFailedLog">
+    <nz-empty
+      nzNotFoundImage="simple" 
+      [nzNotFoundContent]="contentTpl"
+    >
+      <ng-template #contentTpl>
+        <span>
+          No failed access logs found
+          <span nz-tooltip nzTooltipTitle="This will show who accessed or attempted to access the file.">
+            <nz-icon nzType="question-circle" class="ml-1 text-gray-400" />
+          </span>
+        </span>
+      </ng-template>
+    </nz-empty>
+  </ng-container>
+
+  <ng-template #tableFailedLog>
+    <nz-table 
+      #basicTable 
+      [nzData]="dataSet.data"
+      [nzPageSize]="dataSet.limit"
+      [nzPageIndex]="dataSet.page"
+      [nzTotal]="dataSet.total"
+      [nzShowPagination]="true"
+      [nzLoading]="isLoading"
+      (nzPageIndexChange)="onPageChange($event)"
+      [nzFrontPagination]="false"
+      [nzScroll]="{ y: '50em' }"
+    >
+      <thead>
+        <tr>
+          <th>Accessed At</th>
+          <th>Email</th>
+          <th>Ip Address</th>
+          <th>User Agent</th>
+          <th>Reason</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{formatDateWithTime(data.accessedAt)}} WIB</td>
+          <td class="text-center">{{ data.email || '-' }}</td>
+          <td>
+            {{ data.ipAddress === '::1' ? 'localhost (::1)' : data.ipAddress }}
+            <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy IP"
+              (click)="copyToClipboard(data.ipAddress)">
+              <nz-icon nzType="copy" nzTheme="outline" />
+            </button>
+          </td>
+          <td>
+            {{ data.userAgent | userAgentParser }}
+            <button nz-button nzSize="small" nzType="text" nz-tooltip="Copy User Agent"
+              (click)="copyToClipboard(data.userAgent)">
+              <nz-icon nzType="copy" nzTheme="outline" />
+            </button>
+          </td>
+          <td>{{ data.reason }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </ng-template>
 </div>

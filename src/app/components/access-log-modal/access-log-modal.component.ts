@@ -10,6 +10,8 @@ import { UserAgentParserPipe } from '../../core/pipes/user-agent-parser.pipe';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { copyTextToClipboard } from '../../core/utils/copy';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 interface AccessLog {
   accessedAt: string;
@@ -28,7 +30,9 @@ interface AccessLog {
     NzTableModule,
     CommonModule,
     NzIconModule,
-    UserAgentParserPipe
+    UserAgentParserPipe,
+    NzEmptyModule,
+    NzToolTipModule
   ],
   standalone: true,
   templateUrl: './access-log-modal.component.html',
