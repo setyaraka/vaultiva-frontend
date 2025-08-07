@@ -1,5 +1,7 @@
 # 🗂️ Vaultiva – Secure File Sharing Frontend
 
+> ⚠️ This project is a personal open-source showcase. Vaultiva is not a commercial SaaS, but a demonstration of secure file-sharing app development best practices.
+
 A modern, secure file-sharing frontend with watermarking, access control, and activity tracking — built for privacy-focused document workflows.
 
 > ⚙️ Built with Angular 19, NG Zorro (Ant Design), and Tailwind CSS.
@@ -89,6 +91,43 @@ Vaultiva is built as a practical exploration of document-sharing systems in real
 - 🧠 A clean and scalable frontend codebase for modern Angular projects
 
 ---
+
+## 🗺️ Roadmap
+Vaultiva is built with a long-term plan to gradually enhance document protection, user experience, and enterprise readiness.
+
+### 🥇 Stage 1 – Lockdown Basics (MVP)
+- [x] Responsive mobile design overhaul
+- [x] Convert file list from table to card layout (desktop + mobile)
+- [ ] Proxy all file access via backend (token-based)
+- [ ] Hard watermark rendering via backend (pdf-lib + Sharp)
+- [ ] Watermark preview per recipient
+- [ ] Replace <iframe> viewer with PDF.js
+- [ ] Token-based session tracking
+- [ ] Log PDF open event and last page viewed
+- [ ] Basic JS protections (blur on tab out, disable right-click)
+- [ ] Strengthened watermark rendering (positioning, rotating, opacity, content)
+
+### 🥈 Stage 2 – UX & Try Vaultiva
+- [ ] “Try Vaultiva Now” share demo
+- [ ] “View as recipient” simulation
+- [ ] Group file list by protection level
+- [ ] Enhanced empty states and guidance messages
+
+### 🥉 Stage 3 – Abuse Prevention & Performance
+- [ ] Brute-force password protection
+- [ ] IP-based upload/share limiting
+- [ ] Compress dashboard thumbnails
+- [ ] Optimize PDF and asset delivery via CDN
+
+### 🧠 Stage 4 – AI & Smart Recovery
+- [ ] Vaultiva Assistant (AI guide/helper)
+- [ ] “Forgot password?” → reset suggestion or revoke flow
+
+### 💎 Stage 5 – Enterprise-Grade Protections
+- [ ] Server-side image rendering + watermark stamping (Sharp)
+- [ ] Invisible metadata injection (user ID, timestamp, access info)
+- [ ] Multi-device session logging
+- [ ] PDF interaction heatmap & analytics
 
 ## 🙋 Feedback
 
