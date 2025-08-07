@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { environment } from '../../../environments/environment';
@@ -16,6 +16,7 @@ import { FileShareListComponent } from '../../components/file-share-list/file-sh
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { ImagePreviewComponent } from '../image-preview/image-preview.component';
 import { Router } from '@angular/router';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 interface FileData {
   id: string,
@@ -47,7 +48,8 @@ interface FileListState {
     NzDividerModule,
     NzModalModule,
     NzIconModule,
-    NzPaginationModule
+    NzPaginationModule,
+    NzToolTipModule
   ],
   templateUrl: './my-files.component.html',
   styleUrl: './my-files.component.css'
@@ -157,6 +159,14 @@ export class MyFilesComponent implements OnInit {
 
   toggleMobileMenu(id: string): void {
     this.activeMobileMenuId = this.activeMobileMenuId === id ? null : id;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.mobile-menu') && !target.closest('.more-button')) {
+      this.activeMobileMenuId = null;
+    }
   }
 
   openAccessLogModal(fileId: string) {
