@@ -127,12 +127,22 @@ export class MyFilesComponent implements OnInit {
         this.loadingMap[fileId] = false;
       },
       error: (err) => {
-        if (err.status === 403) {
-          this.message.error('Download failed:' + (err.error?.message || 'You do not have permission to access this file'));
+        if (err.status === 403 && err.error instanceof Blob) {
+          const reader = new FileReader();
+          reader.onload = (e: any) => {
+            try {
+              const errorJson = JSON.parse(e.target.result);
+              this.message.error('Download failed: ' + (errorJson.message || 'You do not have permission to access this file'));
+            } catch {
+              this.message.error('The file could not be downloaded');
+            }
+            this.loadingMap[fileId] = false;
+          };
+          reader.readAsText(err.error);
         } else {
           this.message.error('The file could not be downloaded');
+          this.loadingMap[fileId] = false;
         }
-        this.loadingMap[fileId] = false;
       }
     });
   }
