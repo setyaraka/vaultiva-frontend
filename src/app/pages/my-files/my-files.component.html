@@ -72,13 +72,14 @@
       </div>
 
       <!-- More Button for Mobile -->
-      <div class="absolute top-2 right-2 lg:hidden">
+      <div class="more-button absolute top-2 right-2 lg:hidden">
         <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="toggleMobileMenu(file.id)">
           <i nz-icon nzType="more" nzTheme="outline"></i>
         </button>
       </div>
+
       <!-- Action Menu Mobile -->
-      <div *ngIf="activeMobileMenuId === file.id" class="lg:hidden mt-2 border-t pt-2 space-y-2 text-sm">
+      <div *ngIf="activeMobileMenuId === file.id" class="mobile-menu lg:hidden mt-2 border-t pt-2 space-y-2 text-sm">
         <button class="flex items-center space-x-2 w-full" (click)="downloadFile(file.id, file.filename)">
           <i nz-icon nzType="download"></i>
           <span>Download</span>

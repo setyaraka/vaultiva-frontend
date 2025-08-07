@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { environment } from '../../../environments/environment';
@@ -157,6 +157,14 @@ export class MyFilesComponent implements OnInit {
 
   toggleMobileMenu(id: string): void {
     this.activeMobileMenuId = this.activeMobileMenuId === id ? null : id;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.mobile-menu') && !target.closest('.more-button')) {
+      this.activeMobileMenuId = null;
+    }
   }
 
   openAccessLogModal(fileId: string) {
