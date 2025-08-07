@@ -1,41 +1,87 @@
-<nz-table 
-    #basicTable 
-    [nzData]="fileShareState.data"
-    [nzPageSize]="fileShareState.limit"
+<!-- Bagian Desktop -->
+<nz-table
+  *ngIf="!isMobile && fileShareState.data.length > 0"
+  #basicTable
+  [nzData]="fileShareState.data"
+  [nzPageSize]="fileShareState.limit"
+  [nzPageIndex]="fileShareState.page"
+  [nzTotal]="fileShareState.total"
+  [nzShowPagination]="true"
+  [nzLoading]="isLoading"
+  (nzPageIndexChange)="onPageChange($event)"
+  [nzFrontPagination]="false"
+  [nzScroll]="{ y: '50em' }"
+  class="min-w-full"
+>
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Email</th>
+      <th>Max Download</th>
+      <th>Download Count</th>
+      <th>Note</th>
+      <th>Created At</th>
+      <th>Expired At</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.token }}</td>
+      <td>{{ data.email }}</td>
+      <td>{{ data.maxDownload }}</td>
+      <td>{{ data.downloadCount }}</td>
+      <td>{{ data.note }}</td>
+      <td>
+        <span>{{ formatDate(data.createdAt) }}</span><br />
+        <span>{{ formatTime(data.createdAt) }} WIB</span>
+      </td>
+      <td>
+        <span>{{ formatDate(data.expiresAt) }}</span><br />
+        <span>{{ formatTime(data.expiresAt) }} WIB</span>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
+<!-- Bagian Mobile Card -->
+<div *ngIf="isMobile && fileShareState.data.length > 0" class="space-y-4">
+  <div
+    *ngFor="let data of fileShareState.data"
+    class="p-4 bg-white rounded shadow flex flex-col gap-2"
+  >
+    <div><span class="font-semibold">Token:</span> {{ data.token }}</div>
+    <div><span class="font-semibold">Email:</span> {{ data.email }}</div>
+    <div>
+      <span class="font-semibold">Max Download:</span> {{ data.maxDownload }}
+    </div>
+    <div>
+      <span class="font-semibold">Download Count:</span> {{ data.downloadCount }}
+    </div>
+    <div><span class="font-semibold">Note:</span> {{ data.note }}</div>
+    <div>
+      <span class="font-semibold">Created At:</span>
+      {{ formatDate(data.createdAt) }} - {{ formatTime(data.createdAt) }} WIB
+    </div>
+    <div>
+      <span class="font-semibold">Expired At:</span>
+      {{ formatDate(data.expiresAt) }} - {{ formatTime(data.expiresAt) }} WIB
+    </div>
+  </div>
+
+  <!-- Pagination Mobile -->
+  <nz-pagination
     [nzPageIndex]="fileShareState.page"
     [nzTotal]="fileShareState.total"
-    [nzShowPagination]="true"
-    [nzLoading]="isLoading"
+    [nzPageSize]="fileShareState.limit"
     (nzPageIndexChange)="onPageChange($event)"
-    [nzFrontPagination]="false"
-    [nzScroll]="{ y: '50em' }"
-    >
-    <thead>
-      <tr>
-        <th>Token</th>
-        <th>Email</th>
-        <th>Max Download</th>
-        <th>Download Count</th>
-        <th>Note</th>
-        <th>Created At</th>
-        <th>Expired At</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of basicTable.data">
-        <td>{{ data.token }}</td>
-        <td>{{ data.email }}</td>
-        <td>{{ data.maxDownload }}</td>
-        <td>{{ data.downloadCount }}</td>
-        <td>{{ data.note }}</td>
-        <td>
-            <span>{{formatDate(data.createdAt)}}</span><br>
-            <span>{{formatTime(data.createdAt)}} WIB</span>
-        </td>
-        <td>
-            <span>{{formatDate(data.expiresAt)}}</span><br>
-            <span>{{formatTime(data.expiresAt)}} WIB</span>
-        </td>
-      </tr>
-    </tbody>
-</nz-table>
+    [nzSimple]="true"
+    class="mt-4"
+  ></nz-pagination>
+</div>
+
+<!-- nz-empty untuk data kosong -->
+<nz-empty
+  *ngIf="!isLoading && fileShareState.data.length === 0"
+  nzNotFoundImage="simple"
+  [nzNotFoundContent]="'No share data found.'"
+></nz-empty>

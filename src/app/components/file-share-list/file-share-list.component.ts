@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NZ_MODAL_DATA, NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { NZ_MODAL_DATA, NzModalModule } from 'ng-zorro-antd/modal';
 import { formatDateToShort, formatTime } from '../../core/utils/date';
 import { environment } from '../../../environments/environment';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { CommonModule } from '@angular/common';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
 interface fileShareData {
   email: string,
@@ -35,14 +36,14 @@ interface fileShareState {
     NzTableModule,
     CommonModule,
     NzIconModule,
-    NzIconModule
+    NzEmptyModule,
+    NzPaginationModule
   ],
   templateUrl: './file-share-list.component.html',
   styleUrl: './file-share-list.component.css'
 })
 export class FileShareListComponent implements OnInit {
   private http = inject(HttpClient);
-  private message = inject(NzMessageService);
   
   fileId: string = inject(NZ_MODAL_DATA).fileId;
 
@@ -50,6 +51,7 @@ export class FileShareListComponent implements OnInit {
   formatTime = formatTime;
 
   isLoading = false;
+  isMobile = false;
   
   fileShareState: fileShareState = {
     data: [] as fileShareData[],
@@ -60,7 +62,13 @@ export class FileShareListComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.isMobile = window.innerWidth <= 768;
     this.fetchData(1);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isMobile = event.target.innerWidth <= 768;
   }
 
   fetchData(page: number): void {
