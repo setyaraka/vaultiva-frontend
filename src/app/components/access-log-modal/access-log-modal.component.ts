@@ -12,6 +12,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { copyTextToClipboard } from '../../core/utils/copy';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 
 interface AccessLog {
   accessedAt: string;
@@ -32,7 +33,8 @@ interface AccessLog {
     NzIconModule,
     UserAgentParserPipe,
     NzEmptyModule,
-    NzToolTipModule
+    NzToolTipModule,
+    NzPaginationModule
   ],
   standalone: true,
   templateUrl: './access-log-modal.component.html',
@@ -50,6 +52,7 @@ export class AccessLogModalComponent implements OnInit {
 
   isLoading = false;
   activeTab = 'fileLog';
+  isMobile: boolean = false;
 
   dataSet: {
     data: AccessLog[],
@@ -66,7 +69,15 @@ export class AccessLogModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checkScreenWidth();
+    window.addEventListener('resize', () => {
+      this.checkScreenWidth();
+    });
     this.fetchLogs(1, false);
+  }
+
+  checkScreenWidth() {
+    this.isMobile = window.innerWidth <= 640;
   }
 
   fetchLogs(page: number, isFailed: boolean): void {

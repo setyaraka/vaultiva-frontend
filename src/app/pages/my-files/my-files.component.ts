@@ -16,6 +16,7 @@ import { FileShareListComponent } from '../../components/file-share-list/file-sh
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { ImagePreviewComponent } from '../image-preview/image-preview.component';
 import { Router } from '@angular/router';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 interface FileData {
   id: string,
@@ -47,7 +48,8 @@ interface FileListState {
     NzDividerModule,
     NzModalModule,
     NzIconModule,
-    NzPaginationModule
+    NzPaginationModule,
+    NzToolTipModule
   ],
   templateUrl: './my-files.component.html',
   styleUrl: './my-files.component.css'
