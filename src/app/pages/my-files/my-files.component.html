@@ -1,115 +1,117 @@
-<div class="p-4 max-h-[78vh] overflow-y-auto">
-    <!-- Empty State -->
-  <div *ngIf="fileState.data.length === 0 && !isLoading" class="flex flex-col items-center justify-center py-20 text-gray-400">
-    <nz-icon nzType="inbox" nzTheme="outline" class="text-6xl mb-4" />
-    <p class="mb-2 text-lg font-semibold">No files uploaded yet</p>
-    <p class="mb-6 text-center max-w-xs">You haven't uploaded any files. Start by uploading files to manage and share them here.</p>
-    <button nz-button nzType="primary" (click)="goToUpload()">Upload File Now</button>
-  </div>
+<div class="p-4 max-h-[78vh] lg:max-h-none">
+  <div class="max-h-[68vh] lg:max-h-[78vh] overflow-y-auto">
+      <!-- Empty State -->
+    <div *ngIf="fileState.data.length === 0 && !isLoading" class="flex flex-col items-center justify-center py-20 text-gray-400">
+      <nz-icon nzType="inbox" nzTheme="outline" class="text-6xl mb-4" />
+      <p class="mb-2 text-lg font-semibold">No files uploaded yet</p>
+      <p class="mb-6 text-center max-w-xs">You haven't uploaded any files. Start by uploading files to manage and share them here.</p>
+      <button nz-button nzType="primary" (click)="goToUpload()">Upload File Now</button>
+    </div>
 
-  <!-- File Grid -->
-  <div *ngIf="fileState.data.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <div *ngFor="let file of fileState.data" class="bg-white rounded-lg shadow hover:shadow-lg p-4 relative group">
-      <div class="flex justify-center mb-3">
-        <img
-          *ngIf="isImage(file.filename)"
-          [src]="file.url"
-          alt="file image"
-          (click)="openImagePreview(file)"
-          class="w-24 h-24 object-contain cursor-pointer"
-        />
-        <nz-icon
-          *ngIf="!isImage(file.filename) && isPdf(file.filename)"
-          nzType="file-pdf"
-          nzTheme="fill"
-          class="text-6xl text-red-600! h-24 w-24"
-        />
-        <nz-icon
-          *ngIf="!isImage(file.filename) && !isPdf(file.filename)"
-          nzType="file"
-          nzTheme="fill"
-          class="text-6xl text-gray-300!"
-        />
-      </div>
+    <!-- File Grid -->
+    <div *ngIf="fileState.data.length > 0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div *ngFor="let file of fileState.data" class="bg-white rounded-lg shadow hover:shadow-lg p-4 relative group">
+        <div class="flex justify-center mb-3">
+          <img
+            *ngIf="isImage(file.filename)"
+            [src]="file.url"
+            alt="file image"
+            (click)="openImagePreview(file)"
+            class="w-24 h-24 object-contain cursor-pointer"
+          />
+          <nz-icon
+            *ngIf="!isImage(file.filename) && isPdf(file.filename)"
+            nzType="file-pdf"
+            nzTheme="fill"
+            class="text-6xl text-red-600! h-24 w-24"
+          />
+          <nz-icon
+            *ngIf="!isImage(file.filename) && !isPdf(file.filename)"
+            nzType="file"
+            nzTheme="fill"
+            class="text-6xl text-gray-300!"
+          />
+        </div>
 
-      <div class="text-sm font-medium truncate" title="{{file.originalName}}">
-        {{file.originalName}}
-      </div>
+        <div class="text-sm font-medium truncate" title="{{file.originalName}}">
+          {{file.originalName}}
+        </div>
 
-      <div class="text-xs text-gray-500 mt-1">
-        {{displayVisibility(file.visibility)}} • Limit: {{file.downloadLimit || 0}}
-      </div>
+        <div class="text-xs text-gray-500 mt-1">
+          {{displayVisibility(file.visibility)}} • Limit: {{file.downloadLimit || 0}}
+        </div>
 
-      <div class="text-xs text-gray-400 mt-2">
-        Created: {{formatDateToShort(file.createdAt)}}
-      </div>
-      <div class="text-xs text-gray-400">
-        Expired: {{file.expiresAt ? formatDateToShort(file.expiresAt) : '-'}}
-      </div>
+        <div class="text-xs text-gray-400 mt-2">
+          Created: {{formatDateToShort(file.createdAt)}}
+        </div>
+        <div class="text-xs text-gray-400">
+          Expired: {{file.expiresAt ? formatDateToShort(file.expiresAt) : '-'}}
+        </div>
 
-      <!-- Hover Action in Desktop View -->
-      <div class="absolute top-2 right-2 hidden lg:flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-        <span class="mx-0" nz-tooltip nzTooltipTitle="Download File">
-          <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="downloadFile(file.id, file.filename)" [disabled]="loadingMap[file.id]">
-            <ng-container *ngIf="!loadingMap[file.id]; else loadingIcon">
-              <i nz-icon nzType="download"></i>
-            </ng-container>
-            <ng-template #loadingIcon>
-              <i nz-icon nzType="loading" nzSpin></i>
-            </ng-template>
+        <!-- Hover Action in Desktop View -->
+        <div class="absolute top-2 right-2 hidden lg:flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <span class="mx-0" nz-tooltip nzTooltipTitle="Download File">
+            <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="downloadFile(file.id, file.filename)" [disabled]="loadingMap[file.id]">
+              <ng-container *ngIf="!loadingMap[file.id]; else loadingIcon">
+                <i nz-icon nzType="download"></i>
+              </ng-container>
+              <ng-template #loadingIcon>
+                <i nz-icon nzType="loading" nzSpin></i>
+              </ng-template>
+            </button>
+          </span>
+          <span class="mx-0" nz-tooltip nzTooltipTitle="Access Log">
+            <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="openAccessLogModal(file.id)">
+              <i nz-icon nzType="file-search"></i>
+            </button>
+          </span>
+          <span class="mx-0" nz-tooltip nzTooltipTitle="Share With">
+            <button *ngIf="isShareable(file)" nz-button nzType="text" nzShape="circle" nzSize="small" (click)="openShareModal(file.id)">
+              <i nz-icon nzType="share-alt"></i>
+            </button>
+          </span>
+          <span class="mx-0" nz-tooltip nzTooltipTitle="Share List">
+            <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="openShareTableModal(file.id)">
+              <nz-icon nzType="solution" nzTheme="outline" />
+            </button>
+          </span>
+          <span class="mx-0" nz-tooltip nzTooltipTitle="Delete File">
+            <button nz-button nzType="text" nzShape="circle" nzSize="small" nzDanger (click)="onDeleteFile(file.id)">
+              <i nz-icon nzType="delete"></i>
+            </button>
+          </span>
+        </div>
+
+        <!-- More Button for Mobile -->
+        <div class="more-button absolute top-2 right-2 lg:hidden">
+          <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="toggleMobileMenu(file.id)">
+            <i nz-icon nzType="more" nzTheme="outline"></i>
           </button>
-        </span>
-        <span class="mx-0" nz-tooltip nzTooltipTitle="Access Log">
-          <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="openAccessLogModal(file.id)">
+        </div>
+
+        <!-- Action Menu Mobile -->
+        <div *ngIf="activeMobileMenuId === file.id" class="mobile-menu lg:hidden mt-2 border-t pt-2 space-y-2 text-sm">
+          <button class="flex items-center space-x-2 w-full" (click)="downloadFile(file.id, file.filename)">
+            <i nz-icon nzType="download"></i>
+            <span>Download</span>
+          </button>
+          <button class="flex items-center space-x-2 w-full" (click)="openAccessLogModal(file.id)">
             <i nz-icon nzType="file-search"></i>
+            <span>Access Log</span>
           </button>
-        </span>
-        <span class="mx-0" nz-tooltip nzTooltipTitle="Share With">
-          <button *ngIf="isShareable(file)" nz-button nzType="text" nzShape="circle" nzSize="small" (click)="openShareModal(file.id)">
+          <button *ngIf="isShareable(file)" class="flex items-center space-x-2 w-full" (click)="openShareModal(file.id)">
             <i nz-icon nzType="share-alt"></i>
+            <span>Share With</span>
           </button>
-        </span>
-        <span class="mx-0" nz-tooltip nzTooltipTitle="Share List">
-          <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="openShareTableModal(file.id)">
+          <button class="flex items-center space-x-2 w-full" (click)="openShareTableModal(file.id)">
             <nz-icon nzType="solution" nzTheme="outline" />
+            <span>Share List</span>
           </button>
-        </span>
-        <span class="mx-0" nz-tooltip nzTooltipTitle="Delete File">
-          <button nz-button nzType="text" nzShape="circle" nzSize="small" nzDanger (click)="onDeleteFile(file.id)">
+          <button class="flex items-center space-x-2 w-full text-red-600" (click)="onDeleteFile(file.id)">
             <i nz-icon nzType="delete"></i>
+            <span>Delete</span>
           </button>
-        </span>
-      </div>
-
-      <!-- More Button for Mobile -->
-      <div class="more-button absolute top-2 right-2 lg:hidden">
-        <button nz-button nzType="text" nzShape="circle" nzSize="small" (click)="toggleMobileMenu(file.id)">
-          <i nz-icon nzType="more" nzTheme="outline"></i>
-        </button>
-      </div>
-
-      <!-- Action Menu Mobile -->
-      <div *ngIf="activeMobileMenuId === file.id" class="mobile-menu lg:hidden mt-2 border-t pt-2 space-y-2 text-sm">
-        <button class="flex items-center space-x-2 w-full" (click)="downloadFile(file.id, file.filename)">
-          <i nz-icon nzType="download"></i>
-          <span>Download</span>
-        </button>
-        <button class="flex items-center space-x-2 w-full" (click)="openAccessLogModal(file.id)">
-          <i nz-icon nzType="file-search"></i>
-          <span>Access Log</span>
-        </button>
-        <button *ngIf="isShareable(file)" class="flex items-center space-x-2 w-full" (click)="openShareModal(file.id)">
-          <i nz-icon nzType="share-alt"></i>
-          <span>Share With</span>
-        </button>
-        <button class="flex items-center space-x-2 w-full" (click)="openShareTableModal(file.id)">
-          <nz-icon nzType="solution" nzTheme="outline" />
-          <span>Share List</span>
-        </button>
-        <button class="flex items-center space-x-2 w-full text-red-600" (click)="onDeleteFile(file.id)">
-          <i nz-icon nzType="delete"></i>
-          <span>Delete</span>
-        </button>
+        </div>
       </div>
     </div>
   </div>

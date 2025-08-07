@@ -67,7 +67,7 @@ export class MyFilesComponent implements OnInit {
   fileState: FileListState = {
     data: [] as FileData[],
     page: 1,
-    limit: 10,
+    limit: 12,
     total: 0,
     totalPages: 0
   }
