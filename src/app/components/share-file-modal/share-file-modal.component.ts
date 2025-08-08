@@ -1,20 +1,36 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { CommonModule } from '@angular/common';
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { FileSizePipe } from '../../file-size.pipe';
+
+interface fileState {
+  id: string,
+  originalName: string,
+  visibility: string,
+  downloadLimit: number,
+  expiresAt: string,
+  size: number
+}
 
 @Component({
   selector: 'app-share-file-modal',
-  imports: [CommonModule, NzFormModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule, 
+    NzFormModule, 
+    FormsModule, 
+    ReactiveFormsModule,
+    FileSizePipe,
+  ],
   standalone: true,
   templateUrl: './share-file-modal.component.html',
   styleUrl: './share-file-modal.component.css'
 })
-export class ShareFileModalComponent {
+export class ShareFileModalComponent implements OnInit {
   fileId: string = inject(NZ_MODAL_DATA).fileId;
 
   private fb = inject(FormBuilder);
@@ -30,6 +46,39 @@ export class ShareFileModalComponent {
   })
   loading = false;
   shareUrl: string | null = null;
+
+  fileState: fileState = {
+    id: '',
+    originalName: '',
+    visibility: '',
+    downloadLimit: 0,
+    expiresAt: '',
+    size: 0
+  }
+
+  ngOnInit(): void {
+    this.fetchData(this.fileId);
+  }
+
+  isPdf(filename: string): boolean {
+    return /\.pdf$/i.test(filename);
+  }
+
+  fetchData(id: string): void {
+    this.loading = true;
+    const apiUrl = `${environment.apiUrl}/file/${this.fileId}`;
+
+    this.http.get<fileState>(apiUrl)
+    .subscribe({
+      next: (res) => {
+        this.fileState = res;
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+      },
+    });
+  };
 
   onSubmit() {
     if(this.form.invalid) return;
