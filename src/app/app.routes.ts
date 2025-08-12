@@ -69,5 +69,25 @@ export const routes: Routes = [
       }
     ]
   },
+  {
+    path: 'demo',
+    // component: LayoutPassportComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/demo/demo.routes').then(m => m.DEMO_ROUTES)
+      }
+    ]
+  },
+  {
+    path: 'demo/:slug',
+    // component: LayoutPassportComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/demo-preview/demo-preview.routes').then(m => m.DEMO_PREVIEW_ROUTES)
+      }
+    ]
+  },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
