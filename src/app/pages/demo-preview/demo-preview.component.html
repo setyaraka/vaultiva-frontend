@@ -56,7 +56,8 @@
             <div *ngIf="!expired() && (!needPassword() || authed())">
               <div class="text-xs text-gray-500 mb-2">Demo watermark is visible by design.</div>
   
-              <div *ngIf="file()?.type==='pdf'; else imgView" class="h-[70vh] rounded-lg overflow-hidden border">
+              <div *ngIf="file()?.type==='pdf'; else imgView"
+                  class="min-h-[60vh] md:h-[70vh] rounded-lg overflow-hidden border">
                 <iframe class="w-full h-full" [src]="safeUrl()" title="Demo PDF"></iframe>
               </div>
               <ng-template #imgView>
