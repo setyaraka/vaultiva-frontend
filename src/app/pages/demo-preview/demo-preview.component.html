@@ -1,0 +1,79 @@
+<nav class="bg-white shadow fixed w-full z-50 top-0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <button (click)="goToLanding()" class="cursor-pointer">
+            <span class="text-xl font-bold text-gray-900">Vaultiva</span>
+      </button>
+      <button (click)="goToLogin()" class="bg-[#364d79] text-white! px-4 py-2 rounded-xl text-sm hover:bg-[#2C3E50]">
+        Login
+      </button>
+    </div>
+</nav>
+
+  <main class="pt-16"> <!-- offset 64px karena nav h-16 -->
+    <section
+      [ngClass]="centerGate()
+        ? 'min-h-[calc(100vh-64px)] grid place-items-center px-4'
+        : 'px-4'">
+  
+      <div class="w-full max-w-5xl mx-auto p-4">
+        <ng-container *ngIf="!link(); else content">
+          <nz-alert nzType="error" nzMessage="Invalid demo link"
+                    nzDescription="The link may have expired or is not found in this session."
+                    class="mb-4"></nz-alert>
+          <button nz-button nzType="primary" (click)="router.navigate(['/demo'])">
+            Start a new demo
+          </button>
+        </ng-container>
+  
+        <ng-template #content>
+          <nz-card class="rounded-2xl shadow space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm text-gray-500">Demo preview</div>
+                <div class="font-semibold">{{ file()?.label }}</div>
+              </div>
+              <!-- <div class="text-xs text-gray-500">Expires: {{ expiresAtLocal() }}</div> -->
+              <div class="text-xs text-gray-500">
+                Expires: {{ expiresAtLocal() }} (in {{ expiresIn() }})
+              </div>
+            </div>
+  
+            <!-- Expired -->
+            <nz-alert *ngIf="expired()" nzType="warning" nzMessage="This link has expired." class="mb-2"></nz-alert>
+  
+            <!-- Password gate -->
+            <div *ngIf="!expired() && needPassword() && !authed()" class="space-y-2">
+              <div class="text-sm">Enter password to view (hint: 1234)</div>
+              <input nz-input [(ngModel)]="passwordInput" type="password" placeholder="Password">
+              <div class="flex gap-2 mt-3">
+                <button nz-button nzType="primary" (click)="checkPassword()">Unlock</button>
+                <button nz-button nzType="default" (click)="router.navigate(['/demo'])">Back</button>
+              </div>
+              <nz-alert *ngIf="wrong()" nzType="error" nzMessage="Wrong password"></nz-alert>
+            </div>
+  
+            <!-- Content -->
+            <div *ngIf="!expired() && (!needPassword() || authed())">
+              <div class="text-xs text-gray-500 mb-2">Demo watermark is visible by design.</div>
+  
+              <div *ngIf="file()?.type==='pdf'; else imgView" class="h-[70vh] rounded-lg overflow-hidden border">
+                <iframe class="w-full h-full" [src]="safeUrl()" title="Demo PDF"></iframe>
+              </div>
+              <ng-template #imgView>
+                <img class="max-h-[70vh] rounded-lg border mx-auto" [src]="file()?.url" [alt]="file()?.label">
+              </ng-template>
+  
+              <div class="mt-4 flex items-center gap-3">
+                <button nz-button nzType="primary" [disabled]="limitReached()" (click)="simulateDownload()">Download</button>
+                <div class="text-sm text-gray-600" *ngIf="limitEnabled()">
+                  Downloads left: {{ downloadsLeft() }}
+                </div>
+              </div>
+              <nz-alert class="mt-3" *ngIf="limitReached()" nzType="info" nzMessage="Download limit reached"></nz-alert>
+            </div>
+          </nz-card>
+        </ng-template>
+      </div>
+    </section>
+  </main>
+  

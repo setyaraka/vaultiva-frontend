@@ -58,6 +58,10 @@ export class LandingComponent implements AfterViewInit {
     this.router.navigate(['/login']);
   }
 
+  goToDemo() {
+    this.router.navigate(['/demo']);
+  }
+
   scrollTo(sectionId: string) {
     const el = document.getElementById(sectionId);
     if (el) {

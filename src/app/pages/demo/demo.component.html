@@ -1,0 +1,124 @@
+<nav class="bg-white shadow fixed w-full z-50 top-0">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <button (click)="goToLanding()" class="cursor-pointer">
+            <span class="text-xl font-bold text-gray-900">Vaultiva</span>
+      </button>
+      <button (click)="goToLogin()" class="bg-[#364d79] text-white! px-4 py-2 rounded-xl text-sm hover:bg-[#2C3E50]">
+        Login
+      </button>
+    </div>
+</nav>
+
+<div class="mt-20 px-4">
+    <app-demo-banner></app-demo-banner>
+</div>
+
+<section class="max-w-6xl mx-auto px-4">
+
+    <nz-steps [nzCurrent]="step()" class="pt-4 pb-5">
+      <nz-step nzTitle="Choose file"></nz-step>
+      <nz-step nzTitle="Protect"></nz-step>
+      <nz-step nzTitle="Get link"></nz-step>
+    </nz-steps>
+    
+    <ng-container [ngSwitch]="step()">
+        <!-- STEP 0: File rack -->
+        <div *ngIf="step() === 0" class="max-w-6xl mx-auto px-4 mt-5">
+          <p class="text-sm text-gray-500 mb-4">This demo uses dummy files with persistent watermarks.</p>
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <nz-card *ngFor="let f of allFiles" class="rounded-2xl shadow">
+              <div class="space-y-1">
+                <div class="font-semibold">{{ f.label }}</div>
+                <div class="text-xs text-gray-500">{{ f.name }} • {{ f.size || '—' }}</div>
+                <div class="text-xs text-gray-500">{{ f.description }}</div>
+              </div>
+              <div class="mt-4">
+                <button nz-button nzType="primary" class="w-full" (click)="selectFile(f)">Use this file</button>
+              </div>
+            </nz-card>
+          </div>
+        </div>
+        
+        <!-- STEP 1: Protect form -->
+        <div *ngIf="step() === 1" class="max-w-3xl mx-auto px-4 mt-5">
+          <nz-card class="rounded-2xl shadow">
+            <div class="mb-4">
+              <div class="text-sm text-gray-500">Selected file</div>
+              <div class="font-semibold">{{ selected()?.label }}</div>
+              <div class="text-xs text-gray-500">{{ selected()?.name }} • {{ selected()?.size }}</div>
+            </div>
+        
+            <form [formGroup]="form" class="space-y-5">
+              <!-- Password -->
+              <div class="flex items-center gap-3">
+                <span class="w-40 text-sm">Password protection</span>
+                <nz-switch formControlName="passwordEnabled"></nz-switch>
+              </div>
+              <div *ngIf="form.value.passwordEnabled" class="pl-40">
+                <input nz-input type="password" formControlName="password" placeholder="Default: 1234">
+                <div class="text-xs text-gray-500 mt-1">For demo only. Hint: 1234</div>
+              </div>
+        
+              <div class="flex items-start gap-3">
+                <span class="w-40 text-sm">Expire after</span>
+                <div>
+                  <nz-radio-group formControlName="expiryPreset" class="flex flex-col gap-2">
+                    <label nz-radio nzValue="1h">1 hour</label>
+                    <label nz-radio nzValue="24h">24 hours</label>
+                    <label nz-radio nzValue="3d">3 days</label>
+                    <label nz-radio nzValue="7d">7 days</label>
+                    <label nz-radio nzValue="custom">Custom</label>
+                  </nz-radio-group>
+              
+                  <div *ngIf="form.value.expiryPreset === 'custom'" class="mt-2">
+                    <nz-date-picker formControlName="expiryCustom"></nz-date-picker>
+                  </div>
+                </div>
+              </div>
+        
+              <!-- Download limit -->
+              <div class="flex items-center gap-3">
+                <span class="w-40 text-sm">Download limit</span>
+                <nz-switch formControlName="limitEnabled"></nz-switch>
+              </div>
+              <div *ngIf="form.value.limitEnabled" class="pl-40">
+                <nz-input-number [nzMin]="1" [nzMax]="10" formControlName="downloadLimit"></nz-input-number>
+                <div class="text-xs text-gray-500 mt-1">Number of allowed downloads</div>
+              </div>
+        
+              <!-- Visibility (optional copy only) -->
+              <div class="flex items-center gap-3">
+                <span class="w-40 text-sm">Visibility</span>
+                <nz-radio-group formControlName="visibility" class="flex gap-4">
+                  <label nz-radio nzValue="Restricted">Restricted</label>
+                  <label nz-radio nzValue="Public">Public</label>
+                </nz-radio-group>
+              </div>
+        
+              <div class="flex gap-3 pt-2">
+                <button nz-button nzType="default" (click)="backToFiles()">Back</button>
+                <button nz-button nzType="primary" (click)="generateLink()">Generate Demo Link</button>
+              </div>
+              <div class="text-xs text-gray-500 pt-2">
+                This is a simulated demo. No real files are uploaded.
+              </div>
+            </form>
+          </nz-card>
+        </div>
+        
+        <!-- STEP 2: Link result -->
+        <div *ngIf="step() === 2" class="max-w-2xl mt-5 mx-auto px-4">
+            <nz-card class="rounded-2xl shadow space-y-3 max-w-lg mx-auto">
+                <span class="font-semibold">Your demo link is ready</span>
+                <input nz-input [value]="linkUrl()" readonly>
+                <div class="flex gap-3 mt-3">
+                    <button nz-button nzType="default" (click)="copyLink()">Copy</button>
+                    <button nz-button nzType="primary" (click)="openPreview()">Open Preview</button>
+                </div>
+                <div class="text-xs text-gray-500 mt-2">
+                    Link works only in this browser session. You can always create a new one.
+                </div>
+            </nz-card>
+        </div>
+    </ng-container>
+</section>
