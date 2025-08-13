@@ -4,10 +4,15 @@ import { WatermarkService } from '../demo/watermark.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { CommonModule } from '@angular/common';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
   selector: 'app-try-your-file',
-  imports: [NzAlertModule, CommonModule],
+  imports: [
+    NzAlertModule, 
+    CommonModule,
+    NzSpinModule
+  ],
   templateUrl: './try-your-file.component.html',
   styleUrl: './try-your-file.component.css'
 })
