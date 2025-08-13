@@ -18,6 +18,11 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { DemoBannerComponent } from './demo-banner.component';
+import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
+import { WatermarkService } from './watermark.service';
+import { TryYourFileComponent } from '../try-your-file/try-your-file.component';
 
 @Component({
   selector: 'app-demo',
@@ -27,7 +32,7 @@ import { DemoBannerComponent } from './demo-banner.component';
     NzCardModule, NzButtonModule, NzFormModule, NzInputModule,
     NzSwitchModule, NzRadioModule, NzInputNumberModule,
     NzDatePickerModule, NzStepsModule, DemoBannerComponent,
-    NzTagModule
+    NzTagModule, NzAlertModule, NzModalModule
   ],
   templateUrl: './demo.component.html',
   styleUrls: ['./demo.component.css']
@@ -38,10 +43,18 @@ export class DemoComponent {
   private svc = inject(DemoLinkService);
   private router = inject(Router);
   private msg = inject(NzMessageService);
+  private modal = inject(NzModalService);
 
   step = signal(0); // 0: choose, 1: protect, 2: link
   allFiles: DemoFile[] = demoFiles;
   selected = signal<DemoFile | null>(null);
+
+  objectUrl: string | null = null;
+  safePreviewUrl: SafeResourceUrl | null = null;
+  isPdf = false;
+  busy = false;
+  errorMsg = '';
+  showTryModal = false;
 
   form = this.fb.group({
     passwordEnabled: [true],
@@ -112,4 +125,15 @@ export class DemoComponent {
   }
 
   backToFiles() { this.step.set(0); this.selected.set(null); }
+
+  openTryYourFile() {
+    this.modal.create({
+      nzTitle: 'Try with your file (preview only)',
+      nzContent: TryYourFileComponent,
+      nzFooter: null,
+      nzWidth: 900,
+      nzMaskClosable: false
+    });
+  }
+
 }
