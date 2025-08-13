@@ -4,7 +4,7 @@
       <span class="text-lg md:text-xl font-bold text-gray-900">Vaultiva</span>
     </button>
     <button (click)="goToLogin()"
-            class="bg-[#364d79] text-white px-3 py-1.5 md:px-4 md:py-2 rounded-xl text-xs md:text-sm hover:bg-[#2C3E50]">
+            class="bg-[#364d79] text-white! px-3 py-1.5 md:px-4 md:py-2 rounded-xl text-xs md:text-sm hover:bg-[#2C3E50]">
       Login
     </button>
   </div>
@@ -30,9 +30,14 @@
       <ng-container [ngSwitch]="step()">
           <!-- STEP 0: File rack -->
           <div *ngIf="step() === 0" class="mt-4">
-            <p class="text-xs md:text-sm text-gray-500 mb-3 md:mb-4">
-              This demo uses dummy files with persistent watermarks.
-            </p>
+            <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 mb-3">
+              <p class="text-sm text-gray-500 flex-1">
+                This demo uses dummy files with persistent watermarks.
+              </p>
+              <button nz-button nzType="default" (click)="openTryYourFile()">
+                Try with your file (no signup)
+              </button>
+            </div>
           
             <div class="grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               <nz-card *ngFor="let f of allFiles"

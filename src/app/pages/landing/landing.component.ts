@@ -68,5 +68,9 @@ export class LandingComponent implements AfterViewInit {
       el.scrollIntoView({ behavior: 'smooth' });
     }
   }
+
+  goToLanding() {
+    this.router.navigate(['/']);
+  }
 }
 

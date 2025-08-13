@@ -1,7 +1,7 @@
 :host ::ng-deep .ant-steps-item-process .ant-steps-item-icon {
-    background-color: #364d79 !important;
-    border-color: #364d79 !important;
-  }
-  :host ::ng-deep .ant-steps-item-process .ant-steps-item-title {
-    color: #364d79 !important;
-  }
+  background-color: #364d79 !important;
+  border-color: #364d79 !important;
+}
+:host ::ng-deep .ant-steps-item-process .ant-steps-item-title {
+  color: #364d79 !important;
+}
