@@ -1,53 +1,139 @@
-<div *ngIf="hasPassword && !previewUrl">
-    <div class="flex items-center justify-center min-h-screen bg-gray-100">
-      <nz-card nzTitle="Protected File" [nzBordered]="false" style="width: 300px;">
-        
-        <nz-input-group class="mb-3" [nzSuffix]="suffixTemplate">
+<!-- Brand ambience -->
+<div
+class="fixed inset-0 -z-10
+       bg-[#eaeef2]
+       bg-[radial-gradient(circle,rgba(54,77,121,0.07)_1px,transparent_1px)]
+       bg-[length:22px_22px]">
+</div>
+
+<!-- PASSWORD GATE -->
+<div *ngIf="hasPassword && !previewUrl && !expired" class="min-h-screen grid place-items-center px-4 pt-12">
+  <nz-card class="w-full max-w-sm rounded-2xl shadow-md">
+    <div class="flex items-center gap-3 mb-3">
+      <div class="h-10 w-10 rounded-full bg-[#364d79]/10 grid place-items-center">
+
+        <img src="assets/images/logo.png" alt="Vaultiva Logo" class="mx-auto w-16 mb-2" />
+      </div>
+      <div>
+        <div class="font-semibold">Protected File</div>
+        <div class="text-xs text-gray-500" *ngIf="filename">{{ filename }}</div>
+      </div>
+    </div>
+
+    <nz-alert *ngIf="wrong" nzType="error" nzMessage="Wrong password. Try again." class="mb-3"></nz-alert>
+
+    <nz-spin [nzSpinning]="isLoading" nzTip="Verifying…">
+      <form (ngSubmit)="onSubmitPassword()" class="space-y-3">
+        <nz-input-group [nzSuffix]="eyeTpl">
           <input
-            [type]="passwordVisible ? 'text' : 'password'"
+            #pwdInput
             nz-input
+            [type]="passwordVisible ? 'text' : 'password'"
             placeholder="Enter file password"
             [(ngModel)]="password"
+            name="password"
             [disabled]="isLoading"
+            (keydown.enter)="onSubmitPassword()"
+            required
           />
         </nz-input-group>
-  
-        <ng-template #suffixTemplate>
-          <nz-icon
-            class="ant-input-password-icon"
-            [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
-            (click)="passwordVisible = !passwordVisible"
-          />
-        </ng-template>
-  
-        <div class="mt-3">
-          <button
-            style="width: 100%;"
-            nz-button
-            nzType="primary"
-            [nzLoading]="isLoading"
-            [disabled]="!password"
-            (click)="onSubmitPassword()"
-          >
-            Submit Password
+        <ng-template #eyeTpl>
+          <button type="button" class="ant-input-password-icon bg-transparent border-0"
+                  (click)="passwordVisible = !passwordVisible"
+                  [attr.aria-label]="passwordVisible ? 'Hide password' : 'Show password'">
+            <nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"></nz-icon>
           </button>
-        </div>
-  
-      </nz-card>
+        </ng-template>
+
+        <button nz-button nzType="primary" class="w-full !bg-[#364d79] hover:!bg-[#2C3E50] text-white!"
+                [disabled]="isLoading || !password">
+          Submit Password
+        </button>
+      </form>
+    </nz-spin>
+
+    <div class="mt-3 text-xs text-gray-500 space-y-1">
+      <div *ngIf="expiresAt">Expires: {{ expiresAt | date:'medium' }}</div>
+      <div>This link may expire or be limited in download count.</div>
     </div>
+  </nz-card>
 </div>
 
-<iframe *ngIf="previewUrl" [src]="previewUrl" width="100%" height="100%"></iframe>
+<!-- EXPIRED / ERROR STATE -->
+<div *ngIf="messageError && !previewUrl" class="min-h-screen grid place-items-center px-4 pt-12">
+  <nz-card [nzBodyStyle]="{textAlign: 'center'}" class="rounded-2xl shadow-md max-w-sm w-full">
+    <div class="flex flex-col items-center">
+      <nz-icon nzType="lock" nzTheme="outline" class="text-5xl text-[#364d79] mb-3"></nz-icon>
+      <h3 class="text-lg font-semibold text-gray-800 mb-1">Access Restricted</h3>
+      <p class="text-sm text-gray-500 mb-3">The file can’t be viewed because:</p>
+      <nz-alert nzType="error" [nzMessage]="messageError" nzShowIcon class="w-full"></nz-alert>
+      <div class="mt-3 text-xs text-gray-500">
+        Sent via <span class="font-medium">Vaultiva</span> — secure and simple file sharing.
+      </div>
+    </div>
+  </nz-card>
+</div>
 
-<div *ngIf="messageError" class="flex items-center justify-center min-h-screen bg-gray-100">
-    <nz-card [nzBodyStyle]="{ textAlign: 'center' }">
-        <div class="flex flex-col items-center">
-            <nz-icon nzType="lock" nzTheme="outline" class="text-5xl text-blue-500 mb-4" />
-            <h3 class="text-lg font-semibold text-gray-800 mb-1">Access Restricted</h3>
-            <p class="text-sm text-gray-500 mb-4">
-                The file can’t be viewed because:
-            </p>
-            <nz-alert nzType="error" [nzMessage]="messageError" nzShowIcon class="w-full"></nz-alert>
+ <!-- PREVIEW (brand card) -->
+<section *ngIf="previewUrl" class="min-h-screen py-6 px-4">
+  <div class="max-w-6xl mx-auto">
+    <!-- Kartu brand -->
+    <div class="rounded-2xl shadow-md border bg-white overflow-hidden">
+      <!-- Brand bar tipis -->
+      <div class="h-1.5 bg-[#364d79]"></div>
+
+      <!-- Header -->
+      <div class="px-4 md:px-6 py-3">
+        <div class="flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2 min-w-0">
+            <img src="assets/images/logo.png" alt="Vaultiva" class="w-6 h-6" />
+            <div class="truncate">
+              <div class="text-sm font-semibold text-[#364d79]">
+                Vaultiva Secure Preview
+              </div>
+              <div *ngIf="filename" class="text-xs text-gray-500 truncate">
+                {{ filename }}
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 shrink-0">
+            <span class="hidden md:inline-block text-[11px] px-2 py-0.5 rounded-full bg-gray-100 border">
+              Preview only
+            </span>
+          </div>
         </div>
-    </nz-card>
-</div>
+      </div>
+
+      <!-- Viewer -->
+      <div class="relative border-t">
+        <!-- Overlay loading hanya di area viewer -->
+        <div *ngIf="isLoading"
+             class="absolute inset-0 z-10 grid place-items-center bg-white/65 backdrop-blur-[1px]">
+          <nz-spin nzTip="Loading preview…"></nz-spin>
+        </div>
+
+        <iframe
+          class="block w-full h-[72vh] md:h-[calc(100vh-260px)] border-0"
+          [src]="previewUrl"
+          title="Vaultiva Preview">
+        </iframe>
+      </div>
+
+      <!-- Footer -->
+      <div class="px-4 md:px-6 py-2.5 flex items-center justify-between text-[12px] text-gray-500">
+        <div class="flex items-center gap-2">
+          <span>Watermark visible · Preview only</span>
+          <span *ngIf="expiresAt">• Expires: {{ expiresAt | date:'medium' }}</span>
+        </div>
+
+        <button
+          *ngIf="objectUrl"
+          nz-button nzType="link" nzSize="small"
+          (click)="openInNewTab()">
+          Open in new tab
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
